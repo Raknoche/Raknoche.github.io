@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-07-26T14:15:44-04:00</updated>
+ <updated>2016-07-26T14:56:08-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -62,16 +62,16 @@ here is some other stuff&lt;/p&gt;
 
 &lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt;
 
+&lt;p&gt;this is my second post  here is some stuff  here is some other stuff. this is my second post  here is some stuff  here is some other stuff. this is my second post  here is some stuff  here is some other stuff.this is my second post  here is some stuff  here is some other stuff.&lt;br /&gt;
+this is my second post  here is some stuff  here is some other stuffthis is my second post  here is some stuff  here is some other stuffthis is my second post  here is some stuff  here is some other stuff&lt;/p&gt;
+
+&lt;h1 id=&quot;here-is-another&quot;&gt;Here is another&lt;/h1&gt;
+
 &lt;p&gt;this is my second post&lt;br /&gt;
 here is some stuff&lt;br /&gt;
 here is some other stuff&lt;/p&gt;
 
-&lt;p&gt;#Here is another&lt;/p&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff
-### Here is a third&lt;/p&gt;
+&lt;h3 id=&quot;here-is-a-third&quot;&gt;Here is a third&lt;/h3&gt;
 
 &lt;p&gt;this is my second post&lt;br /&gt;
 here is some stuff&lt;br /&gt;
