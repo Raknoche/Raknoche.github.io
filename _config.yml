@@ -12,6 +12,7 @@ baseurl:             ''
 paginate:            5
 paginate_path:       "page:num"
 excerpt_separator:   <!--more-->
+gitrepo:             http://www.github.com/raknoche
 
 # About/contact
 author:
