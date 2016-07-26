@@ -7,15 +7,16 @@ permalink:           pretty
 title:               Dealing Data
 tagline:             'Learning data science through example'
 description:         'A blog dedicated to learning data science techniques by applying them to real world data.'
-url:                 raknoche.github.io
-baseurl:             ''
+url:                 http://www.dealingdata.net
+baseurl:             http://www.dealingdata.net
 paginate:            5
 paginate_path:       "page:num"
+excerpt_separator:   <!--more-->
 
 # About/contact
 author:
   name:              Richard Knoche
-  url:               raknoche.github.io
+  url:               https://www.dealingdata.net
   email:             raknoche@gmail.com
 
 # Custom vars
