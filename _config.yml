@@ -11,12 +11,11 @@ url:                 http://www.dealingdata.net
 baseurl:             ''
 paginate:            5
 paginate_path:       "page:num"
-excerpt_separator:   <!--more-->
 
 # About/contact
 author:
   name:              Richard Knoche
-  url:               https://www.dealingdata.net
+  url:               raknoche.github.io
   email:             raknoche@gmail.com
 
 # Custom vars
