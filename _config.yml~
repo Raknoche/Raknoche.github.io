@@ -1,0 +1,26 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+
+# Setup
+title:               Dealing Data
+tagline:             'Learning data science through example'
+description:         'A blog dedicated to learning data science techniques by applying them to real world data.'
+url:                 http://www.dealingdata.net
+baseurl:             ''
+paginate:            5
+paginate_path:       "page:num"
+
+
+# About/contact
+author:
+  name:              Richard Knoche
+  url:               https://www.dealingdata.net
+  email:             raknoche@gmail.com
+
+# Custom vars
+version:             1.0.0
+
+#Gems
+gems:                [jekyll-paginate]
