@@ -4,13 +4,47 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-07-26T12:41:01-04:00</updated>
+ <updated>2016-07-26T14:01:09-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Second test post</title>
+   <link href="http://www.dealingdata.net/2016/07/25/secondposttwo/"/>
+   <updated>2016-07-25T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/25/secondposttwo</id>
+   <content type="html">&lt;p&gt;Second test post
+This is my summary
+this is my second post&lt;br /&gt;
+here is some stuff&lt;br /&gt;
+here is some other stuff&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;this should be the actual post&lt;/p&gt;
+
+&lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt;
+
+&lt;p&gt;this is my second post&lt;br /&gt;
+here is some stuff&lt;br /&gt;
+here is some other stuff&lt;/p&gt;
+
+&lt;p&gt;#Here is another&lt;/p&gt;
+
+&lt;p&gt;this is my second post&lt;br /&gt;
+here is some stuff&lt;br /&gt;
+here is some other stuff
+### Here is a third&lt;/p&gt;
+
+&lt;p&gt;this is my second post&lt;br /&gt;
+here is some stuff&lt;br /&gt;
+here is some other stuff&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Test post</title>

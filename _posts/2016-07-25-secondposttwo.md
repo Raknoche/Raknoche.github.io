@@ -1,9 +1,10 @@
 ---
 layout: post
-title: Test post
+title: Second test post
 comments: true
 ---
 
+Second test post
 This is my summary
 this is my second post  
 here is some stuff  
