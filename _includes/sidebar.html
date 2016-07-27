@@ -30,8 +30,20 @@
       {% endfor %}
 
       <a class="sidebar-nav-item" href=" {{ site.gitrepo }} ">GitHub Repo</a>
-      <span class="sidebar-nav-item">Currently v{{ site.version }}</span>
+      <!-- <span class="sidebar-nav-item">Currently v{{ site.version }}</span> -->
+
     </nav>
 
-    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
+    <!-- <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/raknoche"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@gmail.com"><i class="fa fa-envelope fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+     </p>
+   </div>
 </div>
