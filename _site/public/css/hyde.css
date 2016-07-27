@@ -455,7 +455,42 @@ a.pagination-item:hover {
 }
 
 
+/* Share pages */
 
+
+.social-media {
+  font-size: 85%;
+  line-height: 2.5;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  border-top: 1px solid black;
+}
+
+.social-media a {
+  text-decoration: none;
+}
+
+.social-media a:hover {
+  background-color: #e6e6e6;
+}
+
+.social-media-box {
+  display: inline;
+  margin-left: 0.5rem;
+  border: 1.5px solid #c6c6c6;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.social-media-box a {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.social-media-box a:hover {
+  text-decoration: none;
+}
 
 /*
  * Themes
