@@ -4,13 +4,22 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-07-27T17:54:07-04:00</updated>
+ <updated>2016-07-27T17:56:23-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Thirdpost</title>
+   <link href="http://www.dealingdata.net/2016/07/26/thirdpost/"/>
+   <updated>2016-07-26T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/26/thirdpost</id>
+   <content type="html">
+</content>
+ </entry>
  
  <entry>
    <title>Second test post</title>
