@@ -4,13 +4,30 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-07-27T17:56:23-04:00</updated>
+ <updated>2016-07-28T11:50:51-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Fourth test post</title>
+   <link href="http://www.dealingdata.net/2016/07/27/fourth/"/>
+   <updated>2016-07-27T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/27/fourth</id>
+   <content type="html">&lt;p&gt;Fourth test post
+This is my summary
+this is my second post&lt;br /&gt;
+here is some stuff&lt;br /&gt;
+here is some other stuff&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;this should be the actual post&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Thirdpost</title>
@@ -26,33 +43,7 @@
    <link href="http://www.dealingdata.net/2016/07/25/secondposttwo/"/>
    <updated>2016-07-25T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/07/25/secondposttwo</id>
-   <content type="html">&lt;p&gt;Second test post
-This is my summary
-this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;this should be the actual post&lt;/p&gt;
-
-&lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-
-&lt;p&gt;#Here is another&lt;/p&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff
-### Here is a third&lt;/p&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-</content>
+   <content type="html">&lt;p&gt;Second test post This is my summary this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some other stuff&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;this should be the actual post&lt;/p&gt; &lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt; &lt;p&gt;this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some...</content>
  </entry>
  
  <entry>
@@ -60,32 +51,7 @@ here is some other stuff&lt;/p&gt;
    <link href="http://www.dealingdata.net/2016/07/25/secondpost/"/>
    <updated>2016-07-25T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/07/25/secondpost</id>
-   <content type="html">&lt;p&gt;This is my summary
-this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;this should be the actual post&lt;/p&gt;
-
-&lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt;
-
-&lt;p&gt;this is my second post  here is some stuff  here is some other stuff. this is my second post  here is some stuff  here is some other stuff. this is my second post  here is some stuff  here is some other stuff.this is my second post  here is some stuff  here is some other stuff.&lt;br /&gt;
-this is my second post  here is some stuff  here is some other stuffthis is my second post  here is some stuff  here is some other stuffthis is my second post  here is some stuff  here is some other stuff&lt;/p&gt;
-
-&lt;h1 id=&quot;here-is-another&quot;&gt;Here is another&lt;/h1&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-
-&lt;h3 id=&quot;here-is-a-third&quot;&gt;Here is a third&lt;/h3&gt;
-
-&lt;p&gt;this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-</content>
+   <content type="html">&lt;p&gt;This is my summary this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some other stuff&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;this should be the actual post&lt;/p&gt; &lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt; &lt;p&gt;this is my second post here is some stuff here is some other stuff. this is my...</content>
  </entry>
  
 
