@@ -8,8 +8,6 @@ How to create a website like this blog with Jekyll.
 
 <!--more-->
 
-Welcome to my new data science blog!  I'll be posting tutorials which explain various data science topics that I come accross in my studies.  My hope is that these posts will provide a valuable resource for aspiring data scientists who are learning similar topics as they start out. 
-
 I thought it would be appropriate for my first post to explain how I created this website.  There are many options on the web to help you build a blog.  The most popular among these include [WordPress](https://wordpress.com/create/), [Pelican](http://blog.getpelican.com/), [Ghost](https://ghost.org/), and [Jekyll](https://jekyllrb.com/).  There are arguments for and against each of these platforms, and the choice of which to use comes down to personal preference and needs. In the end, I decided to create my blog using Jekyll.  
 
 In this post, we'll discuss the following topics:
