@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-07-28T11:50:51-04:00</updated>
+ <updated>2016-08-04T13:56:35-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -13,45 +13,11 @@
 
  
  <entry>
-   <title>Fourth test post</title>
-   <link href="http://www.dealingdata.net/2016/07/27/fourth/"/>
-   <updated>2016-07-27T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/27/fourth</id>
-   <content type="html">&lt;p&gt;Fourth test post
-This is my summary
-this is my second post&lt;br /&gt;
-here is some stuff&lt;br /&gt;
-here is some other stuff&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;this should be the actual post&lt;/p&gt;
-</content>
- </entry>
- 
- <entry>
-   <title>Thirdpost</title>
-   <link href="http://www.dealingdata.net/2016/07/26/thirdpost/"/>
-   <updated>2016-07-26T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/26/thirdpost</id>
-   <content type="html">
-</content>
- </entry>
- 
- <entry>
-   <title>Second test post</title>
-   <link href="http://www.dealingdata.net/2016/07/25/secondposttwo/"/>
-   <updated>2016-07-25T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/25/secondposttwo</id>
-   <content type="html">&lt;p&gt;Second test post This is my summary this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some other stuff&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;this should be the actual post&lt;/p&gt; &lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt; &lt;p&gt;this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some...</content>
- </entry>
- 
- <entry>
-   <title>Test post</title>
-   <link href="http://www.dealingdata.net/2016/07/25/secondpost/"/>
-   <updated>2016-07-25T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/25/secondpost</id>
-   <content type="html">&lt;p&gt;This is my summary this is my second post&lt;br /&gt; here is some stuff&lt;br /&gt; here is some other stuff&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;this should be the actual post&lt;/p&gt; &lt;h2 id=&quot;here-is-a-section-header&quot;&gt;Here is a Section Header&lt;/h2&gt; &lt;p&gt;this is my second post here is some stuff here is some other stuff. this is my...</content>
+   <title>Making a Website with Jekyll</title>
+   <link href="http://www.dealingdata.net/2016/06/28/MakingAWebsite/"/>
+   <updated>2016-06-28T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/06/28/MakingAWebsite</id>
+   <content type="html">&lt;p&gt;How to create a website like this blog with Jekyll.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;Welcome to my new data science blog! I’ll be posting tutorials which explain various data science topics that I come accross in my studies. My hope is that these posts will provide a valuable resource for aspiring data scientists...</content>
  </entry>
  
 
