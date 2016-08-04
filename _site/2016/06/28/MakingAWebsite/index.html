@@ -170,11 +170,11 @@
   <li><a href="#domain">Creating your own domain name</a></li>
 </ul>
 
-<h2 id="a-nameintroaintroduction-to-jekyll"><a name="intro"></a>Introduction to Jekyll</h2>
+<h1 id="a-nameintroaintroduction-to-jekyll"><a name="intro"></a>Introduction to Jekyll</h1>
 
 <p>Jekyll is a static website generator which is designed to give complete control of a website’s layout through simple HTML and Markdown files.  As a static website generator, Jekyll reads HTML and Markdown files to produce identical content for every visitor to the site.  In contrast, a dynamic website generator such as <a href="http://picocms.org/">Pico</a> can customize content for each user by interfacing with a Content Management System (CMS) database.  These database queries slow down interactions with the website, and introduce additional complexities which are not needed for a simple blog.  A Jekyll website can be hosted and version-controlled for free on <a href="https://github.com/">Github</a>.  For more information, you can read <a href="http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html">this blog post</a> by Jekyll’s creator, Tom Preston.</p>
 
-<h2 id="a-nameinstalla-installing-jekyll"><a name="install"></a> Installing Jekyll</h2>
+<h1 id="a-nameinstalla-installing-jekyll"><a name="install"></a> Installing Jekyll</h1>
 
 <p>There are a number of <a href="https://jekyllrb.com/docs/installation/">prerequisites</a> that have to be met before Jekyll can be installed on your computer.  You’ll need the following items:</p>
 
@@ -204,7 +204,7 @@
 
 <p>That’s it!  Your computer should now be ready to build a Jekyll website.</p>
 
-<h2 id="a-nameinitsetupa-initial-setup-of-a-jekyll-website"><a name="initSetup"></a> Initial setup of a Jekyll website</h2>
+<h1 id="a-nameinitsetupa-initial-setup-of-a-jekyll-website"><a name="initSetup"></a> Initial setup of a Jekyll website</h1>
 
 <p>We’ll be hosting our Jekyll website on Github.  Before setting up the website, you’ll need to follow <a href="https://pages.github.com/">Github’s guide</a> to create your own username.github.io repository (where username is your Github username).  If you aren’t familiar with Github, pay close attention to the step four, where the guide explains how to push your index.html file to your online Github repository.  You’ll be repeating this process each time you make a change to your website.</p>
 
@@ -214,9 +214,10 @@
 
 <p>After successfully building the <strong>_site</strong> folder, you can view a local version of your website by typing <code class="highlighter-rouge">jekyll serve</code> into your terminal.  Afterwards, direct a web browser to <a href="http://localhost:4000">http://localhost:4000/</a> to see your website!</p>
 
-<p>In order to publish the local version of your website to the internet you need to push the changes in your local repository to your online Github repository.  Doing so requires you to run three terminal commands from your local repository:</p>
+<p>In order to publish the local version of your website to the internet you need to push the changes in your local repository to your online Github repository.  Doing so requires you to run four terminal commands from your local repository:</p>
 
 <ol>
+  <li><code class="highlighter-rouge">jekyll build</code></li>
   <li><code class="highlighter-rouge">git add --all</code></li>
   <li><code class="highlighter-rouge">git commit -m "Initial Theme Setup"</code></li>
   <li><code class="highlighter-rouge">git push -u origin master</code></li>
@@ -224,7 +225,7 @@
 
 <p>Your website should now be accessible on the internet by  pointing a web browser to <a href="username.github.io">username.github.io</a> (where username is your github username).</p>
 
-<h2 id="a-namecustomizea-customizing-your-jekyll-website"><a name="customize"></a> Customizing your Jekyll Website</h2>
+<h1 id="a-namecustomizea-customizing-your-jekyll-website"><a name="customize"></a> Customizing your Jekyll Website</h1>
 
 <p>In this section we’ll take a closer look at the folders you extracted from the theme .zip file.  The theme should have included the following folders and files:</p>
 
@@ -274,7 +275,7 @@ layout: default
 
 <p>If you are looking for more details on how I implemented these changes, feel free to look through my website’s <a href="https://github.com/Raknoche/Raknoche.github.io">source code</a>.</p>
 
-<h2 id="a-namedomaina-creating-your-own-domain-name"><a name="domain"></a> Creating your own domain name</h2>
+<h1 id="a-namedomaina-creating-your-own-domain-name"><a name="domain"></a> Creating your own domain name</h1>
 
 <p>If you’ve been following this post up until now, you can 
 access your website by pointing your browser to <a href="username.github.io">username.github.io</a>. Some people may prefer to have a more professional or unique web address.  If this is the case, you will need to purchase a domain name from a registrar.</p>
