@@ -26,6 +26,7 @@ In this post, we'll discuss the following topics:
 
 Jekyll is a static website generator which is designed to give complete control of a website's layout through simple HTML and Markdown files.  As a static website generator, Jekyll reads HTML and Markdown files to produce identical content for every visitor to the site.  In contrast, a dynamic website generator such as [Pico](http://picocms.org/) can customize content for each user by interfacing with a Content Management System (CMS) database.  These database queries slow down interactions with the website, and introduce additional complexities which are not needed for a simple blog.  A Jekyll website can be hosted and version-controlled for free on [Github](https://github.com/).  For more information, you can read [this blog post](http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html) by Jekyll's creator, Tom Preston.
 
+
 # <a name="install"></a> Installing Jekyll
 
 There are a number of [prerequisites](https://jekyllrb.com/docs/installation/) that have to be met before Jekyll can be installed on your computer.  You'll need the following items: 
@@ -47,6 +48,7 @@ If you are not using one of the operating systems mentioned above, you will need
 
 That's it!  Your computer should now be ready to build a Jekyll website.
 
+
 # <a name="initSetup"></a> Initial setup of a Jekyll website
 
 We'll be hosting our Jekyll website on Github.  Before setting up the website, you'll need to follow [Github's guide](https://pages.github.com/) to create your own username.github.io repository (where username is your Github username).  If you aren't familiar with Github, pay close attention to the step four, where the guide explains how to push your index.html file to your online Github repository.  You'll be repeating this process each time you make a change to your website. 
@@ -65,6 +67,7 @@ In order to publish the local version of your website to the internet you need t
 4. `git push -u origin master`
 
 Your website should now be accessible on the internet by  pointing a web browser to [username.github.io](username.github.io) (where username is your github username).
+
 
 # <a name="customize"></a> Customizing your Jekyll Website
 
@@ -96,7 +99,8 @@ The **\_posts** folder is where you will store the Markdown files that create yo
 
 Finally, the **index.html** file is used to create the homepage for your website.  If you want to edit the look of your homepage you will need to edit this file.  Be sure to think about any **\_layouts** files, css files, or **\_includes** files that might be interacting with **index.html** when editing it.
 
-## <a name="ideas"></a> Ideas for Customizing your Page
+
+# <a name="ideas"></a> Ideas for Customizing your Page
 
 To give you an idea of where to start when customizing your website, I've provided a list of some of the initial changes I made to this website's theme:
 
@@ -112,6 +116,7 @@ To give you an idea of where to start when customizing your website, I've provid
 * Created a subscriber e-mail list using [MailChimp](http://mailchimp.com/) and [WebJeda's guide](https://blog.webjeda.com/jekyll-subscribe-form/)
 
 If you are looking for more details on how I implemented these changes, feel free to look through my website's [source code](https://github.com/Raknoche/Raknoche.github.io).
+
 
 # <a name="domain"></a> Creating your own domain name
 
