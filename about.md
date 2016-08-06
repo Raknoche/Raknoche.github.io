@@ -11,5 +11,5 @@ If you would like more information about me or my graduate school research, plea
 * [LinkedIn page](https://www.linkedin.com/in/richard-knoche-ba8bb1122
 )
 * [email](mailto:raknoche@dealingdata.net)
-* [CV](need this link)
+* [CV](https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf)
 
