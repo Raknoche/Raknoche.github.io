@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-07T16:54:34-04:00</updated>
+ <updated>2016-08-07T18:12:26-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -25,7 +25,7 @@
    <link href="http://www.dealingdata.net/2016/06/27/HelloWorld/"/>
    <updated>2016-06-27T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/06/27/HelloWorld</id>
-   <content type="html">&lt;p&gt;An introduction to the author, and a discussion of the goals for this blog.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;#Who am I?&lt;/p&gt; &lt;p&gt;Hello, World! My name is Richard Knoche. I’m a graduate student working on my Ph.D. in Physics at the University of Maryland. My research focuses on advancing signal corrections and calibration techniques...</content>
+   <content type="html">&lt;p&gt;An introduction to the author, his transition from physics to data science, and the goals of this blog.&lt;/p&gt; &lt;!--more--&gt; &lt;h1 id=&quot;who-am-i&quot;&gt;Who am I?&lt;/h1&gt; &lt;p&gt;Hello, World! My name is Richard Knoche. I’m a graduate student working on my Ph.D. in Physics at the University of Maryland. My research focuses on advancing...</content>
  </entry>
  
 

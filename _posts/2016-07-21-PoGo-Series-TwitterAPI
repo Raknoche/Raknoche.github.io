@@ -1,0 +1,65 @@
+---
+layout: post
+title: PoGo Series&#58; The Twitter API
+comments: true
+---
+
+An introduction to Twitter's API.
+
+<!--more-->
+
+TABLE OF CONTENTS
+
+Welcome to the second post in the Pokemon Go analysis series.  Recall that our goal is to construct a map of the dominance of each Pokemon Go team within each state.  The first step of this process is to collect tweets about each team from twitter.  To do so, we'll need to interact with Twitter's Application Programming Interface ([API](https://www.quora.com/What-is-an-API-4)).
+
+In this post, we'll discuss the following topics:
+
+1. [Getting access to the Twitter API](#access)
+2. Understanding access keys
+3. Details of the Twitter API
+
+
+# <a name="access"></a>Getting access to the twitter API:
+
+
+Getting access to the twitter API is simple:
+
+1. Go to [http://apps.twitter.com](http://apps.twitter.com)
+2. Log in with your twitter account
+3. Click "Create New App"
+4. Fill out the information sheet and create the application.  If you don't have a website, just fill that section in with a made up URL.
+5. After creating the app, click on "manage keys and access tokens) under "Application Settings."
+6. Take note of the consumer API key and the consumer secret.  We'll need these to connect to the API later.
+6. Click on "create my access token" and take note of the access token and access token secret that are generated.  We'll also need these to connect to the Twitter API.
+7. Note that you can change app permissions from this page to allow access to features like direct messaging. The standard read and write permissions are fine for our purposes.
+
+# <a name="keys"></a>Understanding access keys
+
+To understand the what the consumer key, consumer secret, access token, and access token secret are we need to discuss some of the security protocols of the Twitter API.  Suppose we build an application that requires information from our user’s twitter accounts.  For instance, maybe we made an application that takes pictures and we want our users to be able to upload those pictures to twitter with the push of a button.  We could ask the users to provide their username and password for us.  However, doing so is not safe &mdash; the application would have unlimited access to the user’s twitter account and can do whatever it wants with it.  Instead, we can generate a special key that provides limited access to the user’s account.  To do so, we first ask the user (known as the "resource owner") for permission to use such a key.  When we get the permission we forward it to an authentication server, which returns an access token so our application (known as "the client") can access Twitter's resource server on the user’s behalf.  The client can then use the access token to get limited access to the user’s data.  This process, known as the [OAuth2.0 authentication protocol](https://tools.ietf.org/html/rfc6749#section-1.3), is depicted below:
+
+
+Show picture from link here
+
+	Client: Third-party app that is trying to get access to a user’s twitter account
+	Resource Server: API server that is used to access the user’s information
+	Resource Owner:  The user who is giving access to their account (with particular permissions)
+
+https://tools.ietf.org/html/rfc6749#section-1.3
+
+OAuth2 process:
+	Create an app and get client ID/secret.  This allows the app to be authenticated by the Resource server
+	Send a request to the user, requesting access to their information on the resource server
+	If permission is granted the user sends an authentication code, which the app then exchanges for an access token from the resource server
+	The access token allows the application to collect data from the resource server on the user’s behalf
+	
+
+https://aaronparecki.com/2012/07/29/2/oauth2-simplified
+
+
+So what are the keys?
+
+Consumer key: API key that identifies the application
+Consumer secret: Password that is used to authenticate the application trying to access the API
+
+Access token and secret: Defines the privileges of the application once it has been authenticated
+
