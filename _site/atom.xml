@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-07T18:12:26-04:00</updated>
+ <updated>2016-08-10T14:14:10-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -13,18 +13,42 @@
 
  
  <entry>
+   <title>PoGo Series&#58; Collecting Tweets with Tweepy</title>
+   <link href="http://www.dealingdata.net/2016/07/23/PoGo-Series-Tweepy/"/>
+   <updated>2016-07-23T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/23/PoGo-Series-Tweepy</id>
+   <content type="html">&lt;p&gt;How to collect tweets using Python’s Tweepy library.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;TABLE OF CONTENTS&lt;/p&gt; &lt;p&gt;This is the third post in an on-going Pokemon Go analysis series. Last time, we discussed Twitter’s Search and Streaming APIs. In this post, we’ll discuss how to use Python’s Tweepy library to interface with Twitter’s API and...</content>
+ </entry>
+ 
+ <entry>
+   <title>PoGo Series&#58; The Twitter API</title>
+   <link href="http://www.dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/"/>
+   <updated>2016-07-21T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI</id>
+   <content type="html">&lt;p&gt;An introduction to Twitter’s API.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;TABLE OF CONTENTS&lt;/p&gt; &lt;p&gt;Welcome to the second post in the Pokemon Go analysis series. Recall that our goal is to construct a map of the dominance of each Pokemon Go team within each state. The first step of this process is to collect tweets...</content>
+ </entry>
+ 
+ <entry>
+   <title>PoGo Series&#58; Introduction</title>
+   <link href="http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro/"/>
+   <updated>2016-07-20T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro</id>
+   <content type="html">&lt;p&gt;An introduction to the X part series covering various analysis techniques using data from Pokemon Go.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;Table of Contents: Put a link to each part of the series here&lt;/p&gt; &lt;p&gt;–&lt;/p&gt; &lt;p&gt;Unless you’ve been living under a rock for the past week, you’ve heard of the new augmented reality game...</content>
+ </entry>
+ 
+ <entry>
    <title>Making a Website with Jekyll</title>
-   <link href="http://www.dealingdata.net/2016/06/28/MakingAWebsite/"/>
-   <updated>2016-06-28T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/06/28/MakingAWebsite</id>
+   <link href="http://www.dealingdata.net/2016/07/12/MakingAWebsite/"/>
+   <updated>2016-07-12T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/12/MakingAWebsite</id>
    <content type="html">&lt;p&gt;How to create a website like this blog with Jekyll.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;I thought it would be appropriate for my first post to explain how I created this website. There are many options on the web to help you build a blog. The most popular among these include &lt;a href=&quot;https://wordpress.com/create/&quot;&gt;WordPress&lt;/a&gt;, &lt;a...</content>
  </entry>
  
  <entry>
    <title>Hello, World!</title>
-   <link href="http://www.dealingdata.net/2016/06/27/HelloWorld/"/>
-   <updated>2016-06-27T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/06/27/HelloWorld</id>
+   <link href="http://www.dealingdata.net/2016/07/08/HelloWorld/"/>
+   <updated>2016-07-08T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/08/HelloWorld</id>
    <content type="html">&lt;p&gt;An introduction to the author, his transition from physics to data science, and the goals of this blog.&lt;/p&gt; &lt;!--more--&gt; &lt;h1 id=&quot;who-am-i&quot;&gt;Who am I?&lt;/h1&gt; &lt;p&gt;Hello, World! My name is Richard Knoche. I’m a graduate student working on my Ph.D. in Physics at the University of Maryland. My research focuses on advancing...</content>
  </entry>
  

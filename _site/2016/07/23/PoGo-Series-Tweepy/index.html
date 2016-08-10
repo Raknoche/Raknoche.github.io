@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      PoGo Series&#58; Collecting Tweets with Tweepy &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">PoGo Series&#58; Collecting Tweets with Tweepy</h1>
+  <span class="post-date">23 Jul 2016</span>
+  
+    
+
+<p>TABLE OF CONTENTS</p>
+
+<p>This is the third post in an on-going Pokemon Go analysis series.  Last time, we discussed Twitter’s Search and Streaming APIs.  In this post, we’ll discuss how to use Python’s Tweepy library to interface with Twitter’s API and start collecting tweets about Pokemon Go teams.</p>
+
+<p>We’ll cover the following topics:</p>
+
+<ol>
+  <li><a href="#tweepy">The Tweepy Library</a></li>
+  <li><a href="#search">Using the Search API to collect historical tweets</a></li>
+  <li><a href="#stream">Using the Streaming API to collect new tweets</a></li>
+</ol>
+
+<h1 id="a-nametweepya-the-tweepy-library"><a name="tweepy"></a> The Tweepy Library</h1>
+
+<p>There are a number of Python libraries that connect to the twitter API.  Twitter provides a <a href="https://dev.twitter.com/overview/api/twitter-libraries">full list of API libraries</a> for both Python and other languages. Some of the most popular among these include <a href="https://github.com/bear/python-twitter">python-twitter</a>, <a href="https://twython.readthedocs.io/en/latest/">Twython</a>, and <a href="http://www.tweepy.org/">Tweepy</a>.  I’m most familiar with Tweepy, so we’ll be using that for our analysis.  In practice, Tweepy is a simple wrapper for the Twitter API.  It simplifies the interaction between Python and Twitter’s API by handling complications such as rate limiting behind the scenes.  Installing Tweepy is as simple as typing <code class="highlighter-rouge">pip install tweepy</code> into a command line.  For more information about Tweepy, read the <a href="http://tweepy.readthedocs.io/en/v3.5.0/getting_started.html#introduction">developer’s introduction to Tweepy</a>.</p>
+
+<h1 id="a-namesearcha-using-the-search-api-to-collect-historical-tweets"><a name="search"></a> Using the Search API to collect historical tweets</h1>
+
+<p>In this section, we’ll look at how to collect historical tweets using Tweepy and Twitter’s Search API.  The first thing we need to do is import the <code class="highlighter-rouge">sys</code>, <code class="highlighter-rouge">os</code>, <code class="highlighter-rouge">jsonpickle</code>, and <code class="highlighter-rouge">tweepy</code> libraries into python.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Importing libraries</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">jsonpickle</span>
+<span class="kn">import</span> <span class="nn">tweepy</span>
+</code></pre>
+</div>
+
+<p>Recall that our goal is to make a map of the United States which displays the dominance of each team in each state.  Since we aren’t interested in tweets from outside of the United States, we’ll want to add a location filter when we use the Search API.  This requires us to use the <a href="https://dev.twitter.com/rest/reference/get/geo/search">Geo Search REST API</a> to find Twitter’s <code class="highlighter-rouge">place_id</code> for the United States.  Note from the <a href="https://dev.twitter.com/rest/reference/get/geo/search">geo_search documentation</a> that we have to use user-authentication for such a query.  We set up user authentication in Tweepy with the following commands:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Pass our consumer key and consumer secret to Tweepy's user authentication handler</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
+
+<span class="c">#Pass our access token and access secret to Tweepy's user authentication handler</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_secret</span><span class="p">)</span>
+
+<span class="c">#Creating a twitter API wrapper using tweepy</span>
+<span class="c">#Details here http://docs.tweepy.org/en/v3.5.0/api.html</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+
+<span class="c">#Error handling</span>
+<span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">api</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">"Problem connecting to API"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Make sure to replace <code class="highlighter-rouge">consumer_key</code>,<code class="highlighter-rouge">consumer_secret</code>,<code class="highlighter-rouge">access_token</code>, and <code class="highlighter-rouge">access_secret</code> with your personal keys and secret.  Once we have the API object instantiated we can use Tweepy’s geo_search method to query the Geo Search API:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Getting Geo ID for USA</span>
+<span class="n">places</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">geo_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s">"USA"</span><span class="p">,</span> <span class="n">granularity</span><span class="o">=</span><span class="s">"country"</span><span class="p">)</span>
+
+<span class="c">#Copy USA id</span>
+<span class="n">place_id</span> <span class="o">=</span> <span class="n">places</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="nb">id</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'USA id is: '</span><span class="p">,</span><span class="n">place_id</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>USA id is:  96683cc9126741d1
+</code></pre>
+</div>
+
+<p>Great, now we know which <code class="highlighter-rouge">place_id</code> to use as a filter in the Search API.  Next, we’ll use the Search API to collect historical tweets. Recall:</p>
+
+<ul>
+  <li>The search API only collects a random sample of tweets</li>
+  <li>There is no way to get more than the last week of tweets without purchasing them from a third-party provider</li>
+</ul>
+
+<p>From the Search API documentation, note that we can use either user-authentication or application-only authentication to access the Search API.  User-authentication allows for 180 queries per access token every 15 minutes, and application-only authentication allows for 450 queries total.  Since we only have one access token to work with, we’ll want to switch to application-only authentication for the higher rate limit.  Tweepy has a separate <code class="highlighter-rouge">AppAuthHandler</code> method for this purpose:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Switching to application authentication</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">AppAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
+
+<span class="c">#Setting up new api wrapper, using authentication only</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">wait_on_rate_limit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">wait_on_rate_limit_notify</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+ 
+<span class="c">#Error handling</span>
+<span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">api</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">"Problem Connecting to API"</span><span class="p">)</span>
+ 
+</code></pre>
+</div>
+
+<p>You may have noticed that we added two arguements to the API wrapper this time around.  The Search API is returns a maximum of 100 tweets per query.  We have 450 queries available to us every 15 minutes using application authentication, so we can collect 45,000 tweets every 15 minutes.  If we exceed this rate, the <code class="highlighter-rouge">wait_on_rate_limit</code> arguement tells tweepy to pause until we are no longer rate limited. If <code class="highlighter-rouge">wait_on_rate_limit</code> is set to the default value of <code class="highlighter-rouge">False</code>, Tweepy would just return an error and stop search once we reached out rate limit.  The <code class="highlighter-rouge">wait_on_rate_limit_notify</code> arguement tells Tweepy to display a notification when we’ve reached the rate limit and that it is waiting for the 15 minute rate limit window to refresh.  These arguements were also available when we were using user-authentication with the Geo Search API, but we did not need to use them since we were only sending one query.  As a side note, if you ever want to check the status of your rate limits you can use Tweepy’s <code class="highlighter-rouge">rate_limit_status</code> method, as shown below:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#You can check how many queries you have left using rate_limit_status() method</span>
+<span class="n">api</span><span class="o">.</span><span class="n">rate_limit_status</span><span class="p">()[</span><span class="s">'resources'</span><span class="p">][</span><span class="s">'search'</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="s">'/search/tweets'</span><span class="p">:</span> <span class="p">{</span><span class="s">'limit'</span><span class="p">:</span> <span class="mi">450</span><span class="p">,</span> <span class="s">'remaining'</span><span class="p">:</span> <span class="mi">450</span><span class="p">,</span> <span class="s">'reset'</span><span class="p">:</span> <span class="mi">1470850812</span><span class="p">}}</span>
+</code></pre>
+</div>
+
+<p>Now that we have an API object using application-only authentication, we’re ready to query the Search API for tweets about each Pokemon Go team.  First, we define the search query that we’ll send to the API.  In this case, we’ll want to search for any phrase that is likely to identify tweets about each Pokemon Go team, but will not grab generic tweets about Pokemon, Pokemon Go, or other topics.  After looking through trending hashtags and tweets about Pokemon Go, I chose the following list of phrases:</p>
+
+<ul>
+  <li>#teammystic</li>
+  <li>#teaminstinct</li>
+  <li>#teamvalor</li>
+  <li>#teamblue</li>
+  <li>#teamyellow</li>
+  <li>#teamred</li>
+  <li>#mystic</li>
+  <li>#valor</li>
+  <li>#instinct</li>
+  <li>“team mystic”</li>
+  <li>“team valor”</li>
+  <li>“team instinct”</li>
+</ul>
+
+<p>Note that the search phrases are not case sensitive.  We can search for all of these terms at once by seperating them with <code class="highlighter-rouge">OR</code> in our query.  I’ve also included a filter that requires the tweet originate within the United Statesby including <code class="highlighter-rouge">place:96683cc9126741d1</code> at the beginning of the query, where <code class="highlighter-rouge">96683cc9126741d1</code> is the US <code class="highlighter-rouge">place_id</code> we found with the Geo Search API.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#This is what we are searching for</span>
+<span class="c">#We can restrict the location of tweets using place:id </span>
+<span class="c">#We can search for multiple phrases using OR</span>
+<span class="n">searchQuery</span> <span class="o">=</span> <span class="s">'place:96683cc9126741d1 #teammystic OR #teaminstinct OR #teamvalor OR'</span> \
+              <span class="s">'#teamblue OR #teamyellow OR #teamred OR'</span> \
+              <span class="s">'#mystic OR #valor OR #instinct OR'</span> \
+              <span class="s">'"team mystic" OR "team valor" OR "team instinct"'</span>
+</code></pre>
+</div>
+
+<p>We also need to define the maximum number of tweets that we want to collect, and the maximum number of tweets that we want to recieve from each query that we send:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Maximum number of tweets we want to collect </span>
+<span class="n">maxTweets</span> <span class="o">=</span> <span class="mi">1000000</span>
+
+<span class="c">#The twitter Search API allows up to 100 tweets per query</span>
+<span class="n">tweetsPerQry</span> <span class="o">=</span> <span class="mi">100</span>
+</code></pre>
+</div>
+
+<p>Note that the Search API limits us to 100 tweets per query, and that we may not collect the number of tweets that we specified since the Search API only collects the past week of tweets.  The easieset way to send our query to the Search API is through <a href="http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html">Tweepy’s Cursor method</a>.  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a <code class="highlighter-rouge">for</code> loop, and write the JSON formatted tweet to a text file using the <code class="highlighter-rouge">jsonpickle</code> library:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">tweetCount</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c">#Open a text file to save the tweets to</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'PoGo_USA_Tutorial.json'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="c">#Tell the Cursor method that we want to use the Search API (api.search)</span>
+    <span class="c">#Also tell Cursor our query, and the maximum number of tweets to return</span>
+    <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Cursor</span><span class="p">(</span><span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">,</span><span class="n">q</span><span class="o">=</span><span class="n">searchQuery</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">maxTweets</span><span class="p">)</span> <span class="p">:</span>         
+
+        <span class="c">#Verify the tweet has place info before writing (It should, if it got past our place filter)</span>
+        <span class="k">if</span> <span class="n">tweet</span><span class="o">.</span><span class="n">place</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            
+            <span class="c">#Write the JSON format to the text file, and add one to the number of tweets we've collected</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">_json</span><span class="p">,</span> <span class="n">unpicklable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">+</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+            <span class="n">tweetCount</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c">#Display how many tweets we have collected</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Downloaded {0} tweets"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tweetCount</span><span class="p">))</span>
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Downloaded 2006 tweets
+</code></pre>
+</div>
+
+<p>Let’s take a closer look at the information we are storing in the text file.  The Twitter API returns the tweet in <a href="http://json.org/">JSON format</a>, and Tweepy parses the JSON text into a number of class members. First, let’s look at the raw JSON text that Twitter returns.  This is what we are saving to our text file in the <code class="highlighter-rouge">for</code> loop:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Let's look at what we are actually printing to text  (if you don't know what JSON is: http://json.org/)</span>
+<span class="n">tweet</span><span class="o">.</span><span class="n">_json</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="p">{</span><span class="s">'contributors'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+     <span class="s">'coordinates'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+     <span class="s">'created_at'</span><span class="p">:</span> <span class="s">'Tue Aug 02 19:51:58 +0000 2016'</span><span class="p">,</span>
+     <span class="s">'entities'</span><span class="p">:</span> <span class="p">{</span><span class="s">'hashtags'</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="s">'symbols'</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="s">'urls'</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="s">'user_mentions'</span><span class="p">:</span> <span class="p">[{</span><span class="s">'id'</span><span class="p">:</span> <span class="mi">873491544</span><span class="p">,</span>
+        <span class="s">'id_str'</span><span class="p">:</span> <span class="s">'873491544'</span><span class="p">,</span>
+        <span class="s">'indices'</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
+        <span class="s">'name'</span><span class="p">:</span> <span class="s">'Kenel M'</span><span class="p">,</span>
+        <span class="s">'screen_name'</span><span class="p">:</span> <span class="s">'KxSweaters13'</span><span class="p">}]},</span>
+     <span class="s">'favorite_count'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+     <span class="s">'favorited'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+     <span class="s">'geo'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+     <span class="s">'id'</span><span class="p">:</span> <span class="mi">760563814450491392</span><span class="p">,</span>
+     <span class="s">'id_str'</span><span class="p">:</span> <span class="s">'760563814450491392'</span><span class="p">,</span>
+     <span class="s">'in_reply_to_screen_name'</span><span class="p">:</span> <span class="s">'KxSweaters13'</span><span class="p">,</span>
+     <span class="s">'in_reply_to_status_id'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+     <span class="s">'in_reply_to_status_id_str'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+     <span class="s">'in_reply_to_user_id'</span><span class="p">:</span> <span class="mi">873491544</span><span class="p">,</span>
+     <span class="s">'in_reply_to_user_id_str'</span><span class="p">:</span> <span class="s">'873491544'</span><span class="p">,</span>
+     <span class="s">'is_quote_status'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+     <span class="s">'lang'</span><span class="p">:</span> <span class="s">'en'</span><span class="p">,</span>
+     <span class="s">'metadata'</span><span class="p">:</span> <span class="p">{</span><span class="s">'iso_language_code'</span><span class="p">:</span> <span class="s">'en'</span><span class="p">,</span> <span class="s">'result_type'</span><span class="p">:</span> <span class="s">'recent'</span><span class="p">},</span>
+     <span class="s">'place'</span><span class="p">:</span> <span class="p">{</span><span class="s">'attributes'</span><span class="p">:</span> <span class="p">{},</span>
+      <span class="s">'bounding_box'</span><span class="p">:</span> <span class="p">{</span><span class="s">'coordinates'</span><span class="p">:</span> <span class="p">[[[</span><span class="o">-</span><span class="mf">71.813501</span><span class="p">,</span> <span class="mf">42.4762</span><span class="p">],</span>
+         <span class="p">[</span><span class="o">-</span><span class="mf">71.702186</span><span class="p">,</span> <span class="mf">42.4762</span><span class="p">],</span>
+         <span class="p">[</span><span class="o">-</span><span class="mf">71.702186</span><span class="p">,</span> <span class="mf">42.573956</span><span class="p">],</span>
+         <span class="p">[</span><span class="o">-</span><span class="mf">71.813501</span><span class="p">,</span> <span class="mf">42.573956</span><span class="p">]]],</span>
+       <span class="s">'type'</span><span class="p">:</span> <span class="s">'Polygon'</span><span class="p">},</span>
+      <span class="s">'contained_within'</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="s">'country'</span><span class="p">:</span> <span class="s">'United States'</span><span class="p">,</span>
+      <span class="s">'country_code'</span><span class="p">:</span> <span class="s">'US'</span><span class="p">,</span>
+      <span class="s">'full_name'</span><span class="p">:</span> <span class="s">'Leominster, MA'</span><span class="p">,</span>
+      <span class="s">'id'</span><span class="p">:</span> <span class="s">'c4f1830ea4b8caaf'</span><span class="p">,</span>
+      <span class="s">'name'</span><span class="p">:</span> <span class="s">'Leominster'</span><span class="p">,</span>
+      <span class="s">'place_type'</span><span class="p">:</span> <span class="s">'city'</span><span class="p">,</span>
+      <span class="s">'url'</span><span class="p">:</span> <span class="s">'https://api.twitter.com/1.1/geo/id/c4f1830ea4b8caaf.json'</span><span class="p">},</span>
+     <span class="s">'retweet_count'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+     <span class="s">'retweeted'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+     <span class="s">'source'</span><span class="p">:</span> <span class="s">'&lt;a href="http://twitter.com/download/android" rel="nofollow"&gt;Twitter for Android&lt;/a&gt;'</span><span class="p">,</span>
+     <span class="s">'text'</span><span class="p">:</span> <span class="s">'@KxSweaters13 are you the kenelx13 I see owning leominster for team valor?'</span><span class="p">,</span>
+     <span class="s">'truncated'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+     <span class="s">'user'</span><span class="p">:</span> <span class="p">{</span><span class="s">'contributors_enabled'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'created_at'</span><span class="p">:</span> <span class="s">'Thu Apr 21 17:09:52 +0000 2011'</span><span class="p">,</span>
+      <span class="s">'default_profile'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'default_profile_image'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'description'</span><span class="p">:</span> <span class="s">"Arbys when it's cold. Kimballs when it's warm. @Ally__09 all year. Comp sci classes sometimes."</span><span class="p">,</span>
+      <span class="s">'entities'</span><span class="p">:</span> <span class="p">{</span><span class="s">'description'</span><span class="p">:</span> <span class="p">{</span><span class="s">'urls'</span><span class="p">:</span> <span class="p">[]}},</span>
+      <span class="s">'favourites_count'</span><span class="p">:</span> <span class="mi">1106</span><span class="p">,</span>
+      <span class="s">'follow_request_sent'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+      <span class="s">'followers_count'</span><span class="p">:</span> <span class="mi">167</span><span class="p">,</span>
+      <span class="s">'following'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+      <span class="s">'friends_count'</span><span class="p">:</span> <span class="mi">171</span><span class="p">,</span>
+      <span class="s">'geo_enabled'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+      <span class="s">'has_extended_profile'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'id'</span><span class="p">:</span> <span class="mi">285715182</span><span class="p">,</span>
+      <span class="s">'id_str'</span><span class="p">:</span> <span class="s">'285715182'</span><span class="p">,</span>
+      <span class="s">'is_translation_enabled'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'is_translator'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'lang'</span><span class="p">:</span> <span class="s">'en'</span><span class="p">,</span>
+      <span class="s">'listed_count'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s">'location'</span><span class="p">:</span> <span class="s">'MA'</span><span class="p">,</span>
+      <span class="s">'name'</span><span class="p">:</span> <span class="s">'Steve'</span><span class="p">,</span>
+      <span class="s">'notifications'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+      <span class="s">'profile_background_color'</span><span class="p">:</span> <span class="s">'131516'</span><span class="p">,</span>
+      <span class="s">'profile_background_image_url'</span><span class="p">:</span> <span class="s">'http://abs.twimg.com/images/themes/theme14/bg.gif'</span><span class="p">,</span>
+      <span class="s">'profile_background_image_url_https'</span><span class="p">:</span> <span class="s">'https://abs.twimg.com/images/themes/theme14/bg.gif'</span><span class="p">,</span>
+      <span class="s">'profile_background_tile'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+      <span class="s">'profile_banner_url'</span><span class="p">:</span> <span class="s">'https://pbs.twimg.com/profile_banners/285715182/1462218226'</span><span class="p">,</span>
+      <span class="s">'profile_image_url'</span><span class="p">:</span> <span class="s">'http://pbs.twimg.com/profile_images/727223698332200961/bGPjGjHK_normal.jpg'</span><span class="p">,</span>
+      <span class="s">'profile_image_url_https'</span><span class="p">:</span> <span class="s">'https://pbs.twimg.com/profile_images/727223698332200961/bGPjGjHK_normal.jpg'</span><span class="p">,</span>
+      <span class="s">'profile_link_color'</span><span class="p">:</span> <span class="s">'4A913C'</span><span class="p">,</span>
+      <span class="s">'profile_sidebar_border_color'</span><span class="p">:</span> <span class="s">'FFFFFF'</span><span class="p">,</span>
+      <span class="s">'profile_sidebar_fill_color'</span><span class="p">:</span> <span class="s">'EFEFEF'</span><span class="p">,</span>
+      <span class="s">'profile_text_color'</span><span class="p">:</span> <span class="s">'333333'</span><span class="p">,</span>
+      <span class="s">'profile_use_background_image'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+      <span class="s">'protected'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+      <span class="s">'screen_name'</span><span class="p">:</span> <span class="s">'StephenBurke_'</span><span class="p">,</span>
+      <span class="s">'statuses_count'</span><span class="p">:</span> <span class="mi">5913</span><span class="p">,</span>
+      <span class="s">'time_zone'</span><span class="p">:</span> <span class="s">'Eastern Time (US &amp; Canada)'</span><span class="p">,</span>
+      <span class="s">'url'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+      <span class="s">'utc_offset'</span><span class="p">:</span> <span class="o">-</span><span class="mi">14400</span><span class="p">,</span>
+      <span class="s">'verified'</span><span class="p">:</span> <span class="bp">False</span><span class="p">}}</span>
+</code></pre>
+</div>
+
+<p>As we already mentioned, each one of the JSON attributes is turned into an individual class member in Tweepy’s tweet object.  I’ve included a function below that will list all of these class members.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#A function to clean up and print all of the JSON attributes </span>
+<span class="k">def</span> <span class="nf">PrintMembers</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        
+        <span class="c">#We don't want to show built in methods of the class</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">attribute</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'__'</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+            
+<span class="n">PrintMembers</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>_api
+_json
+author
+contributors
+coordinates
+created_at
+destroy
+entities
+favorite
+favorite_count
+favorited
+geo
+id
+id_str
+in_reply_to_screen_name
+in_reply_to_status_id
+in_reply_to_status_id_str
+in_reply_to_user_id
+in_reply_to_user_id_str
+is_quote_status
+lang
+metadata
+parse
+parse_list
+place
+retweet
+retweet_count
+retweeted
+retweets
+source
+source_url
+text
+truncated
+user
+</code></pre>
+</div>
+
+<p>Note that each additional layer within a JSON attribute will be parsed as an additional class member within the tweet object:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Can dig into each member as well</span>
+<span class="n">PrintMembers</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">place</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>_api
+attributes
+bounding_box
+contained_within
+country
+country_code
+full_name
+id
+name
+parse
+parse_list
+place_type
+url
+</code></pre>
+</div>
+
+<p>As a closing note, I wanted to share the “old” way of using Tweepy.  Before the Cursor method was introduced, the process of sending multiple queries until you collected your maximum number of tweets all had to be handled manually.  You will often see old implementations online which do so, but when possible you should use the Cursor instead.  I’ve included an example of our search query using the “old” way below.  I hope the example will help you recognize and update any out of date implementations you may come across in your own work.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Old way of doing things - which is what you will see a lot of people doing online</span>
+<span class="n">max_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">tweetCount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'PoGo_USA_Tutorial.json'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c">#While we still want to collect more tweets</span>
+    <span class="k">while</span> <span class="n">tweetCount</span> <span class="o">&lt;</span> <span class="n">maxTweets</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c">#Look for more tweets, resuming where we left off</span>
+            <span class="k">if</span> <span class="n">max_id</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">new_tweets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">searchQuery</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">tweetsPerQry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_tweets</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="n">searchQuery</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">tweetsPerQry</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">max_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            
+            <span class="c">#If we didn't find any exit the loop</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_tweets</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">"No more tweets found"</span><span class="p">)</span>
+                <span class="k">break</span>
+            
+            <span class="c">#Write the JSON output of any new tweets we found to the output file</span>
+            <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">new_tweets</span><span class="p">:</span>
+                
+                <span class="c">#Make sure the tweet has place info before writing</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">place</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">tweetCount</span> <span class="o">&lt;</span> <span class="n">maxTweets</span><span class="p">):</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jsonpickle</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">tweet</span><span class="o">.</span><span class="n">_json</span><span class="p">,</span> <span class="n">unpicklable</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">+</span>
+                        <span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+                    <span class="n">tweetCount</span> <span class="o">+=</span> <span class="mi">1</span>
+                    
+            <span class="c">#Display how many tweets we have collected</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Downloaded {0} tweets"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tweetCount</span><span class="p">))</span>
+            
+            <span class="c">#Record the id of the last tweet we looked at</span>
+            <span class="n">max_id</span> <span class="o">=</span> <span class="n">new_tweets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="nb">id</span>
+            
+        <span class="k">except</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">TweepError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            
+            <span class="c">#Print the error and continue searching</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"some error : "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+
+<span class="k">print</span> <span class="p">(</span><span class="s">"Downloaded {0} tweets, Saved to {1}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tweetCount</span><span class="p">,</span> <span class="n">fName</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<h1 id="a-namestreama-using-the-streaming-api-to-collect-new-tweets"><a name="stream"></a> Using the Streaming API to collect new tweets</h1>
+
+<p>If we want to collect new tweets in real-time, we’ll need to use Twitter’s Streaming API.  Since we don’t need to worry about rate limits, we’ll switch back to using Tweepy’s user-authentication handler for this.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Connecting to the twitter streaming API </span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">OAuthHandler</span><span class="p">(</span><span class="n">consumer_key</span><span class="p">,</span> <span class="n">consumer_secret</span><span class="p">)</span>
+<span class="n">auth</span><span class="o">.</span><span class="n">set_access_token</span><span class="p">(</span><span class="n">access_token</span><span class="p">,</span> <span class="n">access_secret</span><span class="p">)</span>
+ 
+<span class="n">api</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">API</span><span class="p">(</span><span class="n">auth</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The <a href="http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html">Tweepy documentation page</a> tells us how to set up a Streaming API interface.  We have to follow three steps:</p>
+
+<ol>
+  <li>Create a class inheriting from StreamListener</li>
+  <li>Use that class create a Stream object</li>
+  <li>Connect to the Twitter API using the Stream.</li>
+</ol>
+
+<p>First, we’ll discuss how to inherit and modify the <code class="highlighter-rouge">StreamListener</code> class.  The are two ways to interact with the streaming data - by overloading the <code class="highlighter-rouge">on_data</code> method or by overloading the <code class="highlighter-rouge">on_status</code> method.  If you want detailed information about the tweets you need to override the <code class="highlighter-rouge">on_data</code> method. This will allow us to interact with the data at the highest level and opens up information such as replies to statuses, deletions, direct messages, friends, etc.  The default <code class="highlighter-rouge">on_data</code> method from the <code class="highlighter-rouge">StreamListener</code> class passes data from statuses to the <code class="highlighter-rouge">on_status</code> method. If we’re only concerned with reading the JSON output of tweet statuses, can override the <code class="highlighter-rouge">on_status</code> method instead of the <code class="highlighter-rouge">on_data</code> method.  This process is shown in the code below:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Inherit from the StreamListener object</span>
+<span class="k">class</span> <span class="nc">MyStreamListener</span><span class="p">(</span><span class="n">tweepy</span><span class="o">.</span><span class="n">StreamListener</span><span class="p">):</span>
+    
+    <span class="c">#Overload the on_status method</span>
+    <span class="k">def</span> <span class="nf">on_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            
+            <span class="c">#Open a text file to save tweets to</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'PoGo.json'</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                
+                <span class="c">#Check if the tweet has coordinates, if so write it to text</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">coordinates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">True</span>
+         
+        <span class="c">#Error handling</span>
+        <span class="k">except</span> <span class="nb">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"Error on_status: </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            
+        <span class="k">return</span> <span class="bp">True</span>
+ 
+    <span class="c">#Error handling</span>
+    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c">#Timeout handling</span>
+    <span class="k">def</span> <span class="nf">on_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span> 
+    
+</code></pre>
+</div>
+
+<p>Now that we have our <code class="highlighter-rouge">MyStreamListener</code> class, we can use it to create a class object.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Create a stream object  </span>
+<span class="n">twitter_stream</span> <span class="o">=</span> <span class="n">tweepy</span><span class="o">.</span><span class="n">Stream</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">MyStreamListener</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<p>The <a href="http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html">Tweepy documentation</a> discusess a number of ways to start the Twitter stream.  In our case, we’ll want to use the <code class="highlighter-rouge">filter</code> method to track particular phrases:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">twitter_stream</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">track</span><span class="o">=</span><span class="p">[</span><span class="s">'#teammystic'</span><span class="p">,</span><span class="s">'teaminstinct'</span><span class="p">,</span><span class="s">'#teamvalor'</span><span class="p">,</span> \
+                             <span class="s">'#teamblue'</span><span class="p">,</span><span class="s">'#teamyellow'</span><span class="p">,</span><span class="s">'#teamred'</span><span class="p">,</span>\
+                             <span class="s">'#mystic'</span><span class="p">,</span><span class="s">'#instinct'</span><span class="p">,</span><span class="s">'#valor'</span><span class="p">,</span> \
+                             <span class="s">'team mystic'</span><span class="p">,</span><span class="s">'team instinct'</span><span class="p">,</span><span class="s">'team valor'</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<p>Note that, we could filter on <a href="https://dev.twitter.com/streaming/overview/request-parameters">other parameters</a>, such as locations:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">twitter_stream</span><span class="o">.</span><span class="nb">filter</span><span class="p">(</span><span class="n">locations</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">122.75</span><span class="p">,</span><span class="mf">36.8</span><span class="p">,</span><span class="o">-</span><span class="mf">121.75</span><span class="p">,</span><span class="mf">37.8</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<p>It is important to note that some filters don’t interact as expected with each other.  For instance, look at the information about the location parameter in the previous link.  It states that “Bounding boxes do not act as filters for other filter parameters. For example track=twitter&amp;locations=-122.75,36.8,-121.75,37.8 would match any tweets containing the term Twitter (even non-geo tweets) OR coming from the San Francisco area.”  Therefore, if we tried to filter on both location and phrases at the same time, we would not get tweets that contain the phrase AND that are from the location.  Instead, we’d get tweets that contain the phrase OR are from the location.  This is why we need the</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">coordinates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">):</span>
+</code></pre>
+</div>
+
+<p>condition in our class definition.</p>
+
+<h1 id="closing-remarks">Closing remarks</h1>
+
+<p>That was a lot of content to digest for one blog post!  We covered how to use Tweepy to collect historical tweets through Twitter’s Search API, and how to use Tweepy to collect new tweets in real-time through Twitter’s Streaming API.  Now that we have a text file full of tweets, we’ll discuss how to import them into a Pandas dataframe and clean up the data in our next blog post.</p>
+
+  
+</div>
+
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=PoGo Series&#58; Collecting Tweets with Tweepy&url=http://www.dealingdata.net/2016/07/23/PoGo-Series-Tweepy/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/23/PoGo-Series-Tweepy/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/23/PoGo-Series-Tweepy/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/07/23/PoGo-Series-Tweepy/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/07/23/PoGo-Series-Tweepy/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

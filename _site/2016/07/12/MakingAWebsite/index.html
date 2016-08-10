@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Making a Website with Jekyll &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Making a Website with Jekyll</h1>
+  <span class="post-date">12 Jul 2016</span>
+  
+    
+
+<p>I thought it would be appropriate for my first post to explain how I created this website.  There are many options on the web to help you build a blog.  The most popular among these include <a href="https://wordpress.com/create/">WordPress</a>, <a href="http://blog.getpelican.com/">Pelican</a>, <a href="https://ghost.org/">Ghost</a>, and <a href="https://jekyllrb.com/">Jekyll</a>.  There are arguments for and against each of these platforms, and the choice of which to use comes down to personal preference and needs. In the end, I decided to create my blog using Jekyll.</p>
+
+<p>In this post, we’ll discuss the following topics:</p>
+
+<ul>
+  <li><a href="#intro">Introduction to Jekyll</a></li>
+  <li><a href="#install">Installing Jekyll</a></li>
+  <li><a href="#initSetup">Initial setup of a Jekyll website</a></li>
+  <li><a href="#customize">Customizing your Jekyll website</a></li>
+  <li><a href="#ideas">Ideas for Customizing your Page</a></li>
+  <li><a href="#domain">Creating your own domain name</a></li>
+</ul>
+
+<h1 id="a-nameintroaintroduction-to-jekyll"><a name="intro"></a>Introduction to Jekyll</h1>
+
+<p>Jekyll is a static website generator which is designed to give complete control of a website’s layout through simple HTML and Markdown files.  As a static website generator, Jekyll reads HTML and Markdown files to produce identical content for every visitor to the site.  In contrast, a dynamic website generator such as <a href="http://picocms.org/">Pico</a> can customize content for each user by interfacing with a Content Management System (CMS) database.  These database queries slow down interactions with the website, and introduce additional complexities which are not needed for a simple blog.  A Jekyll website can be hosted and version-controlled for free on <a href="https://github.com/">Github</a>.  For more information, you can read <a href="http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html">this blog post</a> by Jekyll’s creator, Tom Preston.</p>
+
+<h1 id="a-nameinstalla-installing-jekyll"><a name="install"></a> Installing Jekyll</h1>
+
+<p>There are a number of <a href="https://jekyllrb.com/docs/installation/">prerequisites</a> that have to be met before Jekyll can be installed on your computer.  You’ll need the following items:</p>
+
+<ul>
+  <li>Linux, Unix, or Mac OS X</li>
+  <li>Xcode</li>
+  <li>Ruby</li>
+  <li>Jekyll</li>
+</ul>
+
+<p>If you are not using one of the operating systems mentioned above, you will need to look for Windows-compatible alternative such as <a href="http://blog.getpelican.com/">Pelican</a> or <a href="https://ghost.org/">Ghost</a>.  In this section, I’ll be describing the Mac OS X installation process.  I haven’t installed Jekyll on a Linux environment yet, but I imagine the details of each step are similar.</p>
+
+<ol>
+  <li>
+    <p>If you’re a mac user, you most likely have Xcode installed already.  You can check if this is the case by typing <code class="highlighter-rouge">xcode-select -v</code> into your terminal.  If the terminal suggests you don’t have Xcode installed, you will need to download it from the App Store.</p>
+  </li>
+  <li>
+    <p>Once Xcode is installed, you will need to install the Xcode command line tools by typing <code class="highlighter-rouge">xcode-select --install</code> into the command line.</p>
+  </li>
+  <li>
+    <p>Jekyll 3 requires Ruby v2.0.0 or higher, and Jekyll 2 requires Ruby v1.9.3 or higher.  If your mac shipped with OS X, chances are you already have Ruby v2.0.0 installed.  You can verify this by typing <code class="highlighter-rouge">ruby -v</code> into your terminal.  If you need to install or update your version of Ruby you can follow the <a href="https://www.ruby-lang.org/en/documentation/installation/">guide on the Ruby website</a>.</p>
+  </li>
+  <li>
+    <p>Once an appropriate version of Ruby is installed, we can install Jekyll using Ruby gems by typing <code class="highlighter-rouge">sudo gem install jekyll</code> into the terminal.  This will prompt the installation of Jekyll and several other gems that it depends on.</p>
+  </li>
+</ol>
+
+<p>That’s it!  Your computer should now be ready to build a Jekyll website.</p>
+
+<h1 id="a-nameinitsetupa-initial-setup-of-a-jekyll-website"><a name="initSetup"></a> Initial setup of a Jekyll website</h1>
+
+<p>We’ll be hosting our Jekyll website on Github.  Before setting up the website, you’ll need to follow <a href="https://pages.github.com/">Github’s guide</a> to create your own username.github.io repository (where username is your Github username).  If you aren’t familiar with Github, pay close attention to the step four, where the guide explains how to push your index.html file to your online Github repository.  You’ll be repeating this process each time you make a change to your website.</p>
+
+<p>Once you have a username.github.io repository set up, it’s time to choose a theme for your website.  Look through the list of pre-built <a href="http://jekyllthemes.org/">Jekyll themes</a> and decide which you like best.  I used a mix of Lanyon and Hyde to make this website. Once you’ve made your choice, click on the theme, then use the download button to download a .zip file containing the initial HTML and Markdown files for that theme.  The .zip file should contain a master folder which has subfolders such as <strong>_includes</strong> and <strong>_posts</strong> (among others).  Extract the contents of that master folder to your local username.github.io repository.  Note that you will likely overwrite the index.html file that the Github guide had you make when you do so, which is fine.</p>
+
+<p>Congratulations, you’re finally ready to build the website!  Open a terminal and navigate to your local username.github.io repository.  Type <code class="highlighter-rouge">jekyll build</code> into the terminal.  This will combine all of the files in the repository into a new <strong>_site</strong> folder which we’ll use to serve the website.  It’s possible you will run into some red text if something goes wrong.  I can’t predict the issues you will run into, but a quick google search of the red text typically turns up an easy solution.  If the google search doesn’t work, you can look through the theme’s github page to try to solve the problem.  You can usually find the theme’s Github page by clicking on “Homepage” when looking at the <a href="http://jekyllthemes.org/">Jekyll theme’s website</a>.  On the Github page, click on the “Issues” tab at the top and use the search bar to look for posts containing “is:issue” followed by the red text you encountered.  You will need to fix all of the problems and rerun the <code class="highlighter-rouge">jekyll build</code> command until it passes with no errors.</p>
+
+<p>After successfully building the <strong>_site</strong> folder, you can view a local version of your website by typing <code class="highlighter-rouge">jekyll serve</code> into your terminal.  Afterwards, direct a web browser to <a href="http://localhost:4000">http://localhost:4000/</a> to see your website!</p>
+
+<p>In order to publish the local version of your website to the internet you need to push the changes in your local repository to your online Github repository.  Doing so requires you to run four terminal commands from your local repository:</p>
+
+<ol>
+  <li><code class="highlighter-rouge">jekyll build</code></li>
+  <li><code class="highlighter-rouge">git add --all</code></li>
+  <li><code class="highlighter-rouge">git commit -m "Initial Theme Setup"</code></li>
+  <li><code class="highlighter-rouge">git push -u origin master</code></li>
+</ol>
+
+<p>Your website should now be accessible on the internet by  pointing a web browser to <a href="username.github.io">username.github.io</a> (where username is your github username).</p>
+
+<h1 id="a-namecustomizea-customizing-your-jekyll-website"><a name="customize"></a> Customizing your Jekyll Website</h1>
+
+<p>In this section we’ll take a closer look at the folders you extracted from the theme .zip file.  The theme should have included the following folders and files:</p>
+
+<ul>
+  <li><strong>_config.yml</strong></li>
+  <li><strong>_includes</strong></li>
+  <li><strong>_layouts</strong></li>
+  <li><strong>public</strong> (this may not exist in your theme)</li>
+  <li><strong>_posts</strong></li>
+  <li><strong>index.html</strong></li>
+</ul>
+
+<p>The <strong>_config.yml</strong> file is used by Jekyll to configure site-wide parameters.  Open the default <strong>_config.yml</strong> file provided by your theme in a text editor of your choice.  There should be a number of site-wide parameters that are assigned to generic settings.  Review the contents of the file and determine which parameters should be replaced with your personal information. For instance, there are probably title, url, and contact parameters that need to be changed.  If you want to add site-wide parameters that do not already exist, or if you want more information on the <strong>_config.yml</strong> file, see <a href="https://jekyllrb.com/docs/configuration/">Jekyll’s configuration page</a>.</p>
+
+<p>The <strong>_includes</strong> folder contains HTML files that are later included by the <code>{% include %}</code> command in other HTML files.  These files are used to produce sections of your website that are appear in multiple places, such as a comments section or a sidebar.  There should also be a <strong>head.html</strong> file in this folder, which will be used for the HTML head of each page on your website.</p>
+
+<p>The <strong>_layouts</strong> folder contains a number of HTML files that are used to style different pages on your website.  There is typically a <strong>default.html</strong> file that is used to style the homepage, and a <strong>posts.html</strong> file that is used to style the individual blog posts.  Layouts are assigned to each section of your website using <a href="https://jekyllrb.com/docs/frontmatter/">YAML front matter</a>.  You will see instances of YAML front matter defined at the top of some of the HTML and Markdown files that were included with your theme, with the YAML front matter defined between two series of three dashes such as in the example shown below.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---
+layout: default
+---
+</code></pre>
+</div>
+
+<p>It’s likely that there is also a <strong>public</strong> folder in the main directory that contains some css files.  These css files will provide additional formatting for the layouts’ HTML code by using the <code class="highlighter-rouge">&lt;link rel="stylesheet" href=css_file.css \&gt;</code> syntax within <strong>head.html</strong>.  If you want to change how your website looks, you should begin by editing the HTML code in the <strong>_layouts</strong> folder and the css files that link into <strong>head.html</strong>.  If you are unfamiliar with HTML and css, Code Academy has a <a href="https://www.codecademy.com/learn/web">fantastic introduction</a> that will help you learn how to edit these files.</p>
+
+<p>The <strong>_posts</strong> folder is where you will store the Markdown files that create your individual blog posts.  Markdown is a plain text formatting language that is designed to be easy-to-read.  You can edit Markdown files with any text editor, but I suggest you use the <a href="http://macdown.uranusjr.com/">MacDown</a> editor for this purpose.  MacDown will render your Markdown files in real time, and includes a great tutorial explaining Markdown syntax.  To create a new post, simply add a Markdown file to the <strong>_posts</strong> directory and push the changes to your online github repository.  To ensure the blog posts render correctly, don’t forget to assign <code class="highlighter-rouge">layout: posts</code> (or whichever layout you want to use) in the YAML front matter at the top of the Markdown file.</p>
+
+<p>Finally, the <strong>index.html</strong> file is used to create the homepage for your website.  If you want to edit the look of your homepage you will need to edit this file.  Be sure to think about any <strong>_layouts</strong> files, css files, or <strong>_includes</strong> files that might be interacting with <strong>index.html</strong> when editing it.</p>
+
+<h1 id="a-nameideasa-ideas-for-customizing-your-page"><a name="ideas"></a> Ideas for Customizing your Page</h1>
+
+<p>To give you an idea of where to start when customizing your website, I’ve provided a list of some of the initial changes I made to this website’s theme:</p>
+
+<ul>
+  <li>Updated my <strong>_config.yml</strong> file to contain my personal information, and to fix some build issues that I ran into</li>
+  <li>Customized my sidebar by combining and editting code from the Hyde and Lanyon .css and HTML files</li>
+  <li>Edited my <strong>index.html</strong> file change the layout of the homepage.</li>
+  <li>Added excerpt seperators to enable summaries of each blog post.  You can do this by adding an excerpt_seperator to your <strong>_config.yml</strong> file, including that separator between the summary and the content in your blog post Markdown files, and displaying only the <code class="highlighter-rouge">post.excerpt</code> content in <strong>index.html</strong>.  See <a href="https://jekyllrb.com/docs/posts/">Jekyll’s information</a> on post excerpts for more details.</li>
+  <li>Added a comments section to my <strong>_includes</strong> folder by following <a href="http://www.perfectlyrandom.org/2014/06/29/adding-disqus-to-your-jekyll-powered-github-pages/">Perfectly Random’s guide</a></li>
+  <li>Added google analytics to my <strong>_includes</strong> folder by following <a href="https://michaelsoolee.com/google-analytics-jekyll/">Michael Lee’s guide</a></li>
+  <li>Added social media links to my <strong>_incldues</strong> folder by following <a href="https://blog.r3bl.me/en/simple-social-media-links-jekyll/">Aleksandar Todorovic’s guide</a></li>
+  <li>Added <a href="http://fontawesome.io/">Font Awesome</a> icon links to my sidebar by following their <a href="http://fontawesome.io/get-started/">get-started guide</a></li>
+  <li>Customized the favicon that is displayed in web browser tabs</li>
+  <li>Created a subscriber e-mail list using <a href="http://mailchimp.com/">MailChimp</a> and <a href="https://blog.webjeda.com/jekyll-subscribe-form/">WebJeda’s guide</a></li>
+</ul>
+
+<p>If you are looking for more details on how I implemented these changes, feel free to look through my website’s <a href="https://github.com/Raknoche/Raknoche.github.io">source code</a>.</p>
+
+<h1 id="a-namedomaina-creating-your-own-domain-name"><a name="domain"></a> Creating your own domain name</h1>
+
+<p>If you’ve been following this post up until now, you can 
+access your website by pointing your browser to <a href="username.github.io">username.github.io</a>. Some people may prefer to have a more professional or unique web address.  If this is the case, you will need to purchase a domain name from a registrar.</p>
+
+<p>There are many domain name registrars to choose from.  One of the most well known registrars is <a href="godaddy.com">Go Daddy</a>, while some of the best user reviewed registars include <a href="namecheap.com">Name Cheap</a> and <a href="gandi.net">Gandi</a>.  I chose to use Name Cheap for my website domain due to their pricing, positive user reviews, and easily accessable tutorials that explain how to interact with the registrar’s services.</p>
+
+<p>If you purchase a domain name from a registrar, the registrar is required to display your personal information in a database called <a href="https://www.whois.net/">WhoIs</a>.  Unfortunately, this allows your information to be collected by web scrapers, resulting in unsolicted emails, junk mail, and phone calls.  As a result many registrars offer identity protection services.  Be wary when you purchase these services; they work by replacing your contact information with the contact information of the protection agency, which means the protection agency owns the domain name in the eyes of the law.  This is not as bad as it sounds if you are using a reputable service, but you could easily be taken advantage of if you aren’t careful about who is allowed to overwrite your information in the WhoIs database.  In the case of Name Cheap, the protection service is called WhoIsGuard.  I haven’t found any complaints about them stealing domain names, and have found plenty of people saying they are reputable.  Their own <a href="https://www.namecheap.com/legal/whoisguard/whoisguard-agreement.aspx">service agreement</a> reserves the rights of the domain name to you.  I also found plenty of reports online of people being flooded with emails after opting out of identity protection services.  In light of this, I decided to use WhoIsGuard on my website, but ultimately you’ll need to make this decision yourself.</p>
+
+<p>After purchasing your domain name, it might take a few minutes for the change to propagate through the web.  You can check its progress by using <a href="https://www.whatsmydns.net">What’s My DNS</a>.</p>
+
+<p>Once you own a domain name, you can redirect your github.io page to the domain name with a few simple steps.</p>
+
+<ol>
+  <li>Go to your repository on github: (<a href="https://github.com/username/username.github.io">https://github.com/username/username.github.io</a>)</li>
+  <li>Add a new file to the repository named “CNAME”</li>
+  <li>Put the full address of your domain on the first line of CNAME</li>
+  <li>Commit the CNAME file</li>
+  <li>Go to your domain name registrar and add a CNAME DNS record pointing to your github page.  Name cheap has a <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/9645/2208/how-do-i-link-my-domain-to-github-pages">guide</a> on how to do this for their service.  The process should be similar for other registrars.</li>
+</ol>
+
+<p>After completing the steps above, you will be able to access your website using your new domain name in addition to <a href="username.github.io">username.github.io</a>.</p>
+
+<p>Finally, if you’d like an e-mail address that is associated with your new domain name, you can follow <a href="https://blog.webjeda.com/free-domain-email-zoho/#step-1-log-in-to-zoho">WebJeda’s guide</a> that explains how to do so for free by using <a href="https://www.zoho.com/">Zoho</a>.</p>
+
+
+  
+</div>
+
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=Making a Website with Jekyll&url=http://www.dealingdata.net/2016/07/12/MakingAWebsite/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/12/MakingAWebsite/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/12/MakingAWebsite/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/07/12/MakingAWebsite/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/07/12/MakingAWebsite/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

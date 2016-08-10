@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      PoGo Series&#58; The Twitter API &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">PoGo Series&#58; The Twitter API</h1>
+  <span class="post-date">21 Jul 2016</span>
+  
+    
+
+<p>TABLE OF CONTENTS</p>
+
+<p>Welcome to the second post in the Pokemon Go analysis series.  Recall that our goal is to construct a map of the dominance of each Pokemon Go team within each state.  The first step of this process is to collect tweets about each team from Twitter.  To do so, we’ll need to interact with Twitter’s Application Programming Interface (<a href="https://www.quora.com/What-is-an-API-4">API</a>).</p>
+
+<p>In this post, we’ll discuss the following topics:</p>
+
+<ol>
+  <li><a href="#access">Getting access to the Twitter API</a></li>
+  <li><a href="#keys">Understanding access keys</a></li>
+  <li><a href="#app-only">Application-only authentication</a></li>
+  <li><a href="#restAPI">Twitter’s REST API</a></li>
+  <li><a href="#rate">Rate Limits</a></li>
+  <li><a href="#streamAPI">Twitter’s Streaming API</a></li>
+</ol>
+
+<h1 id="a-nameaccessagetting-access-to-the-twitter-api"><a name="access"></a>Getting access to the twitter API:</h1>
+
+<p>Getting access to the Twitter API is simple:</p>
+
+<ol>
+  <li>Go to <a href="http://apps.twitter.com">http://apps.twitter.com</a></li>
+  <li>Log in with your twitter account</li>
+  <li>Click “Create New App”</li>
+  <li>Fill out the information sheet and create the application.  If you don’t have a website, just fill that section in with a made up URL.</li>
+  <li>After creating the app, click on “manage keys and access tokens) under “Application Settings.”</li>
+  <li>Take note of the consumer API key and the consumer secret.  We’ll need these to connect to the API later. Do not share these numbers with anybody else.</li>
+  <li>Click on “create my access token” and take note of the access token and access token secret that are generated.  We’ll also need these to connect to the Twitter API.  Do not share these numbers with anybody else.</li>
+  <li>Note that you can change app permissions from this page to allow access to features like direct messaging. The standard read and write permissions are fine for our purposes.</li>
+</ol>
+
+<h1 id="a-namekeysaunderstanding-access-keys"><a name="keys"></a>Understanding access keys</h1>
+
+<p>To understand the what the consumer key, consumer secret, access token, and access token secret are we need to discuss some of the security protocols of the Twitter API.  Suppose we build an application that requires information from our user’s twitter accounts.  For instance, maybe we made an application that takes pictures and we want our users to be able to upload those pictures to Twitter with the push of a button.  We could ask the users to provide their username and password for us.  However, doing so is not safe as it would provide the application with unlimited access to the user’s twitter account.  Instead, we can generate a special key that provides <i>limited</i> access to the user’s account.  To do so, our application (know as “the client”) first asks the user (known as the “resource owner”) for permission to use such a key.  When we get the permission we forward it to an authentication server, which returns an access token.  The application can then use the access token to get limited access to Twitter’s resource server on the user’s behalf.  This process, known as the <a href="https://tools.ietf.org/html/rfc6749#section-1.3">OAuth2.0 authentication protocol</a>, is depicted below:</p>
+
+<p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/Oauth2p0_Protocol.png" alt="OAuth2.0 Protocol" /></p>
+
+<p>The consumer key and consumer secret that are created with our application are login credentials that are used to authenticate our application when we access Twitter’s API.  Once our application is authenticated, the access token and access token secret allow it to access Twitter’s resource server on behalf of our personal account.</p>
+
+<h1 id="a-nameapp-onlya-application-only-authentication"><a name="app-only"></a> Application-only authentication</h1>
+<p>It’s possible to make requests to the resource server on behalf of the application itself, rather than on behalf of the application’s users.  Since there is no context of a user, you won’t be able to interact with user specific API features such as posting tweets or updating a user profile.  However, you will still be able to interact with non-user specific API features such as searching for tweets, or retrieving user information.  The trade off for this lower functionality is a higher rate limit when querying the API.  We’ll discuss rate limits in more detail later in this post.  For more information on application-only authentication, visit <a href="https://dev.twitter.com/oauth/application-only">Twitter’s Dev page</a>.</p>
+
+<h1 id="a-namerestapia-twitters-rest-api"><a name="restAPI"></a> Twitter’s REST API</h1>
+
+<p>Now that our application has the proper credentials to access Twitter’s API, we’re ready to discuss details of the API itself.  Twitter actually has a number of APIs which we can interface with.  These APIs fall under two categories — the REST APIs and the Streaming API.</p>
+
+<p>The <a href="https://dev.twitter.com/rest/public">REST APIs</a> provide read and write access to existing Twitter data.  There are a lot of useful APIs in this collection, but we only need to discuss the <a href="https://dev.twitter.com/rest/public/search">Search API</a> for our purposes.  The Search API behaves similarly to the search bar on the Twitter website.  It is used to search a random sample of the past week of tweets.  Note that the Search API does not capture every tweet in the past week — it aims for “relevance, not completeness.”  Unfortunately there is no way to access the full database of tweets, or tweets older than a week without purchasing data from third party companies such as <a href="https://www.gnip.com/">GNIP</a>.</p>
+
+<h1 id="a-nameratea-rate-limits"><a name="rate"></a> Rate limits</h1>
+
+<p>The REST API enforces a <a href="https://dev.twitter.com/rest/public/rate-limiting">rate limit</a> on the number of queries that can be sent within a 15 minute window.  With user authentication, requests to the API are limited on a per-user basis.  That is, if the query allows for 15 requests in 15 minutes, it will allow 15 requests in 15 minutes for each user (or rather, each access token) using your application.  When using application-only authentication, the requests to the API are limited on a per-application basis.  That is, if the query allows for 15 requests in 15 minutes, it really means a total of 15 requests in 15 minutes.  As mentioned previously, one of the benefits of application-only authentication is that the <a href="https://dev.twitter.com/rest/public/rate-limits">rate-limit restrictions</a> are often higher than they are with user authentication.  For the search API (GET search/tweets) we can send 450 queries every 15 minutes with application-only authentication, whereas we can only send 180 queries per user every 15 minutes with user authentication. Since we only have one access token, and since we don’t need to perform any user-specific actions, we’ll want to use application-only authentication when searching for tweets.</p>
+
+<h1 id="a-namestreamapia-twitters-streaming-api"><a name="streamAPI"></a> Twitter’s Streaming API</h1>
+
+<p>If we want to collect tweets in real-time, we would need to use Twitter’s <a href="https://dev.twitter.com/streaming/overview">Streaming API</a>.  While the REST API pulls data from Twitter’s database, the Streaming API pushes messages to a session.  This allows the Streaming API to download data faster than the REST API can.  Twitter users generate about 6,000 tweets per second, creating what is known as the Twitter <a href="https://dev.twitter.com/streaming/firehose">firehose</a>.  Few applications are granted full access to firehose, with the default Streaming API collecting a random sample of just 1% of those tweets.  You can request elevated access to a larger portion of the firehose by contacting <a href="https://dev.twitter.com/overview/general/support">Twitter’s API support</a>, but most reports suggest you will need to purchase this access from a third-party provider such as <a href="https://www.gnip.com/">GNIP</a>.  Note that Twitter automically performs parsing, filtering, and aggregation that is needed before returning streaming results.</p>
+
+<p>We’ve built a solid understanding of the Twitter API, how to obtain access to it, and the options that the Search API and Streaming API provide us with when collecting tweets.  In our next post, we’ll discuss how to interface with the Twitter API through Python’s Tweepy library.</p>
+
+  
+</div>
+
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=PoGo Series&#58; The Twitter API&url=http://www.dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/07/21/PoGo-Series-TwitterAPI/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
