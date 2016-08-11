@@ -48,7 +48,7 @@ A few notes about the above equation:
 
 <a name="goback"></a>
 
-In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured ($$\mathsf{P(A \lvert B))$$ is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring ($$\mathsf{P( W \cap H)}$$) divided by the probability of $$\mathsf{B}$$ occuring.
+In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured ($$\mathsf{P(A \lvert B)}$$ is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring ($$\mathsf{P( W \cap H)}$$) divided by the probability of $$\mathsf{B}$$ occuring.
 
 
 # <a name="totalprob"></a> The Law of Total Probability
