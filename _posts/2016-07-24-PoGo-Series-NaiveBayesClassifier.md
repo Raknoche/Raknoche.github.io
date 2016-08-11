@@ -26,7 +26,7 @@ In this post, we'll discuss the following topics:
 
 # <a name="conditionalprob"></a> Conditional probability
 
-Suppose we want to calculate the probability of our favorite football team winning their next match.  If we only had information about the team’s win-loss record, we could estimate their chances of winning as the number of games they have won divided by the number of games they have played.  Mathematically, if $$\mathsf{W}$$ represents the team winning, and $$\mathsf{L}$$ represents the team losing, this is written:
+Suppose we want to calculate the probability of our favorite sports team winning their next match.  If we only had information about the team’s win-loss record, we could estimate their chances of winning as the number of games they have won divided by the number of games they have played.  Mathematically, if $$\mathsf{W}$$ represents the team winning, and $$\mathsf{L}$$ represents the team losing, this is written:
 
 $$\mathsf{ P(W) = \frac{W}{W + L}} \tag{1}$$
 
