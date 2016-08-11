@@ -10,7 +10,7 @@ How to collect tweets using Python's Tweepy library.
 
 TABLE OF CONTENTS
 
-This is the third post in an on-going Pokemon Go analysis series.  Last time, we discussed Twitter's Search and Streaming APIs.  In this post, we'll discuss how to use Python's Tweepy library to interface with Twitter's API and start collecting tweets about Pokemon Go teams.
+This is the third post in an on-going Pokemon Go analysis series.  Last time, we discussed Twitter's Search and Streaming APIs.  In this post, we'll discuss how to use Python's Tweepy library to interface with Twitter's API and start collecting tweets about the Pokemon Go teams.
 
 
 We'll cover the following topics:
@@ -21,7 +21,7 @@ We'll cover the following topics:
 
 # <a name="tweepy"></a> The Tweepy Library
 
-There are a number of Python libraries that connect to the twitter API.  Twitter provides a [full list of API libraries](https://dev.twitter.com/overview/api/twitter-libraries) for both Python and other languages. Some of the most popular among these include [python-twitter](https://github.com/bear/python-twitter), [Twython](https://twython.readthedocs.io/en/latest/), and [Tweepy](http://www.tweepy.org/).  I'm most familiar with Tweepy, so we'll be using that for our analysis.  In practice, Tweepy is a simple wrapper for the Twitter API.  It simplifies the interaction between Python and Twitter's API by handling complications such as rate limiting behind the scenes.  Installing Tweepy is as simple as typing `pip install tweepy` into a command line.  For more information about Tweepy, read the [developer's introduction to Tweepy](http://tweepy.readthedocs.io/en/v3.5.0/getting_started.html#introduction).  
+There are a number of Python libraries that connect to the Twitter API.  Twitter provides a [full list of API libraries](https://dev.twitter.com/overview/api/twitter-libraries) for both Python and other languages. Some of the most popular among these include [python-twitter](https://github.com/bear/python-twitter), [Twython](https://twython.readthedocs.io/en/latest/), and [Tweepy](http://www.tweepy.org/).  I'm most familiar with Tweepy, so we'll be using that for our analysis.  In practice, Tweepy is a simple wrapper for the Twitter API.  It simplifies the interaction between Python and Twitter's API by handling complications such as rate limiting behind the scenes.  Installing Tweepy is as simple as typing `pip install tweepy` into a command line.  For more information about Tweepy, read the [developer's introduction to Tweepy](http://tweepy.readthedocs.io/en/v3.5.0/getting_started.html#introduction).  
 
 
 # <a name="search"></a> Using the Search API to collect historical tweets
@@ -57,7 +57,7 @@ if (not api):
     print ("Problem connecting to API")
 ```
 
-Make sure to replace `consumer_key`,`consumer_secret`,`access_token`, and `access_secret` with your personal keys and secret.  Once we have the API object instantiated we can use Tweepy's geo_search method to query the Geo Search API: 
+Make sure to replace `consumer_key`,`consumer_secret`,`access_token`, and `access_secret` with your personal keys and secrets.  Once we have the API object instantiated we can use Tweepy's geo_search method to query the Geo Search API: 
 
 
 ```python
@@ -77,7 +77,7 @@ Great, now we know which `place_id` to use as a filter in the Search API.  Next,
 * The search API only collects a random sample of tweets 
 * There is no way to get more than the last week of tweets without purchasing them from a third-party provider
 
-From the Search API documentation, note that we can use either user-authentication or application-only authentication to access the Search API.  User-authentication allows for 180 queries per access token every 15 minutes, and application-only authentication allows for 450 queries total.  Since we only have one access token to work with, we'll want to switch to application-only authentication for the higher rate limit.  Tweepy has a separate `AppAuthHandler` method for this purpose:
+From the [Search API documentation](https://dev.twitter.com/rest/public/search), note that we can use either user-authentication or application-only authentication to access the Search API.  User-authentication allows for 180 queries per access token every 15 minutes, and application-only authentication allows for 450 queries every 15 minutes.  Since we only have one access token to work with, we'll want to switch to application-only authentication for the higher rate limit.  Tweepy has a separate `AppAuthHandler` method for this purpose:
 
 
 ```python
@@ -93,7 +93,7 @@ if (not api):
  
 ```
 
-You may have noticed that we added two arguements to the API wrapper this time around.  The Search API is returns a maximum of 100 tweets per query.  We have 450 queries available to us every 15 minutes using application authentication, so we can collect 45,000 tweets every 15 minutes.  If we exceed this rate, the `wait_on_rate_limit` arguement tells tweepy to pause until we are no longer rate limited. If `wait_on_rate_limit` is set to the default value of `False`, Tweepy would just return an error and stop search once we reached out rate limit.  The `wait_on_rate_limit_notify` arguement tells Tweepy to display a notification when we've reached the rate limit and that it is waiting for the 15 minute rate limit window to refresh.  These arguements were also available when we were using user-authentication with the Geo Search API, but we did not need to use them since we were only sending one query.  As a side note, if you ever want to check the status of your rate limits you can use Tweepy's `rate_limit_status` method, as shown below:
+You may have noticed that we added two arguments to the API wrapper this time around.  The Search API returns a maximum of 100 tweets per query.  We have 450 queries available to us every 15 minutes using application authentication, so we can collect 45,000 tweets every 15 minutes.  If we exceed this rate, the `wait_on_rate_limit` argument tells tweepy to pause until we are no longer rate limited. If `wait_on_rate_limit` is set to the default value of `False`, Tweepy would just return an error and stop searching once we reached our rate limit.  If we do end up being rate limited, the `wait_on_rate_limit_notify` argument tells Tweepy to display a notification that lets us know it is waiting for the 15 minute rate limit window to refresh.  These arguments were also available when we were using user-authentication with the Geo Search API, but we did not need to use them since we were only sending one query.  As a side note, if you ever want to check the status of your rate limits you can use Tweepy's `rate_limit_status` method, as shown below:
 
 
 ```python
@@ -125,7 +125,7 @@ Now that we have an API object using application-only authentication, we're read
 * "team instinct"
 
 
-Note that the search phrases are not case sensitive.  We can search for all of these terms at once by seperating them with `OR` in our query.  I've also included a filter that requires the tweet originate within the United Statesby including `place:96683cc9126741d1` at the beginning of the query, where `96683cc9126741d1` is the US `place_id` we found with the Geo Search API.
+Note that the search phrases are not case sensitive.  We can search for all of these terms at once by separating them with `OR` in our query.  I've also included a filter that requires the tweet originate within the United States by including `place:96683cc9126741d1` at the beginning of the query, where `96683cc9126741d1` is the US `place_id` we found with the Geo Search API.
 
 
 ```python
@@ -149,7 +149,7 @@ maxTweets = 1000000
 tweetsPerQry = 100
 ```
 
-Note that the Search API limits us to 100 tweets per query, and that we may not collect the number of tweets that we specified since the Search API only collects the past week of tweets.  The easieset way to send our query to the Search API is through [Tweepy's Cursor method](http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html).  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a `for` loop, and write the JSON formatted tweet to a text file using the `jsonpickle` library:
+Note that the Search API limits us to 100 tweets per query, and that we may not collect the maximum number of tweets that we specified since the Search API only collects the past week of tweets.  The easieset way to send our query to the Search API is through [Tweepy's Cursor method](http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html).  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a `for` loop, and write the JSON formatted tweet to a text file using the `jsonpickle` library:
 
 
 ```python
@@ -177,7 +177,7 @@ with open('PoGo_USA_Tutorial.json', 'w') as f:
     Downloaded 2006 tweets
 
 
-Let's take a closer look at the information we are storing in the text file.  The Twitter API returns the tweet in [JSON format](http://json.org/), and Tweepy parses the JSON text into a number of class members. First, let's look at the raw JSON text that Twitter returns.  This is what we are saving to our text file in the `for` loop:
+Let's take a closer look at the information we are storing in the text file.  The Twitter API returns the tweet in [JSON format](http://json.org/), and Tweepy parses the JSON text into a tweet class. First, let's look at the raw JSON text that Twitter returns.  This is what we are saving to our text file in the `for` loop:
 
 
 ```python
@@ -275,7 +275,7 @@ tweet._json
 ```
 
 
-As we already mentioned, each one of the JSON attributes is turned into an individual class member in Tweepy's tweet object.  I've included a function below that will list all of these class members.
+Each one of the JSON attributes is turned into an individual class member in Tweepy's tweet object.  I've included a function below that will list all of these class members.
 
 
 ```python
@@ -349,7 +349,7 @@ PrintMembers(tweet.place)
     url
 
 
-As a closing note, I wanted to share the "old" way of using Tweepy.  Before the Cursor method was introduced, the process of sending multiple queries until you collected your maximum number of tweets all had to be handled manually.  You will often see old implementations online which do so, but when possible you should use the Cursor instead.  I've included an example of our search query using the "old" way below.  I hope the example will help you recognize and update any out of date implementations you may come across in your own work.
+As a closing note, I wanted to share the "old" way of using Tweepy.  Before the Cursor method was introduced, the process of sending multiple queries until you collected your maximum number of tweets had to be handled manually.  You will often see old implementations online which do so, but when possible you should use the Cursor instead.  I've included an example of our search query using the "old" way below.  I hope the example will help you recognize and update any out of date implementations you may come across in your own work.
 
 
 ```python
@@ -408,10 +408,10 @@ auth.set_access_token(access_token, access_secret)
 api = tweepy.API(auth)
 ```
 
-The [Tweepy documentation page](http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html) tells us how to set up a Streaming API interface.  We have to follow three steps:
+The [Tweepy documentation page](http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html) tells us how to set up a Streaming API interface in three steps:
 
 1. Create a class inheriting from StreamListener
-2. Use that class create a Stream object
+2. Use that class to create a Stream object
 3. Connect to the Twitter API using the Stream.
 
 First, we'll discuss how to inherit and modify the `StreamListener` class.  The are two ways to interact with the streaming data - by overloading the `on_data` method or by overloading the `on_status` method.  If you want detailed information about the tweets you need to override the `on_data` method. This will allow us to interact with the data at the highest level and opens up information such as replies to statuses, deletions, direct messages, friends, etc.  The default `on_data` method from the `StreamListener` class passes data from statuses to the `on_status` method. If we're only concerned with reading the JSON output of tweet statuses, can override the `on_status` method instead of the `on_data` method.  This process is shown in the code below:
@@ -458,7 +458,7 @@ Now that we have our `MyStreamListener` class, we can use it to create a class o
 twitter_stream = tweepy.Stream(auth, MyStreamListener())
 ```
 
-The [Tweepy documentation](http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html) discusess a number of ways to start the Twitter stream.  In our case, we'll want to use the `filter` method to track particular phrases:
+The [Tweepy documentation](http://docs.tweepy.org/en/v3.4.0/streaming_how_to.html) discusses a number of ways to start the Twitter stream.  In our case, we'll want to use the `filter` method to track particular phrases:
 
 
 ```python
@@ -468,7 +468,7 @@ twitter_stream.filter(track=['#teammystic','teaminstinct','#teamvalor', \
                              'team mystic','team instinct','team valor'])
 ```
 
-Note that, we could filter on [other parameters](https://dev.twitter.com/streaming/overview/request-parameters), such as locations:
+Note that, we could filter on [other parameters](https://dev.twitter.com/streaming/overview/request-parameters), such as locations, instead:
 
 ```python
 twitter_stream.filter(locations=[-122.75,36.8,-121.75,37.8])
