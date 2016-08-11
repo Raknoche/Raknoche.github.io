@@ -13,9 +13,6 @@ A discussion of Bayes theorem and how it is used in Naive Bayes Classifiers.
 
 TABLE OF CONTENTS
 
-<script type="text/javascript"
-    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
 
 Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the pokemon go teams in a positive light, while others denegrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
 
@@ -154,7 +151,7 @@ The denominator in [Equation 12](#eq12), $$\mathsf{P(\mathbf{X})}$$, is the same
 
 Once we know $$P(C_i \lvert X)$$ for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rule, known as the "maximum posteriori hypothesis," is to predict that the sample belongs to whichever class has the highest probability $$P(X \lvert C_i)$$.
 
-As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  Typically, we assume that the continous values have a Gaussian distribution with mean $$\mu$$ and standard deviation $$\sigma$$, such that
+As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continous values have a Gaussian distribution with mean $$\mu$$ and standard deviation $$\sigma$$, such that
 
 <a name="eq16"></a>
 

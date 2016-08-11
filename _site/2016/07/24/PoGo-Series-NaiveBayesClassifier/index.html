@@ -160,9 +160,6 @@
 
 <p>TABLE OF CONTENTS</p>
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 <p>Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python’s Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the pokemon go teams in a positive light, while others denegrate the team that’s mentioned.  We’ll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.</p>
 
 <p>In this post, we’ll discuss the following topics:</p>
@@ -198,7 +195,7 @@
 
 <p><a name="goback"></a></p>
 
-<p>In words, <a href="#eq2">Equation 2</a> is stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured (<script type="math/tex">\mathsf{P(A \lvert B))</script> is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring (<script type="math/tex">\mathsf{P( W \cap H)}</script>) divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.</p>
+<p>In words, <a href="#eq2">Equation 2</a> is stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured (<script type="math/tex">\mathsf{P(A \lvert B)}</script> is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring (<script type="math/tex">\mathsf{P( W \cap H)}</script>) divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.</p>
 
 <h1 id="a-nametotalproba-the-law-of-total-probability"><a name="totalprob"></a> The Law of Total Probability</h1>
 
@@ -301,7 +298,7 @@ To simplify the calculation, Naive Bayes Classifiers assumes that the features a
 
 <p>Once we know <script type="math/tex">P(C_i \lvert X)</script> for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rule, known as the “maximum posteriori hypothesis,” is to predict that the sample belongs to whichever class has the highest probability <script type="math/tex">P(X \lvert C_i)</script>.</p>
 
-<p>As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  Typically, we assume that the continous values have a Gaussian distribution with mean <script type="math/tex">\mu</script> and standard deviation <script type="math/tex">\sigma</script>, such that</p>
+<p>As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continous values have a Gaussian distribution with mean <script type="math/tex">\mu</script> and standard deviation <script type="math/tex">\sigma</script>, such that</p>
 
 <p><a name="eq16"></a></p>
 
@@ -459,6 +456,10 @@ To simplify the calculation, Naive Bayes Classifiers assumes that the features a
   
 </div>
 
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 <div class="social-media">
     Share this: 
