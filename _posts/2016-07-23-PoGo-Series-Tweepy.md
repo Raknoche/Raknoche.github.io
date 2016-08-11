@@ -484,4 +484,4 @@ condition in our class definition.
 
 # Closing remarks
 
-That was a lot of content to digest for one blog post!  We covered how to use Tweepy to collect historical tweets through Twitter's Search API, and how to use Tweepy to collect new tweets in real-time through Twitter's Streaming API.  Now that we have a text file full of tweets, we'll discuss how to import them into a Pandas dataframe and clean up the data in our next blog post.
+That was a lot of content to digest for one blog post!  We covered how to use Tweepy to collect historical tweets through Twitter's Search API, and how to use Tweepy to collect new tweets in real-time through Twitter's Streaming API.  Now that we have a text file full of tweets, we'll lay the ground work for classifying the tweets as positive or negative in our next post.

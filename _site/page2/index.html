@@ -11,7 +11,7 @@
 
   <title>
     
-      PoGo Series&#58; Introduction &middot; Dealing Data
+      Dealing Data &middot; Learning data science through example
     
   </title>
 
@@ -152,78 +152,47 @@
       </div>
       
       <div class="container content">
-        <div class="post">
-  <h1 class="post-title">PoGo Series&#58; Introduction</h1>
-  <span class="post-date">20 Jul 2016</span>
-  
-    
-
-<p>Table of Contents:
-Put a link to each part of the series here</p>
-
-<p>–</p>
-
-<p>Unless you’ve been living under a rock for the past week, you’ve heard of the new augmented reality game Pokemon Go.  Within two days of release the app was <a href="https://www.similarweb.com/blog/pokemon-go">installed on over 5% of all android devices in the US</a>, more than doubling the installations of other popular applications such as Tinder.</p>
-
-<p>The game uses your phone’s GPS coordinates to track your real-world location.  As you play, pokemon appear in the world around you, displayed on your phone’s screen through an augmented reality version of your surroundings.
-As with all pokemon games, the main objective is to complete your collection of pokemon and “catch ‘em all.”</p>
-
-<p>The game includes some secondary, player-versus-player objectives as well.  Once your avatar reaches level 10 you choose to join one of three teams — Team Mystic (blue), Team Valor (red), and Team Instinct (yellow).  These teams battle each other for control over Pokemon Gyms that are scattered around the world.  Owning a gym grants access to limited amounts of premium currency which can be used to buy resources in the game.</p>
-
-<p>As you might expect, users have become incredibly passionate about their teams.  Rivalries have sparked thousands of tweets each day which profess loyalty to one’s own team or disparage the others.</p>
-
-<p>I thought this would be a great opportunity to explain how to collect data from twitter’s feed and perform in depth analysis on the results.  The plan is simple:</p>
-
-<ol>
-  <li>Develop an understanding of the Twitter API</li>
-  <li>Collect tweets that mention each Pokemon Go team using Python’s Tweepy library</li>
-  <li>Use Python’s Pandas library to perform an inital clean up of the data</li>
-  <li>Develop an understanding of Naive Bayes classifiers</li>
-  <li>Perform a sentiment analysis to determine if a tweet is saying something positive or negative about the team</li>
-  <li>Count the number of positive tweets about each team in each state.  At the same time, measure statistical and systematic errors on our results and produce confidence intervals</li>
-  <li>Use Python’s Bokeh and Basemap libraries to produce a map that visualizes the dominance of each team in every state.</li>
-</ol>
-
-<p>I have organized these steps in a “Pokemon Go Series” of posts.  You’ll be able to find the table of contents for the series at the top of each post.</p>
-
-  
+        <div class="index-content">
+  <p> 
+Welcome to my blog!  I'll be posting tutorials which explain various data science topics that I come accross in my studies.  My hope is that these tutorials will provide a valuable resource for aspiring data scientists who are researching similar topics.  </p>
+  <h1> Recent Posts: </h1>
 </div>
 
 
-<div class="social-media">
-    Share this: 
-    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=PoGo Series&#58; Introduction&url=http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
-    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
-    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+<div class="posts">
+  
+  <div class="post-index">
+    <h1 class="post-title-index">
+      <a href="/2016/07/08/HelloWorld/">
+        Hello, World!
+      </a>
+    </h1>
+
+    <span class="post-date-index">08 Jul 2016</span>
+
+    
+      <p>An introduction to the author, his transition from physics to data science, and the goals of this blog.</p>
+
+
+    
+
+    <!--Replaced this line with post.excerpt from above -->
+    <!-- {post.content}} -->
+  </div>
+  
 </div>
 
-
-<div id="disqus_thread"></div>
-<script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
     
+      <a class="pagination-item newer" href="/">Newer</a>
     
-    var disqus_config = function () {
-        this.page.url = "http://dealingdata.net/2016/07/20/PoGo-Series-Intro/";  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = "dealingdata.net/2016/07/20/PoGo-Series-Intro/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    
-    (function() {  // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        
-        s.src = '//dealingdata.disqus.com/embed.js';
-        
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</div>
 
-
-                                  
 
       </div>
     </div>

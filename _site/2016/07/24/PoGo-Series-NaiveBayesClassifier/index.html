@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      PoGo Series&#58; Introduction to Naive Bayes Classifiers &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">PoGo Series&#58; Introduction to Naive Bayes Classifiers</h1>
+  <span class="post-date">24 Jul 2016</span>
+  
+    
+
+<p>TABLE OF CONTENTS</p>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p>Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python’s Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the pokemon go teams in a positive light, while others denegrate the team that’s mentioned.  We’ll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.</p>
+
+<p>In this post, we’ll discuss the following topics:</p>
+
+<ol>
+  <li><a href="#conditionalprob">Conditional Probability</a></li>
+  <li><a href="#totalprob">The Law of Total Probability</a></li>
+  <li><a href="#bayes">Bayes’ Theorem</a></li>
+  <li><a href="#naiveBayes">Naive Bayes Classifiers</a></li>
+  <li><a href="#naiveEx">Applying the Naive Bayes Classifier</a></li>
+</ol>
+
+<h1 id="a-nameconditionalproba-conditional-probability"><a name="conditionalprob"></a> Conditional probability</h1>
+
+<p>Suppose we want to calculate the probability of our favorite football team winning their next match.  If we only had information about the team’s win-loss record, we could estimate their chances of winning as the number of games they have won divided by the number of games they have played.  Mathematically, if <script type="math/tex">\mathsf{W}</script> represents the team winning, and <script type="math/tex">\mathsf{L}</script> represents the team losing, this is written:</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(W) = \frac{W}{W + L}} \tag{1}</script>
+
+<p>Now, suppose that we obtained additional information about each time our team won and lost a game.  For instance, maybe we kept track of whether our team was playing at home or not.  Now we can ask more complex questions, such as “What is the probability of our favorite team winning, given that they are at home?”  This is known as a <strong>conditional probability</strong>.  We can calculate the answer by counting the how often our team wins while at home, and dividing by the total number of times our team played at home (regardless of the outcome).  Mathematically, if <script type="math/tex">\mathsf{H}</script> represents the team playing at home:</p>
+
+<p><a name="eq2"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P(W \lvert H) = \frac{ P( W \cap H)}{P(H)}}\tag{2}</script>
+
+<p>A few notes about the above equation:</p>
+
+<ul>
+  <li><script type="math/tex">\mathsf{P(W \; \lvert \; H)}</script> is the conditional probability that our team will win, given that they play at home.  The "<script type="math/tex">\lvert</script>" symbol is used to declare the conditions that are <strong>given</strong>.</li>
+  <li><script type="math/tex">\mathsf{P( W \cap H)}</script> is the probability of our team winning and playing at home.  The "<script type="math/tex">\cap</script>" symbol is used to denote the <strong>intersection</strong> where both of these events occur.</li>
+  <li><script type="math/tex">\mathsf{P(H)}</script> is the probability of our team playing at home.</li>
+  <li>The probability of our team winning without specifying any conditions, <script type="math/tex">\mathsf{P(W)}</script> is known as the <strong>prior probability</strong> of <script type="math/tex">\mathsf{W}</script>.</li>
+</ul>
+
+<p><a name="goback"></a></p>
+
+<p>In words, <a href="#eq2">Equation 2</a> is stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured (<script type="math/tex">\mathsf{P(A \lvert B))</script> is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring (<script type="math/tex">\mathsf{P( W \cap H)}</script>) divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.</p>
+
+<h1 id="a-nametotalproba-the-law-of-total-probability"><a name="totalprob"></a> The Law of Total Probability</h1>
+
+<p>Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The <strong>Law of Total Probability</strong> states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into <script type="math/tex">n</script> different outcomes, then for some event <script type="math/tex">\mathsf{A}</script></p>
+
+<script type="math/tex; mode=display">\mathsf{P(A) = \sum_{i=1}^n P(A \cap B_i) = \sum_{i=1}^n P(A \lvert B_i)P(B_i)}\tag{3}</script>
+
+<p>where we have used <a href="#eq2">Equation 2</a> to write <script type="math/tex">\mathsf{P(A \cap B_i)}</script> in terms of conditional probabilities.  Applying this to our favorite team’s record, the law is simply stating that the probability of our team winning in general is equal to the probability of our team winning and being at home, plus the probability of our team winning and being away:</p>
+
+<script type="math/tex; mode=display">\mathsf{P(W) = P(W \cap H) + P(W \cap not \; H)= P(W \lvert H)P(H) + P(W \lvert not \; H)P(not \; H)}\tag{4}</script>
+
+<p>If you need an intuitive explanation for the Law of Probabilities, imagine that our team played 100 games total.  Of those 100 games, they won 40 out of 50 games at home, and 30 out of 50 games while away.  The total number of games they won is clearly 70.  The fraction of games that our team won overall is then 70/100, which you can obtain from the Law of Total Probability by adding the fraction of games where our team won and were at home to the fraction of games that our team won and were away:  40/100 + 30/100 = 70/100.</p>
+
+<p>A closing note for this section — do not confuse the probability of our team winning and being at home with the probability of our team winning while at home.  The former is the probability of both events happening if we randomly sample from any game, while the later is the probability of winning, given that we are only sampling from the games played at home.</p>
+
+<h1 id="a-namebayesa-bayes-theorem"><a name="bayes"></a> Bayes’ Theorem</h1>
+
+<p>Finally, we can discuss the foundation of Naive Bayes Classifiers — Bayes’ theorem.  Consider the general form of <a href="#eq2">Equation 2</a>, for some event <script type="math/tex">\mathsf{A}</script> and some given condition <script type="math/tex">\mathsf{B}</script>:</p>
+
+<p><a name="eq5"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P(A \lvert B) = \frac{ P( A \cap B)}{P(B)}}\tag{5}</script>
+
+<p>We’ll first rearrange this equation to make it easier to work with:</p>
+
+<p><a name="eq6"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P( A \cap B) = P(A \lvert B)P(B)}\tag{6}</script>
+
+<p>The probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occurring, <script type="math/tex">\mathsf{P( A \cap B)}</script>, is identical to the probability of <script type="math/tex">\mathsf{B}</script> and <script type="math/tex">\mathsf{A}</script> both occurring, <script type="math/tex">\mathsf{P( B \cap A)}</script>.  Therefore, we can rewrite the <a href="#eq6">Equation 6</a> as:</p>
+
+<p><a name="eq7"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P( B \cap A) = P(A \lvert B)P(B)}\tag{7}</script>
+
+<p>Switching the roles of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> in <a href="#eq6">Equation 6</a> provides another expression for  <script type="math/tex">\mathsf{P( B \cap A)}</script>:</p>
+
+<p><a name="eq8"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P(B \cap A) = P( B \lvert A)P(A)}\tag{8}</script>
+
+<p>We can see that the right hand side of <a href="#eq7">Equation 7</a> and <a href="#eq8">Equation 8</a> must be equal.  Therefore:</p>
+
+<script type="math/tex; mode=display">\mathsf{P(A \lvert B)P(B) = P( B \lvert A)P(A)}\tag{9}</script>
+
+<p>Solving for <script type="math/tex">\mathsf{P(A \lvert B)}</script>, we arrive a <strong>Bayes’ Theorem</strong></p>
+
+<script type="math/tex; mode=display">\mathsf{P(A \lvert B) = \frac{P( B \lvert A)P(A)}{P(B)}}\tag{10}</script>
+
+<p>In words, Bayes’ Theorem simply another way of stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured, <script type="math/tex">\mathsf{P(A \lvert B)}</script>, is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring, <script type="math/tex">\mathsf{P( B \lvert A)P(A)}</script>, divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.  Notice that this is the exact same statement that we made when discussing conditional dependence at the end of the first section!  If you are having a hard time intuitively undestanding Bayes’ Theorem, I encourage you to <a href="#goback">go back</a> to the first section and convince yourself that Bayes’ Theorem is simply a different mathematical statement for the easier-to-grasp conditional probability theorem.</p>
+
+<p>Often, we need to use the <strong>Law of Total Probability</strong> to calculate the denominator, <script type="math/tex">\mathsf{P(B)}</script>, in Bayes’ Theorem.  Therefore, it’s sometimes more useful to combine the two statements into the more explicit form of Bayes’ Theorem:</p>
+
+<script type="math/tex; mode=display">\mathsf{P(A \lvert B) = \frac{P( B \lvert A)P(A)}{\sum_{i=1}^n P(B \lvert A_i)P(A_i)}}\tag{11}</script>
+
+<p>where <script type="math/tex">\mathsf{A_i}</script> denotes the partitions of the sample space.</p>
+
+<p>Returning to our sport’s team analogy, suppose we know the following pieces of information:</p>
+
+<ul>
+  <li>The probability of our favorite team winning a game, <script type="math/tex">\mathsf{P(W)}</script></li>
+  <li>The probability of our favorite team playing at home, <script type="math/tex">\mathsf{P(H)}</script></li>
+  <li>The probability of our favorite team winning a game given that they are playing at home, <script type="math/tex">\mathsf{P(W \lvert H)}</script></li>
+</ul>
+
+<p>With Bayes’ theorem we can combine all of this information to answer the question “If we know that our team won a game, what is the probability that they were playing at home, <script type="math/tex">\mathsf{P(H \lvert W)}</script>?”</p>
+
+<h1 id="a-namenaivebayesa-naive-bayes-classifiers"><a name="naiveBayes"></a> Naive Bayes Classifiers</h1>
+
+<p>A Naive Bayes Classifier is a machine learning algorithm that uses Bayes’ Theorem to predict the class that a sample belongs to, given a number of features that describe that sample.  If we collect information on <script type="math/tex">\mathsf{n}</script> different features.  We can write the values of these features for a particular sample as a <script type="math/tex">\mathsf{1 \times n}</script> vector <script type="math/tex">\mathbf{X} = \{x_1,x_2,x_3,...,x_n\}</script> known as the <strong>evidence</strong>.</p>
+
+<p>Our goal is to determine which class the sample belongs to.  This boils down to calculating the probability for each class given the evidence vector <script type="math/tex">\mathbf{X}</script>.  Bayes Theorem tells us that for a particular class, <script type="math/tex">\mathsf{C_i}</script>, this is given by</p>
+
+<p><a name="eq12"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{ P(C_i \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert C_i)P(C_i)}{P(\mathbf{X})} }\tag{12}</script>
+
+<p>To evaluate Bayes’ theorem we need to determine the three probabilities on the right hand side of <a href="#eq12">Equation 12</a>.  To do so, we’ll need to use a training set of data for which the features and class are known.  Then, using the data in our training set, we know:</p>
+
+<p><a name="eq13"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{ P(C_i)= \frac{number \; of \; training \; samples \; in \; class \; C_i}{number \; of \; training \; samples} \tag{13}}</script>
+
+<p>In pratice, the probability of the observed features occuring given the sample belongs to class <script type="math/tex">\mathsf{C_i}</script> can be hard to calculate.
+To simplify the calculation, Naive Bayes Classifiers assumes that the features are <strong>conditional independent</strong>.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated — hence the name <em>Naive</em> Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.</p>
+
+<p>Mathematically, the consquence of this assumption is that the probability of the observing the evidence <script type="math/tex">\mathbf{X}</script>, given that the sample belongs to some class <script type="math/tex">\mathsf{C_i}</script>, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to <script type="math/tex">\mathsf{C_i}</script>:</p>
+
+<p><a name="eq14"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{ P(\mathbf{X} \lvert C_i) = P(x_1 \lvert C_i)P(x_2 \lvert C_i) \dotsc P(x_n \lvert C_i) = \prod_{k=1}^n P(x_k \lvert C_i) \tag{14}}</script>
+
+<p>The individual feature probabilities, given that the sample belongs to some class <script type="math/tex">\mathsf{C_i}</script>, can easily be determined from our training set</p>
+
+<p><a name="eq15"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{ P(x_k|C_i) = \frac{number \; training \; samples \; with \; class \; C_i \; and \; feature \; outcome \; x_k}{number \; of \; training \; samples \; with \; class \; C_i} \tag{15}}</script>
+
+<p>The denominator in <a href="#eq12">Equation 12</a>, <script type="math/tex">\mathsf{P(\mathbf{X})}</script>, is the same regardless of which class we are looking at, so we don’t actually need to calculate it. In fact, we shouldn’t calculate it so that the algorithm will run faster.  That said, if we did want to calculate <script type="math/tex">\mathsf{P(\mathbf{X})}</script> we would just use the <strong>Law of Total Probability</strong>.</p>
+
+<p>Once we know <script type="math/tex">P(C_i \lvert X)</script> for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rule, known as the “maximum posteriori hypothesis,” is to predict that the sample belongs to whichever class has the highest probability <script type="math/tex">P(X \lvert C_i)</script>.</p>
+
+<p>As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  Typically, we assume that the continous values have a Gaussian distribution with mean <script type="math/tex">\mu</script> and standard deviation <script type="math/tex">\sigma</script>, such that</p>
+
+<p><a name="eq16"></a></p>
+
+<script type="math/tex; mode=display">\mathsf{P(x_k|C_i) = \frac{1}{\sqrt{2\pi \sigma}} exp \left(- \frac{(x_k-\mu)^2}{2 \sigma^2} \right) \tag{16}}</script>
+
+<h1 id="a-namenaiveexa-applying-the-naive-bayes-classifier"><a name="naiveEx"></a> Applying the Naive Bayes Classifier</h1>
+
+<p>We’ll wrap up this discussion by applying the Naive Bayes’ Classifier to our sports team analogy.  Suppose our favorite sports team played 100 games with a record of 65 wins - 35 losses.  During the season, we tracked the team’s wins and losses, as well as information about three features — whether our team was playing at home, whether it was raining during the game, and who the experts thought would win the game.  The information produced the following frequency tables:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Feature: Playing At Home</th>
+      <th style="text-align: center">Games Won</th>
+      <th style="text-align: center">Games Lost</th>
+      <th style="text-align: center">Total Games</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">At Home</td>
+      <td style="text-align: center">40</td>
+      <td style="text-align: center">20</td>
+      <td style="text-align: center"><strong>60</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Away</td>
+      <td style="text-align: center">25</td>
+      <td style="text-align: center">15</td>
+      <td style="text-align: center"><strong>40</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Total</strong></td>
+      <td style="text-align: center"><strong>65</strong></td>
+      <td style="text-align: center"><strong>35</strong></td>
+      <td style="text-align: center"><strong>100</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Feature: Weather During Game</th>
+      <th style="text-align: center">Games Won</th>
+      <th style="text-align: center">Games Lost</th>
+      <th style="text-align: center">Total Games</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Raining</td>
+      <td style="text-align: center">20</td>
+      <td style="text-align: center">10</td>
+      <td style="text-align: center"><strong>30</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Not Rain</td>
+      <td style="text-align: center">45</td>
+      <td style="text-align: center">25</td>
+      <td style="text-align: center"><strong>70</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Total</strong></td>
+      <td style="text-align: center"><strong>65</strong></td>
+      <td style="text-align: center"><strong>35</strong></td>
+      <td style="text-align: center"><strong>100</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Feature: Expert’s Predictions</th>
+      <th style="text-align: center">Games Won</th>
+      <th style="text-align: center">Games Lost</th>
+      <th style="text-align: center">Total Games</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Experts Predict a Win</td>
+      <td style="text-align: center">45</td>
+      <td style="text-align: center">10</td>
+      <td style="text-align: center"><strong>55</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Experts are split</td>
+      <td style="text-align: center">10</td>
+      <td style="text-align: center">5</td>
+      <td style="text-align: center"><strong>15</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Experts Predict a Loss</td>
+      <td style="text-align: center">10</td>
+      <td style="text-align: center">20</td>
+      <td style="text-align: center"><strong>30</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><strong>Total</strong></td>
+      <td style="text-align: center"><strong>65</strong></td>
+      <td style="text-align: center"><strong>35</strong></td>
+      <td style="text-align: center"><strong>100</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Tomorrow, our team is about to play their first play off game.  We’d like to predict whether they will win or not based on the features we have tracked all season.  We know that our team will be playing at home, that it will be raining on game day, and that the experts are split on who will win the game.  In this case, our evidence vector looks like this:</p>
+
+<script type="math/tex; mode=display">\mathbf{X} = \mathsf{\{At \; Home, Raining, Experts \; are \; split\}}</script>
+
+<p>There are two possible outcomes to predict — our team winning (denoted with <script type="math/tex">\mathsf{W}</script>) and our team losing (denoted with <script type="math/tex">\mathsf{L}</script>).  Bayes’ theorem tells us the probability of each of these outcomes, given the evidence vector for the upcoming game:</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(W \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert W)P(W)}{P(\mathbf{X})} }</script>
+
+<script type="math/tex; mode=display">\mathsf{ P(L \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert L)P(L)}{P(\mathbf{X})} }</script>
+
+<p>From the frequency tables above, and from <a href="#eq13">Equation 13</a>, we know that:</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(W)= \frac{number \; of \; games \; \; Won}{Number \; of \; Games}} = \frac{65}{100} = 0.65</script>
+
+<script type="math/tex; mode=display">\mathsf{ P(L)= \frac{number \; of \; games \; \; Lost}{Number \; of \; Games}} = \frac{35}{100} = 0.35</script>
+
+<p>Assuming that our features are conditionally independent, <a href="#eq14">Equation 14</a> and <a href="#eq15">Equation 15</a> tell us the probability of observing the evidence  <script type="math/tex">\mathbf{X}</script> given that our team wins.</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(\mathbf{X} \lvert W) = P(At \; Home \lvert W) \; P(Raining \lvert W) \; P(Experts \; are \; Split \lvert W) }</script>
+
+<script type="math/tex; mode=display">\mathsf{ P(\mathbf{X} \lvert W) = \left( \frac{\; Wins \; at \; Home}{Games \; at \; Home} \right) 
+\left( \frac{\; Wins \; when \; Raining}{Games \; when \; Raining} \right)
+\left( \frac{Wins \; when \; Experts \; Split}{Games \; when \; Experts \; Split} \right) }</script>
+
+<script type="math/tex; mode=display">\mathsf{ P(\mathbf{X} \lvert W) = \left(\frac{40}{60}\right) \left(\frac{20}{30}\right) \left(\frac{10}{15}\right) = 0.30 }</script>
+
+<p>Repeating the process above, given that our team loses rather than wins tells us:</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(\mathbf{X} \lvert L) = \left(\frac{20}{60}\right) \left(\frac{10}{30}\right) \left(\frac{5}{15}\right) = 0.04 }</script>
+
+<p>We don’t need to calculate <script type="math/tex">\mathsf{P(\mathbf{X})}</script> since the result does not depend on whether we win or lose, but for completeness I’ll go ahead and do so using the Law of Total Probability, <a href="#eq">Equation 3</a>:</p>
+
+<script type="math/tex; mode=display">\mathsf{P(\mathbf{X}) = P(X \lvert W)P(W) +  P(X \lvert L)P(L)} = (0.3 \times 0.65) + (0.04 \times 0.35) = 0.21</script>
+
+<p>Finally, we can plug all of these numbers into Bayes’ Theorem and arrive at the following probabilities for winning or losing given the evidence vector for the upcoming game:</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(W \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert W)P(W)}{P(\mathbf{X})} = \frac{0.3 \times 0.65}{0.21} = 0.93 }</script>
+
+<script type="math/tex; mode=display">\mathsf{ P(L \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert L)P(L)}{P(\mathbf{X})} = \frac{0.04 \times 0.35}{0.21} = 0.07 }</script>
+
+<p>The Naive Bayes Classifier says our team has a 93% chance of winning the upcoming game, and only a 7% chance of losing!  We can safely predict that our team will win game!</p>
+
+<h1 id="closing-remarks">Closing remarks</h1>
+
+<p>We’ve developed an understanding of Naive Bayes Classifiers and the Bayesian statistics from which they are derived.  In the next post we’ll learn how to extract useful features from our Pokemon Go tweets, and use them to train a sentiment analyzer implemented with the Natural Language Tool Kit’s (NLTK) built-in Naive Bayes Classifier.</p>
+
+  
+</div>
+
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=PoGo Series&#58; Introduction to Naive Bayes Classifiers&url=http://www.dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

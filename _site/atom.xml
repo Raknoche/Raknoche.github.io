@@ -4,13 +4,21 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-10T14:14:10-04:00</updated>
+ <updated>2016-08-11T14:43:03-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>PoGo Series&#58; Introduction to Naive Bayes Classifiers</title>
+   <link href="http://www.dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier/"/>
+   <updated>2016-07-24T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/07/24/PoGo-Series-NaiveBayesClassifier</id>
+   <content type="html">&lt;p&gt;A discussion of Bayes theorem and how it is used in Naive Bayes Classifiers.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;TABLE OF CONTENTS&lt;/p&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;Welcome back to our on-going Pokemon Go analysis series. In the previous post, we used Python’s Tweepy package to collect tweets about each Pokemon Go team and store...</content>
+ </entry>
  
  <entry>
    <title>PoGo Series&#58; Collecting Tweets with Tweepy</title>
