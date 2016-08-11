@@ -186,14 +186,14 @@
   <li>Jekyll</li>
 </ul>
 
-<p>If you are not using one of the operating systems mentioned above, you will need to look for Windows-compatible alternative such as <a href="http://blog.getpelican.com/">Pelican</a> or <a href="https://ghost.org/">Ghost</a>.  In this section, I’ll be describing the Mac OS X installation process.  I haven’t installed Jekyll on a Linux environment yet, but I imagine the details of each step are similar.</p>
+<p>If you are not using one of the operating systems mentioned above, you’ll need to look for Windows-compatible alternative such as <a href="http://blog.getpelican.com/">Pelican</a> or <a href="https://ghost.org/">Ghost</a>.  In this section, I’ll be describing the Mac OS X installation process.  I haven’t installed Jekyll on a Linux environment yet, but I imagine the details of each step are similar.</p>
 
 <ol>
   <li>
-    <p>If you’re a mac user, you most likely have Xcode installed already.  You can check if this is the case by typing <code class="highlighter-rouge">xcode-select -v</code> into your terminal.  If the terminal suggests you don’t have Xcode installed, you will need to download it from the App Store.</p>
+    <p>If you’re a mac user, you most likely have Xcode installed already.  You can check if this is the case by typing <code class="highlighter-rouge">xcode-select -v</code> into your terminal.  If the terminal suggests you don’t have Xcode installed, you’ll need to download it from the App Store.</p>
   </li>
   <li>
-    <p>Once Xcode is installed, you will need to install the Xcode command line tools by typing <code class="highlighter-rouge">xcode-select --install</code> into the command line.</p>
+    <p>Once Xcode is installed, you’ll need to install the Xcode command line tools by typing <code class="highlighter-rouge">xcode-select --install</code> into the command line.</p>
   </li>
   <li>
     <p>Jekyll 3 requires Ruby v2.0.0 or higher, and Jekyll 2 requires Ruby v1.9.3 or higher.  If your mac shipped with OS X, chances are you already have Ruby v2.0.0 installed.  You can verify this by typing <code class="highlighter-rouge">ruby -v</code> into your terminal.  If you need to install or update your version of Ruby you can follow the <a href="https://www.ruby-lang.org/en/documentation/installation/">guide on the Ruby website</a>.</p>
@@ -241,9 +241,9 @@
 
 <p>The <strong>_config.yml</strong> file is used by Jekyll to configure site-wide parameters.  Open the default <strong>_config.yml</strong> file provided by your theme in a text editor of your choice.  There should be a number of site-wide parameters that are assigned to generic settings.  Review the contents of the file and determine which parameters should be replaced with your personal information. For instance, there are probably title, url, and contact parameters that need to be changed.  If you want to add site-wide parameters that do not already exist, or if you want more information on the <strong>_config.yml</strong> file, see <a href="https://jekyllrb.com/docs/configuration/">Jekyll’s configuration page</a>.</p>
 
-<p>The <strong>_includes</strong> folder contains HTML files that are later included by the <code>{% include %}</code> command in other HTML files.  These files are used to produce sections of your website that are appear in multiple places, such as a comments section or a sidebar.  There should also be a <strong>head.html</strong> file in this folder, which will be used for the HTML head of each page on your website.</p>
+<p>The <strong>_includes</strong> folder contains HTML files that are later included by the <code>{% include %}</code> command in other HTML files.  These files are used to produce sections of your website that appear in multiple places, such as a comments section or a sidebar.  There should also be a <strong>head.html</strong> file in this folder, which will be used for the HTML head of each page on your website.</p>
 
-<p>The <strong>_layouts</strong> folder contains a number of HTML files that are used to style different pages on your website.  There is typically a <strong>default.html</strong> file that is used to style the homepage, and a <strong>posts.html</strong> file that is used to style the individual blog posts.  Layouts are assigned to each section of your website using <a href="https://jekyllrb.com/docs/frontmatter/">YAML front matter</a>.  You will see instances of YAML front matter defined at the top of some of the HTML and Markdown files that were included with your theme, with the YAML front matter defined between two series of three dashes such as in the example shown below.</p>
+<p>The <strong>_layouts</strong> folder contains a number of HTML files that are used to style different pages on your website.  There is typically a <strong>default.html</strong> file that is used to style the homepage, and a <strong>posts.html</strong> file that is used to style the individual blog posts.  Layouts are assigned to each section of your website using <a href="https://jekyllrb.com/docs/frontmatter/">YAML front matter</a>.  You’ll see instances of YAML front matter defined at the top of some of the HTML and Markdown files that were included with your theme, with the YAML front matter defined between two series of three dashes such as in the example shown below.</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>---
 layout: default
@@ -263,9 +263,9 @@ layout: default
 
 <ul>
   <li>Updated my <strong>_config.yml</strong> file to contain my personal information, and to fix some build issues that I ran into</li>
-  <li>Customized my sidebar by combining and editting code from the Hyde and Lanyon .css and HTML files</li>
-  <li>Edited my <strong>index.html</strong> file change the layout of the homepage.</li>
-  <li>Added excerpt seperators to enable summaries of each blog post.  You can do this by adding an excerpt_seperator to your <strong>_config.yml</strong> file, including that separator between the summary and the content in your blog post Markdown files, and displaying only the <code class="highlighter-rouge">post.excerpt</code> content in <strong>index.html</strong>.  See <a href="https://jekyllrb.com/docs/posts/">Jekyll’s information</a> on post excerpts for more details.</li>
+  <li>Customized my sidebar by combining and editing code from the Hyde and Lanyon .css and HTML files</li>
+  <li>Edited my <strong>index.html</strong> file to change the layout of the homepage.</li>
+  <li>Added excerpt seperators to enable summaries of each blog post.  You can do this by adding an <a href="[Jekyll's information](https://jekyllrb.com/docs/posts/)">excerpt_seperator</a> to your <strong>_config.yml</strong> file, including that separator between the summary and the content in your blog post Markdown files, and displaying only the <code class="highlighter-rouge">post.excerpt</code> content in <strong>index.html</strong>.</li>
   <li>Added a comments section to my <strong>_includes</strong> folder by following <a href="http://www.perfectlyrandom.org/2014/06/29/adding-disqus-to-your-jekyll-powered-github-pages/">Perfectly Random’s guide</a></li>
   <li>Added google analytics to my <strong>_includes</strong> folder by following <a href="https://michaelsoolee.com/google-analytics-jekyll/">Michael Lee’s guide</a></li>
   <li>Added social media links to my <strong>_incldues</strong> folder by following <a href="https://blog.r3bl.me/en/simple-social-media-links-jekyll/">Aleksandar Todorovic’s guide</a></li>
@@ -274,14 +274,14 @@ layout: default
   <li>Created a subscriber e-mail list using <a href="http://mailchimp.com/">MailChimp</a> and <a href="https://blog.webjeda.com/jekyll-subscribe-form/">WebJeda’s guide</a></li>
 </ul>
 
-<p>If you are looking for more details on how I implemented these changes, feel free to look through my website’s <a href="https://github.com/Raknoche/Raknoche.github.io">source code</a>.</p>
+<p>If you’re looking for more details on how I implemented these changes, feel free to look through my website’s <a href="https://github.com/Raknoche/Raknoche.github.io">source code</a>.</p>
 
 <h1 id="a-namedomaina-creating-your-own-domain-name"><a name="domain"></a> Creating your own domain name</h1>
 
 <p>If you’ve been following this post up until now, you can 
-access your website by pointing your browser to <a href="username.github.io">username.github.io</a>. Some people may prefer to have a more professional or unique web address.  If this is the case, you will need to purchase a domain name from a registrar.</p>
+access your website by pointing your browser to <a href="username.github.io">username.github.io</a>. Some people may prefer to have a more professional or unique web address.  If this is the case, you’ll need to purchase a domain name from a registrar.</p>
 
-<p>There are many domain name registrars to choose from.  One of the most well known registrars is <a href="godaddy.com">Go Daddy</a>, while some of the best user reviewed registars include <a href="namecheap.com">Name Cheap</a> and <a href="gandi.net">Gandi</a>.  I chose to use Name Cheap for my website domain due to their pricing, positive user reviews, and easily accessable tutorials that explain how to interact with the registrar’s services.</p>
+<p>There are many domain name registrars to choose from.  One of the most well known registrars is <a href="godaddy.com">Go Daddy</a>, while some of the best user reviewed registars include <a href="namecheap.com">Name Cheap</a> and <a href="gandi.net">Gandi</a>.  I chose to use Name Cheap for my website domain due to their pricing, positive user reviews, and easily accessible tutorials that explain how to interact with the registrar’s services.</p>
 
 <p>If you purchase a domain name from a registrar, the registrar is required to display your personal information in a database called <a href="https://www.whois.net/">WhoIs</a>.  Unfortunately, this allows your information to be collected by web scrapers, resulting in unsolicted emails, junk mail, and phone calls.  As a result many registrars offer identity protection services.  Be wary when you purchase these services; they work by replacing your contact information with the contact information of the protection agency, which means the protection agency owns the domain name in the eyes of the law.  This is not as bad as it sounds if you are using a reputable service, but you could easily be taken advantage of if you aren’t careful about who is allowed to overwrite your information in the WhoIs database.  In the case of Name Cheap, the protection service is called WhoIsGuard.  I haven’t found any complaints about them stealing domain names, and have found plenty of people saying they are reputable.  Their own <a href="https://www.namecheap.com/legal/whoisguard/whoisguard-agreement.aspx">service agreement</a> reserves the rights of the domain name to you.  I also found plenty of reports online of people being flooded with emails after opting out of identity protection services.  In light of this, I decided to use WhoIsGuard on my website, but ultimately you’ll need to make this decision yourself.</p>
 

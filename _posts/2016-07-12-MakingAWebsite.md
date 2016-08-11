@@ -34,11 +34,11 @@ There are a number of [prerequisites](https://jekyllrb.com/docs/installation/) t
  * Ruby
  * Jekyll
 
-If you are not using one of the operating systems mentioned above, you will need to look for Windows-compatible alternative such as [Pelican](http://blog.getpelican.com/) or [Ghost](https://ghost.org/).  In this section, I'll be describing the Mac OS X installation process.  I haven't installed Jekyll on a Linux environment yet, but I imagine the details of each step are similar.
+If you are not using one of the operating systems mentioned above, you'll need to look for Windows-compatible alternative such as [Pelican](http://blog.getpelican.com/) or [Ghost](https://ghost.org/).  In this section, I'll be describing the Mac OS X installation process.  I haven't installed Jekyll on a Linux environment yet, but I imagine the details of each step are similar.
 
-1. If you're a mac user, you most likely have Xcode installed already.  You can check if this is the case by typing `xcode-select -v` into your terminal.  If the terminal suggests you don't have Xcode installed, you will need to download it from the App Store.  
+1. If you're a mac user, you most likely have Xcode installed already.  You can check if this is the case by typing `xcode-select -v` into your terminal.  If the terminal suggests you don't have Xcode installed, you'll need to download it from the App Store.  
 
-2. Once Xcode is installed, you will need to install the Xcode command line tools by typing `xcode-select --install` into the command line.
+2. Once Xcode is installed, you'll need to install the Xcode command line tools by typing `xcode-select --install` into the command line.
 
 3. Jekyll 3 requires Ruby v2.0.0 or higher, and Jekyll 2 requires Ruby v1.9.3 or higher.  If your mac shipped with OS X, chances are you already have Ruby v2.0.0 installed.  You can verify this by typing `ruby -v` into your terminal.  If you need to install or update your version of Ruby you can follow the [guide on the Ruby website](https://www.ruby-lang.org/en/documentation/installation/).
 
@@ -81,9 +81,9 @@ In this section we'll take a closer look at the folders you extracted from the t
 
 The **\_config.yml** file is used by Jekyll to configure site-wide parameters.  Open the default **\_config.yml** file provided by your theme in a text editor of your choice.  There should be a number of site-wide parameters that are assigned to generic settings.  Review the contents of the file and determine which parameters should be replaced with your personal information. For instance, there are probably title, url, and contact parameters that need to be changed.  If you want to add site-wide parameters that do not already exist, or if you want more information on the **\_config.yml** file, see [Jekyll's configuration page](https://jekyllrb.com/docs/configuration/).
 
-The **\_includes** folder contains HTML files that are later included by the <code>{{ "{% include " }}%}</code> command in other HTML files.  These files are used to produce sections of your website that are appear in multiple places, such as a comments section or a sidebar.  There should also be a **head.html** file in this folder, which will be used for the HTML head of each page on your website. 
+The **\_includes** folder contains HTML files that are later included by the <code>{{ "{% include " }}%}</code> command in other HTML files.  These files are used to produce sections of your website that appear in multiple places, such as a comments section or a sidebar.  There should also be a **head.html** file in this folder, which will be used for the HTML head of each page on your website. 
 
-The **\_layouts** folder contains a number of HTML files that are used to style different pages on your website.  There is typically a **default.html** file that is used to style the homepage, and a **posts.html** file that is used to style the individual blog posts.  Layouts are assigned to each section of your website using [YAML front matter](https://jekyllrb.com/docs/frontmatter/).  You will see instances of YAML front matter defined at the top of some of the HTML and Markdown files that were included with your theme, with the YAML front matter defined between two series of three dashes such as in the example shown below.
+The **\_layouts** folder contains a number of HTML files that are used to style different pages on your website.  There is typically a **default.html** file that is used to style the homepage, and a **posts.html** file that is used to style the individual blog posts.  Layouts are assigned to each section of your website using [YAML front matter](https://jekyllrb.com/docs/frontmatter/).  You'll see instances of YAML front matter defined at the top of some of the HTML and Markdown files that were included with your theme, with the YAML front matter defined between two series of three dashes such as in the example shown below.
 
 ```
 ---
@@ -103,9 +103,9 @@ Finally, the **index.html** file is used to create the homepage for your website
 To give you an idea of where to start when customizing your website, I've provided a list of some of the initial changes I made to this website's theme:
 
 * Updated my **_config.yml** file to contain my personal information, and to fix some build issues that I ran into
-* Customized my sidebar by combining and editting code from the Hyde and Lanyon .css and HTML files
-* Edited my **index.html** file change the layout of the homepage.
-* Added excerpt seperators to enable summaries of each blog post.  You can do this by adding an excerpt_seperator to your **\_config.yml** file, including that separator between the summary and the content in your blog post Markdown files, and displaying only the `post.excerpt` content in **index.html**.  See [Jekyll's information](https://jekyllrb.com/docs/posts/) on post excerpts for more details. 
+* Customized my sidebar by combining and editing code from the Hyde and Lanyon .css and HTML files
+* Edited my **index.html** file to change the layout of the homepage.
+* Added excerpt seperators to enable summaries of each blog post.  You can do this by adding an [excerpt_seperator]([Jekyll's information](https://jekyllrb.com/docs/posts/)) to your **\_config.yml** file, including that separator between the summary and the content in your blog post Markdown files, and displaying only the `post.excerpt` content in **index.html**.  
 * Added a comments section to my **\_includes** folder by following [Perfectly Random's guide](http://www.perfectlyrandom.org/2014/06/29/adding-disqus-to-your-jekyll-powered-github-pages/)
 * Added google analytics to my **\_includes** folder by following [Michael Lee's guide](https://michaelsoolee.com/google-analytics-jekyll/)
 * Added social media links to my **\_incldues** folder by following [Aleksandar Todorovic's guide](https://blog.r3bl.me/en/simple-social-media-links-jekyll/)
@@ -113,15 +113,15 @@ To give you an idea of where to start when customizing your website, I've provid
 * Customized the favicon that is displayed in web browser tabs
 * Created a subscriber e-mail list using [MailChimp](http://mailchimp.com/) and [WebJeda's guide](https://blog.webjeda.com/jekyll-subscribe-form/)
 
-If you are looking for more details on how I implemented these changes, feel free to look through my website's [source code](https://github.com/Raknoche/Raknoche.github.io).
+If you're looking for more details on how I implemented these changes, feel free to look through my website's [source code](https://github.com/Raknoche/Raknoche.github.io).
 
 
 # <a name="domain"></a> Creating your own domain name
 
 If you've been following this post up until now, you can 
-access your website by pointing your browser to [username.github.io](username.github.io). Some people may prefer to have a more professional or unique web address.  If this is the case, you will need to purchase a domain name from a registrar. 
+access your website by pointing your browser to [username.github.io](username.github.io). Some people may prefer to have a more professional or unique web address.  If this is the case, you'll need to purchase a domain name from a registrar. 
 
-There are many domain name registrars to choose from.  One of the most well known registrars is [Go Daddy](godaddy.com), while some of the best user reviewed registars include [Name Cheap](namecheap.com) and [Gandi](gandi.net).  I chose to use Name Cheap for my website domain due to their pricing, positive user reviews, and easily accessable tutorials that explain how to interact with the registrar's services.  
+There are many domain name registrars to choose from.  One of the most well known registrars is [Go Daddy](godaddy.com), while some of the best user reviewed registars include [Name Cheap](namecheap.com) and [Gandi](gandi.net).  I chose to use Name Cheap for my website domain due to their pricing, positive user reviews, and easily accessible tutorials that explain how to interact with the registrar's services.  
 
 If you purchase a domain name from a registrar, the registrar is required to display your personal information in a database called [WhoIs](https://www.whois.net/).  Unfortunately, this allows your information to be collected by web scrapers, resulting in unsolicted emails, junk mail, and phone calls.  As a result many registrars offer identity protection services.  Be wary when you purchase these services; they work by replacing your contact information with the contact information of the protection agency, which means the protection agency owns the domain name in the eyes of the law.  This is not as bad as it sounds if you are using a reputable service, but you could easily be taken advantage of if you aren't careful about who is allowed to overwrite your information in the WhoIs database.  In the case of Name Cheap, the protection service is called WhoIsGuard.  I haven’t found any complaints about them stealing domain names, and have found plenty of people saying they are reputable.  Their own [service agreement](https://www.namecheap.com/legal/whoisguard/whoisguard-agreement.aspx) reserves the rights of the domain name to you.  I also found plenty of reports online of people being flooded with emails after opting out of identity protection services.  In light of this, I decided to use WhoIsGuard on my website, but ultimately you'll need to make this decision yourself.
 

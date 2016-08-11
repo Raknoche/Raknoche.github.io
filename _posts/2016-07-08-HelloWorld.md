@@ -18,7 +18,7 @@ The term "data science" casts a wide net over a deep pool of specialties.  At th
 
 # How is data science related to physics?
 
-The resonsiblities of a data scientist bear an uncanny resemblance to my every day work as a physics graduate student.  My largest contribution to [LUX](http://luxdarkmatter.org/) was the construction of a signal corrections module.  This required me to clean up terabytes of calibration data on a remote server and apply various modeling techniques to automatically extract over 300 relevant quantities from each data set.  After extracting these quantities, I collected them in a MySQL database and produced streamlined scripts that helped collaboration members access the information on demand.  I also used the MySQL database to produce data visualizations that monitored the stability of our detector and informed day-to-day operations.  Many of my other responsibilities involved applying advanced statistical techniques such as linear regression, reduced &#120768;<sup>2</sup> fitting, Markov-Chain Monte Carlo methods, and maximum likelihood fitting to measure fundamental detector parameters such as our signal gains and energy scale calibration.  Throughout this process I used a combination of the Python, Matlab, and C++ programming langauges, which are all popular among data scientists.
+The resonsiblities of a data scientist bear an uncanny resemblance to my every day work as a physics graduate student.  My largest contribution to [LUX](http://luxdarkmatter.org/) was the construction of a signal corrections module.  This required me to clean up terabytes of calibration data on a remote server and apply various modeling techniques to automatically extract over 300 relevant quantities from each data set.  After extracting these quantities, I collected them in a MySQL database and produced streamlined scripts that helped collaboration members access the information on demand.  I also used the MySQL database to produce data visualizations that monitored the stability of our detector and informed day-to-day operations.  Many of my other responsibilities involved applying advanced statistical techniques such as linear regression, reduced $$\chi^2$$ fitting, Markov-Chain Monte Carlo methods, and maximum likelihood fitting to measure fundamental detector parameters such as our signal gains and energy scale calibration.  Throughout this process I used a combination of the Python, Matlab, and C++ programming langauges, which are all popular among data scientists.
 
 In addition to the aforementioned technqiues, my time as a physics graduate student has taught me how to present complicated results to a wide variety of audiences.  I've written  technical, peer-reviewed papers for experts in the field, presented high-level overviews of [LUX](http://luxdarkmatter.org/) to physicists outside of dark matter research, and produced simple and digestable talks for the general public.  These skills are invaluable to data scientists who must translate complicated data results into informative presentations for their business counterparts.
 
@@ -41,7 +41,7 @@ Luckily, a number of fellowships exist that help transition new post-docs from a
 
 All of the programs I mentioned above are free.  They make their money through head-hunter fees and are mainly interested in post-docs who already have what it takes to succeed in data science.  As such, they are extemely competitive. 
 
-I've spent the last four months researching, learning, and applying new skills to bolster my chances of getting into a data science fellowship.  I started by creating a list of important skills and resources to from.  In the end, the list came out similar to Insight's ["Preparing for Insight"](http://insightdatascience.com/blog/preparing_for_insight.html) blog post:
+I've spent the last four months researching, learning, and applying new skills to bolster my chances of getting into a data science fellowship.  I started by creating a list of important skills and resources to learn from.  In the end, the list came out similar to Insight's ["Preparing for Insight"](http://insightdatascience.com/blog/preparing_for_insight.html) blog post:
 
 
 * Python:
@@ -68,20 +68,20 @@ I've spent the last four months researching, learning, and applying new skills t
    * [Leetcode problems](https://leetcode.com)
 
 *  Statistics: 
-   * [Applied Statistics] (https://onlinecourses.science.psu.edu/stat500/)
-   * [Regression Methods] (https://onlinecourses.science.psu.edu/stat501/)
-   * [Combinatorics] (https://www.dartmouth.edu/~chance/teaching_aids/books_articles/probability_book/Chapter3.pdf)
+   * [Applied Statistics](https://onlinecourses.science.psu.edu/stat500/)
+   * [Regression Methods](https://onlinecourses.science.psu.edu/stat501/)
+   * [Combinatorics](https://www.dartmouth.edu/~chance/teaching_aids/books_articles/probability_book/Chapter3.pdf)
 
 
 * Interviewing:
-   * [Nailing the Tech Interview] (http://insightdatascience.com/blog/nailing-the-tech-interview-jessica-kirkpatrick.html)
+   * [Nailing the Tech Interview](http://insightdatascience.com/blog/nailing-the-tech-interview-jessica-kirkpatrick.html)
    * [Programming Interview Examples](https://javarevisited.blogspot.com/2011/06/top-programming-interview-questions.html)
-   * [More example problems] (http://www.techinterview.org/)
+   * [More example problems](http://www.techinterview.org/)
 
 * Data Science News and Information:
    * [Hacker News](https://news.ycombinator.com/)
-   * [DataTau] (www.datatau.com/)
-   * [Quora] (https://www.quora.com/topic/Data-Science/top_stories)
+   * [DataTau](www.datatau.com/)
+   * [Quora](https://www.quora.com/topic/Data-Science/top_stories)
    * [Blogs](http://www.kdnuggets.com/2015/10/best-blogs-analytics-big-data-science-machine-learning.html)
 
 This is a long list to learn in a few months.  Luckily, I was able to move through much of the content quickly since I was familiar with it from my graduate school work.  At this time I've finished the Python, MySQL, Machine Learning, and Statistics sections.  I've put some of the computer science algorithms and interviewing topics aside for now, since those will become more critical when applying to data science jobs directly after a fellowship.
