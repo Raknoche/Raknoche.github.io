@@ -14,7 +14,7 @@ A discussion of Bayes theorem and how it is used in Naive Bayes Classifiers.
 TABLE OF CONTENTS
 
 
-Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the pokemon go teams in a positive light, while others denegrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
+Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denegrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
 
 In this post, we'll discuss the following topics:
 
@@ -30,7 +30,7 @@ Suppose we want to calculate the probability of our favorite sports team winning
 
 $$\mathsf{ P(W) = \frac{W}{W + L}} \tag{1}$$
 
-Now, suppose that we obtained additional information about each time our team won and lost a game.  For instance, maybe we kept track of whether our team was playing at home or not.  Now we can ask more complex questions, such as “What is the probability of our favorite team winning, given that they are at home?”  This is known as a **conditional probability**.  We can calculate the answer by counting the how often our team wins while at home, and dividing by the total number of times our team played at home (regardless of the outcome).  Mathematically, if $$\mathsf{H}$$ represents the team playing at home:
+Now, suppose that we obtained additional information about each time our team won and lost a game.  For instance, maybe we kept track of whether our team was playing at home or not.  Now we can ask more complex questions, such as “What is the probability of our favorite team winning, given that they are at home?”  This is known as a **conditional probability**.  We can calculate the answer by counting how often our team wins while at home, and dividing by the total number of times our team played at home (regardless of the outcome). Mathematically, if $$\mathsf{H}$$ represents the team playing at home:
 
 <a name="eq2"></a>
 
@@ -38,19 +38,19 @@ $$\mathsf{P(W \lvert H) = \frac{ P( W \cap H)}{P(H)}}\tag{2} $$
 
 A few notes about the above equation:
 
-* $$\mathsf{P(W \; \lvert \; H)}$$ is the conditional probability that our team will win, given that they play at home.  The \"$$\lvert$$\" symbol is used to declare the conditions that are **given**.
+* $$\mathsf{P(W \; \lvert \; H)}$$ is the conditional probability that our team will win, given that they play at home.  The \"$$\lvert$$\" symbol is used to denote the conditions that are **given**.
 * $$\mathsf{P( W \cap H)}$$ is the probability of our team winning and playing at home.  The \"$$\cap$$\" symbol is used to denote the **intersection** where both of these events occur.
 * $$\mathsf{P(H)}$$ is the probability of our team playing at home.
 * The probability of our team winning without specifying any conditions, $$\mathsf{P(W)}$$ is known as the **prior probability** of $$\mathsf{W}$$.
 
 <a name="goback"></a>
 
-In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured ($$\mathsf{P(A \lvert B)}$$ is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring ($$\mathsf{P( W \cap H)}$$) divided by the probability of $$\mathsf{B}$$ occuring.
+In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured, $$\mathsf{P(A \lvert B)}$$, is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring, $$\mathsf{P( W \cap H)}$$, divided by the probability of $$\mathsf{B}$$ occuring.
 
 
 # <a name="totalprob"></a> The Law of Total Probability
 
-Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The **Law of Total Probability** states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into $$n$$ different outcomes, then for some event $$\mathsf{A}$$
+Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The **Law of Total Probability** states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into $$n$$ different outcomes, then for some event $$\mathsf{A}$$:
 
 $$\mathsf{P(A) = \sum_{i=1}^n P(A \cap B_i) = \sum_{i=1}^n P(A \lvert B_i)P(B_i)}\tag{3}$$
 
@@ -65,7 +65,7 @@ A closing note for this section &mdash; do not confuse the probability of our te
 
 # <a name="bayes"></a> Bayes' Theorem
 
-Finally, we can discuss the foundation of Naive Bayes Classifiers &mdash; Bayes' theorem.  Consider the general form of [Equation 2](#eq2), for some event $$\mathsf{A}$$ and some given condition $$\mathsf{B}$$:
+Finally, we can discuss the foundation of Naive Bayes Classifiers &mdash; Bayes' Theorem.  Consider the general form of [Equation 2](#eq2), for some event $$\mathsf{A}$$ and some given condition $$\mathsf{B}$$:
 
 <a name="eq5"></a>
 
@@ -77,7 +77,7 @@ We'll first rearrange this equation to make it easier to work with:
 
 $$\mathsf{P( A \cap B) = P(A \lvert B)P(B)}\tag{6} $$ 
 
-The probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occurring, $$\mathsf{P( A \cap B)}$$, is identical to the probability of $$\mathsf{B}$$ and $$\mathsf{A}$$ both occurring, $$\mathsf{P( B \cap A)}$$.  Therefore, we can rewrite the [Equation 6](#eq6) as:
+The probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occurring, $$\mathsf{P( A \cap B)}$$, is identical to the probability of $$\mathsf{B}$$ and $$\mathsf{A}$$ both occurring, $$\mathsf{P( B \cap A)}$$. Therefore, we can rewrite the [Equation 6](#eq6) as:
 
 <a name="eq7"></a>
 
@@ -94,7 +94,7 @@ We can see that the right hand side of [Equation 7](#eq7) and [Equation 8](#eq8)
 
 $$\mathsf{P(A \lvert B)P(B) = P( B \lvert A)P(A)}\tag{9}$$ 
 
-Solving for $$\mathsf{P(A \lvert B)}$$, we arrive a **Bayes' Theorem**
+Solving for $$\mathsf{P(A \lvert B)}$$, we arrive a **Bayes' Theorem**:
 
 $$\mathsf{P(A \lvert B) = \frac{P( B \lvert A)P(A)}{P(B)}}\tag{10}$$ 
 
@@ -118,7 +118,7 @@ With Bayes' theorem we can combine all of this information to answer the questio
 
 A Naive Bayes Classifier is a machine learning algorithm that uses Bayes' Theorem to predict the class that a sample belongs to, given a number of features that describe that sample.  If we collect information on $$\mathsf{n}$$ different features.  We can write the values of these features for a particular sample as a $$\mathsf{1 \times n}$$ vector $$\mathbf{X} = \{x_1,x_2,x_3,...,x_n\}$$ known as the **evidence**.
 
-Our goal is to determine which class the sample belongs to.  This boils down to calculating the probability for each class given the evidence vector $$\mathbf{X}$$.  Bayes Theorem tells us that for a particular class, $$\mathsf{C_i}$$, this is given by
+Our goal is to determine which class the sample belongs to.  This boils down to calculating the probability for each class given the evidence vector $$\mathbf{X}$$.  Bayes Theorem tells us that for a particular class, $$\mathsf{C_i}$$, this is given by:
 
 <a name="eq12"></a>
 
@@ -131,9 +131,9 @@ To evaluate Bayes' theorem we need to determine the three probabilities on the r
 $$\mathsf{ P(C_i)= \frac{number \; of \; training \; samples \; in \; class \; C_i}{number \; of \; training \; samples} \tag{13}}$$
 
 In pratice, the probability of the observed features occuring given the sample belongs to class $$\mathsf{C_i}$$ can be hard to calculate.
-To simplify the calculation, Naive Bayes Classifiers assumes that the features are **conditional independent**.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated &mdash; hence the name *Naive* Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.
+To simplify the calculation, Naive Bayes Classifiers assume that the features are **conditional independent**.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated &mdash; hence the name *Naive* Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.
 
-Mathematically, the consquence of this assumption is that the probability of the observing the evidence $$\mathbf{X}$$, given that the sample belongs to some class $$\mathsf{C_i}$$, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to $$\mathsf{C_i}$$:
+Mathematically, the consquence of this assumption is that the probability of observing the evidence $$\mathbf{X}$$, given that the sample belongs to some class $$\mathsf{C_i}$$, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to $$\mathsf{C_i}$$:
 
 <a name="eq14"></a>
 
@@ -149,7 +149,7 @@ $$\mathsf{ P(x_k|C_i) = \frac{number \; training \; samples \; with \; class \; 
 
 The denominator in [Equation 12](#eq12), $$\mathsf{P(\mathbf{X})}$$, is the same regardless of which class we are looking at, so we don't actually need to calculate it. In fact, we shouldn't calculate it so that the algorithm will run faster.  That said, if we did want to calculate $$\mathsf{P(\mathbf{X})}$$ we would just use the **Law of Total Probability**.
 
-Once we know $$P(C_i \lvert X)$$ for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rule, known as the "maximum posteriori hypothesis," is to predict that the sample belongs to whichever class has the highest probability $$P(X \lvert C_i)$$.
+Once we know $$\mathsf{P(C_i \lvert X)}$$ for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rules, known as the "maximum posteriori hypothesis," predicts that the sample belongs to whichever class has the highest probability $$\mathsf{P(X \lvert C_i)}$$.
 
 As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continous values have a Gaussian distribution with mean $$\mu$$ and standard deviation $$\sigma$$, such that
 
@@ -189,7 +189,7 @@ Tomorrow, our team is about to play their first play off game.  We'd like to pre
 
 $$\mathbf{X} = \mathsf{\{At \; Home, Raining, Experts \; are \; split\}}$$
 
-There are two possible outcomes to predict &mdash; our team winning (denoted with $$\mathsf{W}$$) and our team losing (denoted with $$\mathsf{L}$$).  Bayes' theorem tells us the probability of each of these outcomes, given the evidence vector for the upcoming game:
+There are two possible outcomes to predict &mdash; our team winning (denoted with $$\mathsf{W}$$) and our team losing (denoted with $$\mathsf{L}$$).  Bayes' Theorem tells us the probability of each of these outcomes, given the evidence vector for the upcoming game:
 
 $$\mathsf{ P(W \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert W)P(W)}{P(\mathbf{X})} }$$ 
 
@@ -228,7 +228,7 @@ $$\mathsf{ P(W \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert W)P(W)}{P(\mathbf
 
 $$\mathsf{ P(L \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert L)P(L)}{P(\mathbf{X})} = \frac{0.04 \times 0.35}{0.21} = 0.07 }$$ 
 
-The Naive Bayes Classifier says our team has a 93% chance of winning the upcoming game, and only a 7% chance of losing!  We can safely predict that our team will win game! 
+The Naive Bayes Classifier says our team has a 93% chance of winning the upcoming game, and only a 7% chance of losing!  We can safely predict that our team will win the game! 
 
 
 # Closing remarks
