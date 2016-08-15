@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      PoGo Series&#58; Training a Sentiment Analyzer &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">PoGo Series&#58; Training a Sentiment Analyzer</h1>
+  <span class="post-date">28 Jul 2016</span>
+  
+    
+
+<p>TABLE OF CONTENTS</p>
+
+<p>This is the fifth post in an on-going Pokemon Go analysis series.  Last time, we discussed how a Naive Bayes Classifier can be used to predict the class of a sample given a number of features about that sample.  In this post, we’ll apply that technique to our Pokemon Go tweets to build a <a href="http://www.nltk.org/book/ch06.html">sentiment analyzer</a> that automatically classifies whether each tweet has a positive or negative tone.  Once complete, we’ll use the sentiment analyzer to remove negative tweets from our data set before using the positive tweets to map out the dominance of each team in each state.  Strap yourselves in — properly tuning a classifier for your data requires careful implementation. This will be the most detailed post of our Pokemon Go series, but the intuition we’ll build will be invaluable.</p>
+
+<p>We’ll cover the following topics:</p>
+
+<ol>
+  <li><a href="#labeling">Manually classifying a training set</a></li>
+  <li><a href="#sets">Training sets, Test sets, and Cross Validation sets</a></li>
+  <li><a href="#imbalanced">Dealing with imbalanced classes</a></li>
+  <li><a href="#features">Feature Extraction Design</a></li>
+  <li><a href="#featuresCode">Feature Extraction Implementation</a></li>
+  <li><a href="#training">Training and Modifying our sentiment analyzer</a></li>
+  <li><a href="#eval">Evaluating our analyzer’s performance</a></li>
+</ol>
+
+<h1 id="a-namelabelinga-manually-classifying-a-training-set"><a name="labeling"></a> Manually classifying a training set</h1>
+
+<p>Recall from our last post that the implementation of a Naive Bayes Classifier requires a training set of samples which have known features and known classes.  Right now, all of the tweets we’ve collected are unclassified.  Before we create our sentiment analyzer, we’ll have to manually label a subset of the tweets as positive or negative to form our training set.  If you want to avoid manually labeling tweets, you could take an <a href="https://marcobonzanini.com/2015/05/17/mining-twitter-data-with-python-part-6-sentiment-analysis-basics/">unsupervised machine learning approach</a> instead, but these typically have poor performance compared to a supervised approach such as Naive Bayes Classifiers.</p>
+
+<p>The process of manually labeling tweets is going to be time consuming and tedious, but we can use Python to make the process a little more bearable.  First, we’ll import the Pandas and JSON libraries.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</code></pre>
+</div>
+
+<p>If you aren’t familiar with Pandas, I highly recommend watching <a href="https://github.com/estimate/pandas-exercises">Wes McKinney’s tutorial</a> on the library that he created.  Pandas is designed to provide intuitive interactions with tabular data by introducing data frames to Python.  Below, I’ve included a function that reads the JSON text file we created and populates a Pandas data frame one tweet at a time.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pop_tweets</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="c">#Declare a new data frame with pandas, with some specific column names</span>
+    <span class="n">tweets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'screenName'</span><span class="p">,</span><span class="s">'userId'</span><span class="p">,</span><span class="s">'text'</span><span class="p">,</span><span class="s">'location'</span><span class="p">])</span>
+
+    <span class="c">#Open the text file that contains the tweets we collected</span>
+    <span class="n">tweets_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+    
+    <span class="c">#Read the text file line by line</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">tweets_file</span><span class="p">:</span>
+        
+        <span class="c">#Load the JSON information</span>
+        <span class="n">tweet</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        
+        <span class="c">#If the tweet isn't empty, add it to the data frame</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s">'text'</span> <span class="ow">in</span> <span class="n">tweet</span><span class="p">):</span> 
+            <span class="n">tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">tweets</span><span class="p">)]</span><span class="o">=</span><span class="p">[</span><span class="n">tweet</span><span class="p">[</span><span class="s">'user'</span><span class="p">][</span><span class="s">'screen_name'</span><span class="p">],</span>\
+            <span class="n">tweet</span><span class="p">[</span><span class="s">'user'</span><span class="p">][</span><span class="s">'id'</span><span class="p">],</span><span class="n">tweet</span><span class="p">[</span><span class="s">'text'</span><span class="p">],</span><span class="n">tweet</span><span class="p">[</span><span class="s">'place'</span><span class="p">][</span><span class="s">'full_name'</span><span class="p">]]</span>    
+
+    <span class="k">return</span> <span class="n">tweets</span>
+
+<span class="n">PoGo_tweets</span> <span class="o">=</span> <span class="n">pop_tweets</span><span class="p">(</span><span class="s">'PoGo_USA.json'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>We can take a peek at the data frame we just created using Pandas’ <code class="highlighter-rouge">head</code> method.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>screenName</th>
+      <th>userId</th>
+      <th>text</th>
+      <th>location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>desmond_ayala</td>
+      <td>2.953472e+09</td>
+      <td>Which pokemon go team did y'all chose? #valor</td>
+      <td>Caldwell, ID</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>aphrospice</td>
+      <td>1.629086e+07</td>
+      <td>#Magikarp practicing his struggle skills in th...</td>
+      <td>Brooklyn, NY</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ABellgowan</td>
+      <td>1.681036e+09</td>
+      <td>Pokemon Go is taking over my life #TeamInstinct</td>
+      <td>Bixby, OK</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JangoSnow</td>
+      <td>1.057434e+07</td>
+      <td>Go Team Instinct! I like underdogs. :)  https:...</td>
+      <td>Los Angeles, CA</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>MetalMushin</td>
+      <td>6.033327e+08</td>
+      <td>Gonna go fuck up some #TeamMystic and #TeamIns...</td>
+      <td>Orange, CT</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Great! Now that we have all of the tweets that we collected stored in a data frame it’s much easier to assess what our data looks like and any problems we might run into.  In particular, look at the tweet in row 4 of the data frame:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">PoGo_tweets</span><span class="p">[</span><span class="s">'text'</span><span class="p">][</span><span class="mi">4</span><span class="p">])</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Gonna go fuck up some #TeamMystic and #TeamInstinct gyms in the name of #TeamValor before I head off to work today. #PokemonGO
+</code></pre>
+</div>
+
+<p>This type of tweet will be very hard to classify.  It’s clear this Twitter user has an allegiance to Team Valor, but if we want our sentiment analyzer to recognize that it would need to determine that the first half of the tweet has a negative tone, while the second half of the tweet has a positive tone.  This introduces a lot of complexity to the classifier.  It’d be much simpler to have the analyzer classify the entirety of each tweet as positive or negative, so we should just remove complicated, multi-team tweets from our data set.  To do so, we’ll add a new column to our data frame that tells us when a tweet talks about multiple teams.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Remove tweets that discuss two or more teams</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">PoGo_tweets</span><span class="p">)):</span>
+    
+    <span class="c">#Set three flags that determine if the tweet mentions each team</span>
+    <span class="n">has_b</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> \
+    	<span class="p">[</span><span class="s">'team mystic'</span><span class="p">,</span><span class="s">'#teamblue'</span><span class="p">,</span><span class="s">'#teammystic'</span><span class="p">,</span><span class="s">'#mystic'</span><span class="p">,</span><span class="s">'mystic'</span><span class="p">])</span>
+    <span class="n">has_r</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> \
+    	<span class="p">[</span><span class="s">'team valor'</span><span class="p">,</span><span class="s">'#teamred'</span><span class="p">,</span><span class="s">'#teamvalor'</span><span class="p">,</span><span class="s">'#valor'</span><span class="p">,</span><span class="s">'valor'</span><span class="p">])</span>
+    <span class="n">has_y</span><span class="o">=</span><span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> \
+    	<span class="p">[</span><span class="s">'team instinct'</span><span class="p">,</span><span class="s">'#teamyellow'</span><span class="p">,</span><span class="s">'#teaminstinct'</span><span class="p">,</span><span class="s">'#instinct'</span><span class="p">,</span><span class="s">'instinct'</span><span class="p">])</span>
+    
+    <span class="c">#If the tweet mentions more than one team, set the new 'multi-team' column to True</span>
+    <span class="k">if</span> <span class="n">has_b</span><span class="o">+</span><span class="n">has_r</span><span class="o">+</span><span class="n">has_y</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'multi-team'</span><span class="p">]</span><span class="o">=</span><span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'multi-team'</span><span class="p">]</span><span class="o">=</span><span class="bp">False</span>    
+</code></pre>
+</div>
+
+<p>Now that we’ve added a new column, let’s take another look at the data frame.  Note that the new “multi-team” column is appropriately flagging the tweet in the fourth row as being a multi-team tweet.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>screenName</th>
+      <th>userId</th>
+      <th>text</th>
+      <th>location</th>
+      <th>multi-team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>desmond_ayala</td>
+      <td>2.953472e+09</td>
+      <td>Which pokemon go team did y'all chose? #valor</td>
+      <td>Caldwell, ID</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>aphrospice</td>
+      <td>1.629086e+07</td>
+      <td>#Magikarp practicing his struggle skills in th...</td>
+      <td>Brooklyn, NY</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ABellgowan</td>
+      <td>1.681036e+09</td>
+      <td>Pokemon Go is taking over my life #TeamInstinct</td>
+      <td>Bixby, OK</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JangoSnow</td>
+      <td>1.057434e+07</td>
+      <td>Go Team Instinct! I like underdogs. :)  https:...</td>
+      <td>Los Angeles, CA</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>MetalMushin</td>
+      <td>6.033327e+08</td>
+      <td>Gonna go fuck up some #TeamMystic and #TeamIns...</td>
+      <td>Orange, CT</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Removing the multi-team tweets from our data frame is simple.  The data frame can be indexed with logical statements, so we simply reassign our data frame to the subset of data which passes <code class="highlighter-rouge">PoGo_tweets['multi-team'] == False</code>.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Applying cut to remove multi-team tweets</span>
+<span class="n">PoGo_tweets</span> <span class="o">=</span> <span class="n">PoGo_tweets</span><span class="p">[</span><span class="n">PoGo_tweets</span><span class="p">[</span><span class="s">'multi-team'</span><span class="p">]</span> <span class="o">==</span> <span class="bp">False</span><span class="p">]</span>
+<span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>screenName</th>
+      <th>userId</th>
+      <th>text</th>
+      <th>location</th>
+      <th>multi-team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>desmond_ayala</td>
+      <td>2.953472e+09</td>
+      <td>Which pokemon go team did y'all chose? #valor</td>
+      <td>Caldwell, ID</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>aphrospice</td>
+      <td>1.629086e+07</td>
+      <td>#Magikarp practicing his struggle skills in th...</td>
+      <td>Brooklyn, NY</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ABellgowan</td>
+      <td>1.681036e+09</td>
+      <td>Pokemon Go is taking over my life #TeamInstinct</td>
+      <td>Bixby, OK</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JangoSnow</td>
+      <td>1.057434e+07</td>
+      <td>Go Team Instinct! I like underdogs. :)  https:...</td>
+      <td>Los Angeles, CA</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>EmberLighta2</td>
+      <td>7.513920e+17</td>
+      <td>#TeamMystic has total control of Niagara Falls!!</td>
+      <td>Niagara Falls, NY</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Notice that we’re now missing a fourth row in our data frame! Pandas does not automatially reindex the data frame after we apply a logical cut.  We can force it to do so with the <code class="highlighter-rouge">reset_index</code> method.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_tweets</span> <span class="o">=</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>screenName</th>
+      <th>userId</th>
+      <th>text</th>
+      <th>location</th>
+      <th>multi-team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>desmond_ayala</td>
+      <td>2.953472e+09</td>
+      <td>Which pokemon go team did y'all chose? #valor</td>
+      <td>Caldwell, ID</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>aphrospice</td>
+      <td>1.629086e+07</td>
+      <td>#Magikarp practicing his struggle skills in th...</td>
+      <td>Brooklyn, NY</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ABellgowan</td>
+      <td>1.681036e+09</td>
+      <td>Pokemon Go is taking over my life #TeamInstinct</td>
+      <td>Bixby, OK</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>JangoSnow</td>
+      <td>1.057434e+07</td>
+      <td>Go Team Instinct! I like underdogs. :)  https:...</td>
+      <td>Los Angeles, CA</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>EmberLighta2</td>
+      <td>7.513920e+17</td>
+      <td>#TeamMystic has total control of Niagara Falls!!</td>
+      <td>Niagara Falls, NY</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We’ll need to fairly large training set in order for our sentiment analyzer to perform well, but we don’t want to spend too much time manually labeling tweets.  After all, if we manually labeled all of the tweets in our collection there would be no need to train a sentiment analyzer.  Manually labeling about 4,000 of the ~20,000 tweets in our collection should be a good middle ground.  We’ll begin the process by putting the first 4,000 tweets of our collection into their own data frame.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_labeled</span> <span class="o">=</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">ix</span><span class="p">[:</span><span class="mi">4000</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>I wrote a function to help label all 4,000 tweets quickly.  It loops through each of the rows in our new data frame and displays the tweet on screen.  It then waits for us to read the tweet and manually classify the text as ‘pos’,’neg’, or ‘nan’ (when the tweet is ambiguous) before adding our classification to a new “sentiment” column in the data frame.  Even with this function the process was tedious, and took me about 4 hours to complete on my own.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Display the tweet for each row, and ask user to label it</span>
+
+<span class="c">#Classifications:</span>
+<span class="c">#pos: Can identify the user as being on the team</span>
+<span class="c">#neg: Negative tweet about the team</span>
+<span class="c">#nan: Can't identify the user as being on the team, but the tweet is not negative</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4000</span><span class="p">):</span>
+    <span class="k">print</span> <span class="p">(</span><span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">])</span>
+    <span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'sentiment'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>After we’ve finished manually classifying our training set, we should save the data to a csv file so that we don’t have to repeat the process.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'PoGo_Sentiment_Labeled.csv'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h1 id="a-namesetsa-training-sets-test-sets-and-cross-validation-sets"><a name="sets"></a> Training sets, Test sets, and Cross Validation sets</h1>
+
+<p>Before we use the training set to build our sentiment analyzer, we need to consider how to properly handle the data.  Suppose we fed all of our training set to the sentiment analyzer, allowing it to extract whatever features were needed to maximize its prediction accuracy.  In this case, we run the risk of over constraining our sentiment analyzer with obscure features that are only relevant to a handful of tweets.  For instance, maybe one of the tweets that was not included in our training set contains the text “I really love #TeamValor.  Psych!”  Without using the fairly uncommon word “psych” as a feature, our analyzer would probably classify this tweet as positive.  The only chance we have of correctly identifying the tweet as negative is if the word “psych” was also used in one of our training set tweets.  There is no chance that our training set contains every word (including misspellings and acronyms) that will show up in our entire collection of tweets, so if we evaluate the performance of our classifier based on the tweets it was trained on we will likely overestimate its performance.</p>
+
+<p>To solve this problem, we’ll set a portion of our original training set aside, not to be touched until we have finished training our sentiment analyzer.  This reserved set of data is known as the <strong>test set</strong>, which we will use to evaluate the performance of our sentiment analyzer once it is complete.</p>
+
+<p>When designing our sentiment analyzer, we’ll have a number of choices to make along the way.  How many features should we use?  Should we include the capitalization of words as a feature?  Should we label additional tweets to increase the size of our training set?  These types of choices are known as <strong>hyperparameters</strong> in machine learning, and the answers to each of these questions will effect the performance of our sentiment analyzer. To maximize performance,  we’ll need to evaluate our classifier under different hyperparameter settings — but which data should we for this evaluation?  We could evaluate the performance using the training set itself, but then we would run into the same risk of over constraining the analyzer that we discussed earlier.  We could evaluate the performance using the test set that we set aside earlier, but then we would be tuning our classifier to the test set.  This would defeat the purpose of setting that data aside in the first place.</p>
+
+<p>To solve this problem, we’ll set another portion of the original training set aside.  This new subset of data is called the <strong>cross validation set</strong>.  We can use it to evaluate the performance of our sentiment analyzer as we tune our hyperparameters.  Since the analyzer is not trained on data from the cross validation set, there is no chance that the performance evaluation will be skewed due to over fitting the data.  Likewise, since the analyzer is not trained on data from the test set, and since the the hyperparameters were not tuned with data from the test set, our final evaluation of our analyzer’s performance will be a true representation of how it will perform on unlabeled tweets from full collection.</p>
+
+<h1 id="a-nameimbalanceda-dealing-with-imbalanced-classes"><a name="imbalanced"></a> Dealing with imbalanced classes</h1>
+
+<p>Before we decide how much data to set aside for our training, test, and cross validation sets, let’s take a look at how many tweets we labeled as positive and negative.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Use list comprehensions to make lists of positive and negative tweets</span>
+<span class="n">pos_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">],</span><span class="s">'positive'</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">PoGo_labeled</span><span class="p">))</span> <span class="k">if</span> \
+              <span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'sentiment'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'pos'</span><span class="p">]</span>
+
+<span class="n">neg_tweets</span> <span class="o">=</span> <span class="p">[(</span><span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'text'</span><span class="p">],</span><span class="s">'negative'</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">PoGo_labeled</span><span class="p">))</span> <span class="k">if</span> \
+              <span class="n">PoGo_labeled</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="s">'sentiment'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'neg'</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Number of tweets labeled positive: </span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_tweets</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Number of tweets labeled negative: </span><span class="si">%</span><span class="s">d'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">neg_tweets</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Number of tweets labeled positive: 3408
+Number of tweets labeled negative: 304
+</code></pre>
+</div>
+
+<p>Notice that only about 10% of the tweets are negative.  This class imbalance presents a new challenge for our sentiment analyzer.  Bayes’ Theorem tells us that the probability of a tweet belonging to the negative class is</p>
+
+<script type="math/tex; mode=display">\mathsf{ P(Neg | \mathbf{X}) = \frac{ P( \mathbf{X} | \lvert Neg ) P(Neg) }{P(\mathbf{X})}}</script>
+
+<p>Since the probability of seeing negative tweets, <script type="math/tex">\mathsf{P(Neg)}</script>, is so small, Bayes Theorem is likely to predict that the probability of any tweet being negative is small regardless of the evidence.  In fact, if the classifier predicted that all of the tweets we collected were positive it would be correct 90% of the time!  This isn’t a particularly useful classifier though, since it wouldn’t help us eliminate negative tweets from our collection at all.</p>
+
+<p>The are a few ways to deal with imbalanced classes.  One option is to <strong>up sample</strong> the the population of negative tweets in our training set.  This means that each time we put a negative tweet into our training set, we actually enter it multiple times.  In this case, we’d have to copy 10 instances of each negative tweet in our training set for the classes to be balanced.  Up sampling allows us to see a larger population of the positive tweets at the cost of giving each feature that we see in the negative tweets more weight.  This typically works best when we have very little data to work with.</p>
+
+<p>Alternatively, we could <strong>down sample</strong> the population of positive tweets in our training set.  This means that each time we put a negative tweet into our training set, we put one positive tweet in as well.  This will result in having far fewer positive tweets in the training sample than up sampling would, but the weight of negative features will be an exact representation of what we see in our population.  This typically works best when we have a large amount of data to work with.</p>
+
+<p>The choice of up sampling, down sampling, or randomly sampling (producing the true positive to negative ratio) is a hyperparameter of our sentiment analyzer.  The easiest way to know which method will work best is to simply try all three and see which gives the best performance on your cross validation set.  In this case, I found that randomly sampling performed horribly, and down sampling performed slightly better than up sampling.  Below, I’ve included the code I used to put half of the negative tweets into the training set while down sampling positive tweets at a one-to-one ratio.  Half of the remaining tweets were put into my cross validation set, and the final quarter of tweets were put into the test set.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#half the negative tweets go in training</span>
+<span class="c">#Downsampling the positive tweets at 1 pos:1 neg</span>
+<span class="n">len_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neg_tweets</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">train_tweets</span> <span class="o">=</span> <span class="n">neg_tweets</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span> <span class="o">+</span> <span class="n">pos_tweets</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)]</span>
+
+<span class="c">#half of the remaining half go in cv</span>
+<span class="n">cv_neg_cutoff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">round</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">neg_tweets</span><span class="p">)</span> <span class="o">-</span> <span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">cv_pos_cutoff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="nb">round</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_tweets</span><span class="p">)</span> <span class="o">-</span> <span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">cv_tweets</span> <span class="o">=</span>  <span class="n">neg_tweets</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span><span class="n">cv_neg_cutoff</span><span class="p">]</span> <span class="o">+</span>  <span class="n">pos_tweets</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">len_train</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span><span class="n">cv_pos_cutoff</span><span class="p">]</span>  
+
+<span class="c">#rest go into testing</span>
+<span class="n">test_tweets</span> <span class="o">=</span> <span class="n">neg_tweets</span><span class="p">[</span><span class="n">cv_neg_cutoff</span><span class="p">:]</span> <span class="o">+</span>  <span class="n">pos_tweets</span><span class="p">[</span><span class="n">cv_pos_cutoff</span><span class="p">:]</span>  
+</code></pre>
+</div>
+
+<h1 id="a-namefeaturesa-feature-extraction-design"><a name="features"></a> Feature Extraction Design</h1>
+
+<p>We’ll define our sentiment analyzer’s features with boolean <code class="highlighter-rouge">contains(word)</code> statements.  For instance, the feature <code class="highlighter-rouge">contains(hate)</code> will likely be true for a negative tweet, and false for a positive tweet.  We’ll need to construct a list of useful words for this purpose.</p>
+
+<p>Our list of words shouldn’t include every word we come across in our collection of tweets.  Uncommon words, including acronyms, abbreviations, and misspellings, will cause our sentiment analyzer to overfit the training sample.  We can avoid this issue by requiring that each word appear a certain number of times before we consider it as a feature.  While doing so, we need to consider whether or not to treat words with different capitalizations or punctuations as unique.  After testing these hyperparameters with my cross validation set, I found that ignoring capitalization (with the <code class="highlighter-rouge">.lower</code> string method) and punctuation marks (with the <code class="highlighter-rouge">string.punctuation</code> set) works best in this case.  Similarly, I found that treating all URLs as identical improved performance on my cross validation set.  Note that in some situations capitalization or punctuation marks may be important context clues, so you’ll need to evaluate the hyperparameters on your own cross validation set.</p>
+
+<p>Many words, such as “an”, are common to both positive and negative tweets.  Including these words as features can actually decrease the performance of our classifier, since they increase the dimensionality of our model without adding additional information.  There are a few ways to deal with such features:</p>
+
+<ol>
+  <li>
+    <p>Remove the common stop words.  The NLTK library provides a list of common stop words.  You can import it to Python using:
+<code class="highlighter-rouge">python
+from nltk.corpus import stopwords
+stop = set(stopwords.words('english'))
+</code>
+After importing the list of stop words, it’s easy to filter them out with an <code class="highlighter-rouge">if ... not in</code> statement.</p>
+  </li>
+  <li>
+    <p>Limit our model to <a href="http://streamhacker.com/2010/06/16/text-classification-sentiment-analysis-eliminate-low-information-features/">high-information features</a>. These features will contain words which show up far more often in one class than the other.  With this technique we train our model once, and use it to gain information about the most informative features.  We then train our analyzer a second time, using only the most informative features.  The exact number of high information features to use is a hyperparameter which will need to be tuned with the cross validation set.  Using high information features is often a better strategy than simply excluding stop words, since some of the stop words may actually turn out to be important in our context.  This strategy will also help us filter out uncommon words if we neglected to do so beforehand.</p>
+  </li>
+</ol>
+
+<p>I found that my analyzer performed better on my cross validation set when stop words were not excluded as features.  This is likely due to important stop words, such as “my,” which help identify which Pokemon Go team the Twitter user is on. I also found that limiting my model to include only high-information features did not significantly change performance, which is likely due to my efforts to optimize the feature extraction process using the other methods discussed in this section.</p>
+
+<p>Now, consider the following two tweets:</p>
+
+<ol>
+  <li>“I do like #TeamValor.”</li>
+  <li>“I do not like #TeamValor.”</li>
+</ol>
+
+<p>The content of these tweets are extremely similar.  If we were to train a model that believes the word “like” indicates a positive tweet, we would misclassify the second tweet.  It’s clear that the classifier’s performance would increase if it could recognize that the word “not” is negating the word “like.”  One way to achieve this is to distinguish every word that follows a negation — in this case we would end up with  <code class="highlighter-rouge">contains(like)</code> as a feature for the first tweet, and <code class="highlighter-rouge">contains(like_NEG)</code> as a feature for the second tweet.  <a href="http://www.nltk.org/_modules/nltk/sentiment/util.html">NLTK’s sentiment package</a> provides a <code class="highlighter-rouge">mark_negation</code> function that can do this for us:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.sentiment.util</span> <span class="kn">import</span> <span class="n">mark_negation</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="s">"I do not like #TeamValor"</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">sentiment</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">mark_negation</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['I', 'do', 'not', 'like_NEG', '#TeamValor_NEG']
+</code></pre>
+</div>
+
+<p>Another way to address negation markers is to include <a href="http://www.nltk.org/howto/collocations.html">bigrams</a> in our list of features.  Doing so allows our classifier to recognize the collocation of words such as “(not,like)” in addition to the typical unigram features we would extract.  The inclusion of bigrams also allows our classifier to recognize collocations that do not mark negation, such as “(fuck, team)”, which is far more powerful than tracking the common words “fuck” and “team” as unigrams alone. (Pardon my French here, but this turned out to be the strongest example of bigrams features from our tweets.)</p>
+
+<p>Finally, we want to ensure that our sentiment analyzer performs equally well regardless of which Pokemon Go team the tweet is discussing.  If we were to misclassify every negative tweet about Team Valor as positive, but always correctly classify negative tweets about Team Mystic, then our final population of tweets would contain an overabundance of Team Valor tweets.  This would certainly skew the map of team dominance which we hope to make with our data.  To avoid this problem, I’ve excluded any words that could identify a Pokemon Go team from our list of features.</p>
+
+<h1 id="a-namefeaturescodea-feature-extraction-implementation"><a name="featuresCode"></a> Feature Extraction Implementation</h1>
+
+<p>I’ve included the code which applies the feature extraction techniques to our tweets below.  First, we filter the text of each tweet to extract a list of unigrams and bigrams.  I remove any “#” markers from the text, treat all html URLs as the same “word”, and exclude punctuation, capitalization, and team-identifying words in the process.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.metrics</span> <span class="kn">import</span> <span class="n">BigramAssocMeasures</span>
+<span class="kn">from</span> <span class="nn">nltk.collocations</span> <span class="kn">import</span> <span class="n">BigramCollocationFinder</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+
+<span class="c">#Set to exclude punctuation marks</span>
+<span class="n">exclude</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
+
+<span class="c">#List to exclude words that can identify the team from list of features</span>
+<span class="n">excluded_words</span> <span class="o">=</span> <span class="p">[</span><span class="s">'teammystic'</span><span class="p">,</span><span class="s">'mystic'</span><span class="p">,</span><span class="s">'teamblue'</span><span class="p">,</span><span class="s">'blue'</span><span class="p">,</span>\
+                  <span class="s">'teaminstinct'</span><span class="p">,</span><span class="s">'instinct'</span><span class="p">,</span><span class="s">'teamyellow'</span><span class="p">,</span><span class="s">'yellow'</span><span class="p">,</span>\
+                  <span class="s">'teamvalor'</span><span class="p">,</span><span class="s">'valor'</span><span class="p">,</span><span class="s">'teamred'</span><span class="p">,</span><span class="s">'red'</span><span class="p">]</span>
+
+<span class="c">#Function that provides a list of filtered unigrams and bigrams from each tweet</span>
+<span class="k">def</span> <span class="nf">filter_tweets</span><span class="p">(</span><span class="n">tweets</span><span class="p">):</span>
+    <span class="n">filtered_tweets</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c">#Get a list of words, and the sentiment for each tweet</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span> 
+        <span class="n">words_filtered</span><span class="o">=</span><span class="p">[]</span>
+        
+        <span class="c">#For each word in the list of words, filter on our feature requirements. </span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="o">.</span><span class="n">split</span><span class="p">():</span> 
+            
+            <span class="c">#Remove punctuation</span>
+            <span class="n">word</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ch</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">word</span> <span class="k">if</span> <span class="n">ch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span><span class="p">)</span>
+
+            <span class="c">#Remove zero letter "words"</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span> 
+                
+                    <span class="c">#treat URLs the same</span>
+                    <span class="k">if</span> <span class="n">word</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">'http'</span><span class="p">:</span>
+                        <span class="n">word</span><span class="o">=</span><span class="s">'http'</span>
+                        
+                    <span class="c">#remove hashtags</span>
+                    <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">'#'</span><span class="p">:</span> 
+                        <span class="n">word</span><span class="o">=</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                        
+                    <span class="c">#remove team identifiers</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">excluded_words</span><span class="p">):</span>
+        
+                        <span class="c">#require lower case</span>
+                        <span class="n">words_filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> 
+
+        <span class="c">#Identify top 200 bigams in the filtered word list using chi_sq measure of importance</span>
+        <span class="n">bigram_finder</span> <span class="o">=</span> <span class="n">BigramCollocationFinder</span><span class="o">.</span><span class="n">from_words</span><span class="p">(</span><span class="n">words_filtered</span><span class="p">)</span>
+        <span class="n">bigrams</span> <span class="o">=</span> <span class="n">bigram_finder</span><span class="o">.</span><span class="n">nbest</span><span class="p">(</span><span class="n">BigramAssocMeasures</span><span class="o">.</span><span class="n">chi_sq</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>      
+
+        <span class="c">#Add the final bigrams and unigrams for this tweet to the filtered list</span>
+        <span class="n">filtered_tweets</span><span class="o">.</span><span class="n">append</span><span class="p">(([</span><span class="n">ngram</span> <span class="k">for</span> <span class="n">ngram</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">words_filtered</span><span class="p">,</span> <span class="n">bigrams</span><span class="p">)],</span><span class="n">sentiment</span><span class="p">))</span>
+
+    <span class="c">#Returnt he filtered list for all tweets</span>
+    <span class="k">return</span> <span class="n">filtered_tweets</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Filter each set of data</span>
+<span class="n">train_tweets</span> <span class="o">=</span> <span class="n">filter_tweets</span><span class="p">(</span><span class="n">train_tweets</span><span class="p">)</span>
+<span class="n">cv_tweets</span> <span class="o">=</span> <span class="n">filter_tweets</span><span class="p">(</span><span class="n">cv_tweets</span><span class="p">)</span>
+<span class="n">test_tweets</span> <span class="o">=</span> <span class="n">filter_tweets</span><span class="p">(</span><span class="n">test_tweets</span><span class="p">)</span>    
+</code></pre>
+</div>
+
+<p>The result of the filter is a list of tuples for each tweet.  The first entry in each tuple is a list of unigrams and bigrams for that tweet, and the second entry in the tuple is the manually labeled sentiment of that tweet.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">train_tweets</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(['team','is','terrible','im','sorry','http',
+  ('im', 'sorry'), ('is', 'terrible'), ('sorry', 'http'), ('team', 'is'), ('terrible', 'im')],
+ 'negative')
+</code></pre>
+</div>
+
+<p>Next, I combine all of the unigrams and bigrams from our training set into one list.  If a unigram or bigram appears at least 3 times in this list, I include it as a feature.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Function that builds a list of features from the list of unigrams and bigrams</span>
+<span class="c">#Requires each unigram or bigram to show up some minimum number of times to be considered a feature</span>
+<span class="k">def</span> <span class="nf">get_word_features</span><span class="p">(</span><span class="n">tweets</span><span class="p">,</span><span class="n">min_freq</span><span class="p">):</span>
+
+    <span class="c">#Create a list of ALL unigrams and bigrams</span>
+    <span class="n">wordlist</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">sentiment</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+        <span class="n">wordlist</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    
+    <span class="c">#Count the frequency of each unigram and bigram</span>
+    <span class="n">wordlist</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">FreqDist</span><span class="p">(</span><span class="n">wordlist</span><span class="p">)</span>
+    
+    <span class="c">#Sort the list of unigrams and bigrams based on frequency</span>
+    <span class="n">sorted_word_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wordlist</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="c">#Only include the unigrams and bigrams as features if they appear at least min_freq times</span>
+    <span class="n">word_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_word_list</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> \
+    	<span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sorted_word_list</span><span class="p">))</span> <span class="k">if</span> <span class="n">sorted_word_list</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_freq</span><span class="p">]</span>
+    
+    <span class="c">#Return the list of features</span>
+    <span class="k">return</span> <span class="n">word_features</span>
+
+<span class="n">word_features</span> <span class="o">=</span> <span class="n">get_word_features</span><span class="p">(</span><span class="n">train_tweets</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Now that we have a final list of word features, we’ll want evaluate the boolean <code class="highlighter-rouge">contains(word_feature)</code> statements for each tweet.  To do so, we first define an <code class="highlighter-rouge">extract_features</code> function that takes a filtered tweet as an input, then determines if each word feature exists in the filtered tweet’s list of unigrams and bigrams.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Feature extractor - determines which word features are in each tweet</span>
+<span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="n">filtered_tweet</span><span class="p">):</span>
+
+    <span class="c">#list of unigrams and bigrams in the tweet</span>
+    <span class="n">filtered_tweet_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">filtered_tweet</span><span class="p">)</span>
+    
+    <span class="c">#Define a features dictionary</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c">#Loop of all word features</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_features</span><span class="p">:</span>
+        
+        <span class="c">#Set 'contains(word_feature)' as a key in the dictionary</span>
+        <span class="c">#Set the value for that key to True or False</span>
+        <span class="n">features</span><span class="p">[</span><span class="s">'contains(</span><span class="si">%</span><span class="s">s)'</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">filtered_tweet_words</span><span class="p">)</span>
+
+    <span class="c">#Return the final features dictionary for that tweet</span>
+    <span class="k">return</span> <span class="n">features</span>
+</code></pre>
+</div>
+
+<p>The <a href="http://www.nltk.org/api/nltk.classify.html">NLTK classify package</a> provides a convenient <code class="highlighter-rouge">.apply_features</code> method to apply our <code class="highlighter-rouge">extract_features</code> function to each tweet in our data sets:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Extract features from each tweets</span>
+<span class="n">training_set</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">classify</span><span class="o">.</span><span class="n">apply_features</span><span class="p">(</span><span class="n">extract_features</span><span class="p">,</span> <span class="n">train_tweets</span><span class="p">)</span>
+<span class="n">cv_set</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">classify</span><span class="o">.</span><span class="n">apply_features</span><span class="p">(</span><span class="n">extract_features</span><span class="p">,</span> <span class="n">cv_tweets</span><span class="p">)</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">classify</span><span class="o">.</span><span class="n">apply_features</span><span class="p">(</span><span class="n">extract_features</span><span class="p">,</span> <span class="n">test_tweets</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>The final result is a NLTK LazyMap object that contains a tuple for each Tweet.  The first entry in the tuple is a list of boolean <code class="highlighter-rouge">contains(word)</code> features for each of the feature words we selected, while the second entry in the tuple is the manually labeled sentiment of the tweet.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">tweet_number</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">training_set</span><span class="p">[</span><span class="n">tweet_number</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="s">"contains(('a', 'gym'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('a', 'joke'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('a', 'pokemon'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('a', 'team'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('all', 'the'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('and', 'i'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('are', 'you'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('at', 'the'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('but', 'i'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('chose', 'team'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('for', 'team'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('friends', 'anymore'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('fuck', 'team'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="s">"contains(('go', 'team'))"</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+ <span class="o">...</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h1 id="a-nametraininga-training-and-modifying-our-sentiment-analyzer"><a name="training"></a> Training and Modifying our sentiment analyzer</h1>
+
+<p>Once we’ve evaluated the <code class="highlighter-rouge">contains(feature_word)</code> statements for each of our tweets,  we can train a Naive Bayes Classifier with one line of code:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Train the classifier</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_set</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Recall from our discussion of <a href="#imbalanced">imbalanced classes</a> that only 10% of our tweets are labeled as negative.  This means that our classifier could predict every tweet as positive and maintain 90% accuracy.  Clearly, such a classifier would be useless for our purposes, since it would fail to identify any of the negative tweets that we wish to remove from our population.  To accurately evaluate the performance of our classifier, we must use more informative metrics known as <strong>precision</strong> and <strong>recall</strong>.</p>
+
+<p>The <strong>precision</strong> of our classifier is the fraction of samples it correctly identified as positive out of all of the samples that it identified as positive.  Mathematically, this is given by:</p>
+
+<script type="math/tex; mode=display">\mathsf{Precision = \frac{number \; of \; true \; positives}{number \; of \; true \; positives + number \; of \; false \; positives} }</script>
+
+<p>The <strong>recall</strong> of our classifier is the fraction of samples that were correctly identified as positive out of the total number of positive samples.  If our classifier always predicted the positive class, the recall for the negative class will be zero even though the accuracy of our classifier would be around 90%.  Mathematically, the recall of our classifier is given by:</p>
+
+<script type="math/tex; mode=display">\mathsf{Recall = \frac{number \; of \; true \; positives}{number \; of \; true \; positives + number \; of \; false \; negatives} }</script>
+
+<p>If our classifier has high precision for our positive class, we can be confident that the majority of tweets that were  classified as positive really were positive.  If our classifier has high recall for positive classes, we can be confident that the majority of positive tweets were correctly classified as positive.   Often, a change in hyperparameters will result in an increase in precision and decrease in recall, or vice versa.  To balance this trade off, we can average the precision and recall metrics using their <a href="https://en.wikipedia.org/wiki/Harmonic_mean#Harmonic_mean_of_two_numbers">harmonic mean</a>, producing a quantity known as the <strong>F1 score</strong>:</p>
+
+<script type="math/tex; mode=display">\mathsf{F1 = 2* \frac{P*R}{P+R} }</script>
+
+<p>We’ll be using our sentiment analyzer to remove negative tweets that are “contaminating” our collection of tweets.  This means that we want high recall for our negative class so that we correctly identify and reject negative tweets often.  This process lowers the systematic error from negative tweets leaking into our collection.  However, if we incorrectly classify positive tweets as negative too often, we will drastically reduce our sample size and increase the statistical errors of our measurement.  Therefore, we also want our classifier to have high positive recall.  I used the fraction of negative tweets in our entire collection as a custom metric to track this balance of positive recall and negative recall.  I’ll refer to this metric as the <strong>negative tweet contamination</strong> (NTC), of our tweet collection.</p>
+
+<p>Using the following notation:</p>
+
+<script type="math/tex; mode=display">\mathsf{number \; of \; initial \; negative \; tweets \equiv  N^-}</script>
+
+<script type="math/tex; mode=display">\mathsf{number \; of \; initial \; positive \; tweets \equiv  N^+}</script>
+
+<script type="math/tex; mode=display">\mathsf{negative \; recall \equiv R^-}</script>
+
+<script type="math/tex; mode=display">\mathsf{positive \; recall \equiv R^+}</script>
+
+<p>The initial negative tweet contamination is given by</p>
+
+<script type="math/tex; mode=display">\mathsf{ NTC_i = \frac{N^-}{N^- + N^+} }</script>
+
+<p>After removing tweets classified as negative from our collection, the final negative tweet contamination is given by:</p>
+
+<script type="math/tex; mode=display">\mathsf{ NTC_f = \frac{N^-  (1-R^-)}{N^- (1-R^-1) + N^+ R^+} }</script>
+
+<p>Therefore, we can see how much the sentiment analyzer has improved our negative tweet contamination using:</p>
+
+<script type="math/tex; mode=display">\mathsf{ Percent\; Improvement = 100 * \frac{NTC_f - NTC_i}{NTC_i} = 100* \left( \frac{N^+ + N^-}{N^-} \right) \left( \frac{N^-}{N^- + N^+} - \frac{N^- (1-R^-)}{N^- (1-R^-) + N^+ R^+ }\right) }</script>
+
+<p>Before we touch our test set, we’ll want to evaluate the metrics we discussed using our cross validation set. We can do so by making a set of positive and negative tweets, and a set of positive and negative predictions for those tweets.  Feeding these two sets into the <code class="highlighter-rouge">fmeas</code>, <code class="highlighter-rouge">prec</code>, and <code class="highlighter-rouge">rec</code> methods from NLTK’s metrics package will return the values of the standard metrics, as shown below:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">nltk.metrics</span> <span class="kn">import</span> <span class="n">precision</span> <span class="k">as</span> <span class="n">prec</span>
+<span class="kn">from</span> <span class="nn">nltk.metrics</span> <span class="kn">import</span> <span class="n">recall</span> <span class="k">as</span> <span class="n">rec</span>
+<span class="kn">from</span> <span class="nn">nltk.metrics</span> <span class="kn">import</span> <span class="n">f_measure</span> <span class="k">as</span> <span class="n">fmeas</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="c">#Function to evaluate our classifier on the given subset of data</span>
+<span class="k">def</span> <span class="nf">eval_classifier</span><span class="p">(</span><span class="n">data_set</span><span class="p">):</span>
+
+    <span class="c">#Use .accuracy method to calculate accuracy</span>
+    <span class="n">cross_valid_accuracy</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">classify</span><span class="o">.</span><span class="n">accuracy</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">data_set</span><span class="p">)</span>
+
+    <span class="c">#Create two sets which we'll use to count positive and negative tweets</span>
+    <span class="n">ref_set</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">obs_set</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+
+
+    <span class="c">#Loop over each tweet in our cross validation set</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">feats</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data_set</span><span class="p">):</span>
+
+        <span class="c">#Classify the tweet by feeding the classifier the tweet's features</span>
+        <span class="n">observed</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">feats</span><span class="p">)</span>
+
+        <span class="c">#Add the current tweet to the "reference" set under the actual class</span>
+        <span class="n">ref_set</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c">#Add the current tweet to the "observation" set under the predicted class</span>
+        <span class="n">obs_set</span><span class="p">[</span><span class="n">observed</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+
+    <span class="c">#Calculate F score, precision, an recall for positive and negative labels</span>
+    <span class="c">#Also calculate accuracy and NTC improvement</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Accuracy:'</span><span class="p">,</span> <span class="n">cross_valid_accuracy</span><span class="p">)</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'F-measure [negative]:'</span><span class="p">,</span> <span class="n">fmeas</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">]))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'F-measure [positive]:'</span><span class="p">,</span> <span class="n">fmeas</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">]))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Precision [negative]:'</span><span class="p">,</span> <span class="n">prec</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">]))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Precision [positive]:'</span><span class="p">,</span> <span class="n">prec</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">]))</span>
+    <span class="n">rec_neg</span><span class="o">=</span><span class="n">rec</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'negative'</span><span class="p">])</span>
+    <span class="n">rec_pos</span><span class="o">=</span><span class="n">rec</span><span class="p">(</span><span class="n">ref_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">],</span> <span class="n">obs_set</span><span class="p">[</span><span class="s">'positive'</span><span class="p">])</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Recall [negative]:'</span><span class="p">,</span> <span class="n">rec_neg</span><span class="p">)</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Recall [positive]:'</span><span class="p">,</span> <span class="n">rec_pos</span><span class="p">)</span>
+    <span class="n">total_neg</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">neg_tweets</span><span class="p">)</span>
+    <span class="n">total_pos</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_tweets</span><span class="p">)</span>
+    <span class="n">ntc_improvement</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">((</span><span class="n">total_pos</span> <span class="o">+</span> <span class="n">total_neg</span><span class="p">)</span><span class="o">/</span><span class="n">total_neg</span><span class="p">)</span><span class="o">*</span><span class="p">(</span> <span class="p">(</span><span class="n">total_neg</span><span class="o">/</span><span class="p">(</span><span class="n">total_neg</span><span class="o">+</span><span class="n">total_pos</span><span class="p">))</span> <span class="o">-</span> \
+    	<span class="p">(</span><span class="n">total_neg</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">rec_neg</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">total_neg</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">rec_neg</span><span class="p">)</span> <span class="o">+</span> <span class="n">total_pos</span><span class="o">*</span><span class="n">rec_pos</span><span class="p">))</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s">'Negative contamination improved by '</span><span class="p">,</span> <span class="n">ntc_improvement</span><span class="p">,</span> <span class="s">'percent'</span><span class="p">)</span>
+    
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">eval_classifier</span><span class="p">(</span><span class="n">cv_set</span><span class="p">)</span> 
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Accuracy: 0.7775821596244131
+F-measure [negative]: 0.2495049504950495
+F-measure [positive]: 0.8694454013089906
+Precision [negative]: 0.14685314685314685
+Precision [positive]: 0.9898039215686274
+Recall [negative]: 0.8289473684210527
+Recall [positive]: 0.7751842751842751
+Negative contamination improved by  76.42955058361015 percent
+</code></pre>
+</div>
+
+<p>At this point, if we are unhappy with the outcome of our performance metrics we would need to change the hyperparameters of our classifier and revaluate its performance on our cross validation set.  As I mentioned in the <a href="#features">feature extraction section</a>, if your algorithm is not performing well you may want to consider limiting your classifier to high-information features.  In my case, my cross validation set said this did not change the performance of the classifier, but in case you need it NLTK’s <code class="highlighter-rouge">show_most_informative_features</code> method will provide a list of the most informative features:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Show the 5 most important features of our classifier</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">classifier</span><span class="o">.</span><span class="n">show_most_informative_features</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Most Informative Features
+contains(('team', 'is')) = True           negati : positi =     10.3 : 1.0
+            contains(at) = True           positi : negati =      9.0 : 1.0
+          contains(when) = True           negati : positi =      8.3 : 1.0
+          contains(fuck) = True           negati : positi =      7.7 : 1.0
+contains(('on', 'team')) = True           negati : positi =      7.0 : 1.0
+None
+</code></pre>
+</div>
+
+<p>I spent an evening tweaking the hyperparameters of my classifier, and the time invested really paid off. For perspective, the initial version of my classifier did terrible job at recognizing negative tweets, with the cross validation set returning the following metrics:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Accuracy: 0.8807471264367817
+F-measure [negative]: 0.20192307692307693
+F-measure [positive]: 0.9355590062111802
+Precision [negative]: 0.22340425531914893
+Precision [positive]: 0.9283513097072419
+Recall [negative]: 0.18421052631578946
+Recall [positive]: 0.9428794992175273
+Negative contamination improved by  11.48839202570476 percent
+</code></pre>
+</div>
+
+<p>This final version of my classifier is 78% accurate.   From the high negative recall, we can see that only 17% of negative tweets will be misclassified as positive. This means we’ll be able to eliminate a large portion of the negative tweets from our collection with this classifier.  The positive recall remains high as well, at 78%.  This means that we’ll retain a large portion of our sample size once we apply our classifier.  The balance of these two statements is reflected by the fact that our negative contamination metric shows an improvement of 76%.</p>
+
+<p>Notice that our classifier has low negative precision.  While this isn’t ideal, it isn’t surprising either.  The low negative precision means we are identifying a lot of tweets as negative when they are actually positive.  Given the large class imbalance in our cross validation set, it is not surprising that many of the negatively classified tweets are actually positive tweets.  In statistics, this type of “false positive” (where here, a “positive” result is the tweet being classified as negative) is known as a Type I error.  Although I’d like higher negative precision, a Type I error is acceptable here.  As long as the chances of misclassifying a positive tweet are equal for all Pokemon Go teams, a Type I error simply means we are being overly conservative with our classification model.</p>
+
+<p>As a side note, suppose we wanted to look at which Pokemon Go team was the most hated team.  We could do so by looking at the number of negative tweets about each team.   Unfortunately, the low negative precision means the majority of the “negative” tweets we identify will not actually be negative. Therefore, this sentiment analyzer would be unsuited for such an analysis.</p>
+
+<h1 id="a-nameevala-evaluating-our-analyzers-performance"><a name="eval"></a> Evaluating our analyzer’s performance</h1>
+
+<p>After optimizing our hyperparameters with our cross validation set, we need to save our sentiment analyzer and our list of features for future use.  We can easily do so using Python’s <code class="highlighter-rouge">pickle</code> library:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="c">#Save the classifier for later use</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'PoGo_tweet_classifier.pickle'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c">#Save document_words as well</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'PoGo_classifier_feats.pickle'</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">word_features</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Now we can finally crack open our test set and see how our classifier performs on a truly random sample of tweets.  We can use the same <code class="highlighter-rouge">eval_classifier</code> function that we wrote in the previous section for this purpose:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Evaluating classifier on test set</span>
+<span class="n">eval_classifier</span><span class="p">(</span><span class="n">test_set</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Accuracy: 0.7834507042253521
+F-measure [negative]: 0.24539877300613497
+F-measure [positive]: 0.8735868448098665
+Precision [negative]: 0.14527845036319612
+Precision [positive]: 0.9876065065840434
+Recall [negative]: 0.7894736842105263
+Recall [positive]: 0.7831695331695332
+Negative contamination improved by  71.406449288021 percent
+</code></pre>
+</div>
+
+<p>We should also explicitly calculate the initial negative contamination, and the final negative contamination of our tweet collection.  This will be useful in the next blog post.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Calculating initial and final negative contamination</span>
+<span class="n">total_neg</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">neg_tweets</span><span class="p">)</span>
+<span class="n">total_pos</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_tweets</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Original systematic error from uncut negative tweets was: '</span><span class="p">,</span> \
+      <span class="nb">round</span><span class="p">(</span><span class="mi">10000</span><span class="o">*</span><span class="p">(</span><span class="n">total_neg</span><span class="o">/</span><span class="p">(</span><span class="n">total_neg</span> <span class="o">+</span> <span class="n">total_pos</span><span class="p">)))</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span> <span class="s">'percent'</span><span class="p">)</span>
+      
+<span class="k">print</span><span class="p">(</span><span class="s">'Improved systematic error from uncut negative tweets is: '</span><span class="p">,</span> \
+      <span class="nb">round</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="mf">0.714</span><span class="p">)</span><span class="o">*</span><span class="mi">10000</span><span class="o">*</span><span class="p">(</span><span class="n">total_neg</span><span class="o">/</span><span class="p">(</span><span class="n">total_neg</span> <span class="o">+</span> <span class="n">total_pos</span><span class="p">)))</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span> <span class="s">'percent'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Original systematic error from uncut negative tweets was:  8.19 percent
+Improved systematic error from uncut negative tweets is:  2.34 percent
+</code></pre>
+</div>
+
+<p>After a lot of hard work, we have a sentiment analyzer that will remove 78.9% of our negative tweets while retaining 78.3% of our positive tweets.  This will lower the systematic error when counting positive tweets from 8.19% to 2.34%, an improvement of 71.4%!</p>
+
+<h1 id="closing-remarks">Closing remarks</h1>
+
+<p>Congratulations on making it through the most detailed post of this series!  It took a lot of work, but in the end we learned how to use Python’s NLTK library to properly implement a sentiment analyzer.  Many of the techniques we discussed, such as using training sets, cross validation sets, and test sets to evaluate recall, precision, and the f1-score are applicable to general machine learning tasks.  The intuition that we developed for the feature extraction and hyperparameter tuning process will also be invaluable for future work.</p>
+
+<p>In the next post, we’ll use our sentiment analyzer to remove negative tweets from our collection.  We’ll also apply a few other data selection cuts to clean up our data before calculating the fraction of tweets from each state that belong to each Pokemon Go team.  We’ll focus on error analysis techniques along the way, so that we can present the uncertainty in our team dominance measurements along with the results.</p>
+
+  
+</div>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=PoGo Series&#58; Training a Sentiment Analyzer&url=http://www.dealingdata.net/2016/07/28/PoGo-Series-Sentiment-Analyzer/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/07/28/PoGo-Series-Sentiment-Analyzer/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/07/28/PoGo-Series-Sentiment-Analyzer/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/07/28/PoGo-Series-Sentiment-Analyzer/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/07/28/PoGo-Series-Sentiment-Analyzer/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

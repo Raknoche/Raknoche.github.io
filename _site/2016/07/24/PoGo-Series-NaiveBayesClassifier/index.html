@@ -160,7 +160,7 @@
 
 <p>TABLE OF CONTENTS</p>
 
-<p>Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python’s Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the pokemon go teams in a positive light, while others denegrate the team that’s mentioned.  We’ll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.</p>
+<p>Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python’s Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denegrate the team that’s mentioned.  We’ll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.</p>
 
 <p>In this post, we’ll discuss the following topics:</p>
 
@@ -178,7 +178,7 @@
 
 <script type="math/tex; mode=display">\mathsf{ P(W) = \frac{W}{W + L}} \tag{1}</script>
 
-<p>Now, suppose that we obtained additional information about each time our team won and lost a game.  For instance, maybe we kept track of whether our team was playing at home or not.  Now we can ask more complex questions, such as “What is the probability of our favorite team winning, given that they are at home?”  This is known as a <strong>conditional probability</strong>.  We can calculate the answer by counting the how often our team wins while at home, and dividing by the total number of times our team played at home (regardless of the outcome).  Mathematically, if <script type="math/tex">\mathsf{H}</script> represents the team playing at home:</p>
+<p>Now, suppose that we obtained additional information about each time our team won and lost a game.  For instance, maybe we kept track of whether our team was playing at home or not.  Now we can ask more complex questions, such as “What is the probability of our favorite team winning, given that they are at home?”  This is known as a <strong>conditional probability</strong>.  We can calculate the answer by counting how often our team wins while at home, and dividing by the total number of times our team played at home (regardless of the outcome). Mathematically, if <script type="math/tex">\mathsf{H}</script> represents the team playing at home:</p>
 
 <p><a name="eq2"></a></p>
 
@@ -187,7 +187,7 @@
 <p>A few notes about the above equation:</p>
 
 <ul>
-  <li><script type="math/tex">\mathsf{P(W \; \lvert \; H)}</script> is the conditional probability that our team will win, given that they play at home.  The "<script type="math/tex">\lvert</script>" symbol is used to declare the conditions that are <strong>given</strong>.</li>
+  <li><script type="math/tex">\mathsf{P(W \; \lvert \; H)}</script> is the conditional probability that our team will win, given that they play at home.  The "<script type="math/tex">\lvert</script>" symbol is used to denote the conditions that are <strong>given</strong>.</li>
   <li><script type="math/tex">\mathsf{P( W \cap H)}</script> is the probability of our team winning and playing at home.  The "<script type="math/tex">\cap</script>" symbol is used to denote the <strong>intersection</strong> where both of these events occur.</li>
   <li><script type="math/tex">\mathsf{P(H)}</script> is the probability of our team playing at home.</li>
   <li>The probability of our team winning without specifying any conditions, <script type="math/tex">\mathsf{P(W)}</script> is known as the <strong>prior probability</strong> of <script type="math/tex">\mathsf{W}</script>.</li>
@@ -195,11 +195,11 @@
 
 <p><a name="goback"></a></p>
 
-<p>In words, <a href="#eq2">Equation 2</a> is stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured (<script type="math/tex">\mathsf{P(A \lvert B)}</script> is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring (<script type="math/tex">\mathsf{P( W \cap H)}</script>) divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.</p>
+<p>In words, <a href="#eq2">Equation 2</a> is stating that the probability of <script type="math/tex">\mathsf{A}</script> occuring given <script type="math/tex">\mathsf{B}</script> has occured, <script type="math/tex">\mathsf{P(A \lvert B)}</script>, is equal to the probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occuring, <script type="math/tex">\mathsf{P( W \cap H)}</script>, divided by the probability of <script type="math/tex">\mathsf{B}</script> occuring.</p>
 
 <h1 id="a-nametotalproba-the-law-of-total-probability"><a name="totalprob"></a> The Law of Total Probability</h1>
 
-<p>Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The <strong>Law of Total Probability</strong> states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into <script type="math/tex">n</script> different outcomes, then for some event <script type="math/tex">\mathsf{A}</script></p>
+<p>Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The <strong>Law of Total Probability</strong> states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into <script type="math/tex">n</script> different outcomes, then for some event <script type="math/tex">\mathsf{A}</script>:</p>
 
 <script type="math/tex; mode=display">\mathsf{P(A) = \sum_{i=1}^n P(A \cap B_i) = \sum_{i=1}^n P(A \lvert B_i)P(B_i)}\tag{3}</script>
 
@@ -213,7 +213,7 @@
 
 <h1 id="a-namebayesa-bayes-theorem"><a name="bayes"></a> Bayes’ Theorem</h1>
 
-<p>Finally, we can discuss the foundation of Naive Bayes Classifiers — Bayes’ theorem.  Consider the general form of <a href="#eq2">Equation 2</a>, for some event <script type="math/tex">\mathsf{A}</script> and some given condition <script type="math/tex">\mathsf{B}</script>:</p>
+<p>Finally, we can discuss the foundation of Naive Bayes Classifiers — Bayes’ Theorem.  Consider the general form of <a href="#eq2">Equation 2</a>, for some event <script type="math/tex">\mathsf{A}</script> and some given condition <script type="math/tex">\mathsf{B}</script>:</p>
 
 <p><a name="eq5"></a></p>
 
@@ -225,7 +225,7 @@
 
 <script type="math/tex; mode=display">\mathsf{P( A \cap B) = P(A \lvert B)P(B)}\tag{6}</script>
 
-<p>The probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occurring, <script type="math/tex">\mathsf{P( A \cap B)}</script>, is identical to the probability of <script type="math/tex">\mathsf{B}</script> and <script type="math/tex">\mathsf{A}</script> both occurring, <script type="math/tex">\mathsf{P( B \cap A)}</script>.  Therefore, we can rewrite the <a href="#eq6">Equation 6</a> as:</p>
+<p>The probability of <script type="math/tex">\mathsf{A}</script> and <script type="math/tex">\mathsf{B}</script> both occurring, <script type="math/tex">\mathsf{P( A \cap B)}</script>, is identical to the probability of <script type="math/tex">\mathsf{B}</script> and <script type="math/tex">\mathsf{A}</script> both occurring, <script type="math/tex">\mathsf{P( B \cap A)}</script>. Therefore, we can rewrite the <a href="#eq6">Equation 6</a> as:</p>
 
 <p><a name="eq7"></a></p>
 
@@ -241,7 +241,7 @@
 
 <script type="math/tex; mode=display">\mathsf{P(A \lvert B)P(B) = P( B \lvert A)P(A)}\tag{9}</script>
 
-<p>Solving for <script type="math/tex">\mathsf{P(A \lvert B)}</script>, we arrive a <strong>Bayes’ Theorem</strong></p>
+<p>Solving for <script type="math/tex">\mathsf{P(A \lvert B)}</script>, we arrive a <strong>Bayes’ Theorem</strong>:</p>
 
 <script type="math/tex; mode=display">\mathsf{P(A \lvert B) = \frac{P( B \lvert A)P(A)}{P(B)}}\tag{10}</script>
 
@@ -267,7 +267,7 @@
 
 <p>A Naive Bayes Classifier is a machine learning algorithm that uses Bayes’ Theorem to predict the class that a sample belongs to, given a number of features that describe that sample.  If we collect information on <script type="math/tex">\mathsf{n}</script> different features.  We can write the values of these features for a particular sample as a <script type="math/tex">\mathsf{1 \times n}</script> vector <script type="math/tex">\mathbf{X} = \{x_1,x_2,x_3,...,x_n\}</script> known as the <strong>evidence</strong>.</p>
 
-<p>Our goal is to determine which class the sample belongs to.  This boils down to calculating the probability for each class given the evidence vector <script type="math/tex">\mathbf{X}</script>.  Bayes Theorem tells us that for a particular class, <script type="math/tex">\mathsf{C_i}</script>, this is given by</p>
+<p>Our goal is to determine which class the sample belongs to.  This boils down to calculating the probability for each class given the evidence vector <script type="math/tex">\mathbf{X}</script>.  Bayes Theorem tells us that for a particular class, <script type="math/tex">\mathsf{C_i}</script>, this is given by:</p>
 
 <p><a name="eq12"></a></p>
 
@@ -280,9 +280,9 @@
 <script type="math/tex; mode=display">\mathsf{ P(C_i)= \frac{number \; of \; training \; samples \; in \; class \; C_i}{number \; of \; training \; samples} \tag{13}}</script>
 
 <p>In pratice, the probability of the observed features occuring given the sample belongs to class <script type="math/tex">\mathsf{C_i}</script> can be hard to calculate.
-To simplify the calculation, Naive Bayes Classifiers assumes that the features are <strong>conditional independent</strong>.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated — hence the name <em>Naive</em> Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.</p>
+To simplify the calculation, Naive Bayes Classifiers assume that the features are <strong>conditional independent</strong>.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated — hence the name <em>Naive</em> Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.</p>
 
-<p>Mathematically, the consquence of this assumption is that the probability of the observing the evidence <script type="math/tex">\mathbf{X}</script>, given that the sample belongs to some class <script type="math/tex">\mathsf{C_i}</script>, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to <script type="math/tex">\mathsf{C_i}</script>:</p>
+<p>Mathematically, the consquence of this assumption is that the probability of observing the evidence <script type="math/tex">\mathbf{X}</script>, given that the sample belongs to some class <script type="math/tex">\mathsf{C_i}</script>, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to <script type="math/tex">\mathsf{C_i}</script>:</p>
 
 <p><a name="eq14"></a></p>
 
@@ -296,7 +296,7 @@ To simplify the calculation, Naive Bayes Classifiers assumes that the features a
 
 <p>The denominator in <a href="#eq12">Equation 12</a>, <script type="math/tex">\mathsf{P(\mathbf{X})}</script>, is the same regardless of which class we are looking at, so we don’t actually need to calculate it. In fact, we shouldn’t calculate it so that the algorithm will run faster.  That said, if we did want to calculate <script type="math/tex">\mathsf{P(\mathbf{X})}</script> we would just use the <strong>Law of Total Probability</strong>.</p>
 
-<p>Once we know <script type="math/tex">P(C_i \lvert X)</script> for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rule, known as the “maximum posteriori hypothesis,” is to predict that the sample belongs to whichever class has the highest probability <script type="math/tex">P(X \lvert C_i)</script>.</p>
+<p>Once we know <script type="math/tex">\mathsf{P(C_i \lvert X)}</script> for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rules, known as the “maximum posteriori hypothesis,” predicts that the sample belongs to whichever class has the highest probability <script type="math/tex">\mathsf{P(X \lvert C_i)}</script>.</p>
 
 <p>As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continous values have a Gaussian distribution with mean <script type="math/tex">\mu</script> and standard deviation <script type="math/tex">\sigma</script>, such that</p>
 
@@ -411,7 +411,7 @@ To simplify the calculation, Naive Bayes Classifiers assumes that the features a
 
 <script type="math/tex; mode=display">\mathbf{X} = \mathsf{\{At \; Home, Raining, Experts \; are \; split\}}</script>
 
-<p>There are two possible outcomes to predict — our team winning (denoted with <script type="math/tex">\mathsf{W}</script>) and our team losing (denoted with <script type="math/tex">\mathsf{L}</script>).  Bayes’ theorem tells us the probability of each of these outcomes, given the evidence vector for the upcoming game:</p>
+<p>There are two possible outcomes to predict — our team winning (denoted with <script type="math/tex">\mathsf{W}</script>) and our team losing (denoted with <script type="math/tex">\mathsf{L}</script>).  Bayes’ Theorem tells us the probability of each of these outcomes, given the evidence vector for the upcoming game:</p>
 
 <script type="math/tex; mode=display">\mathsf{ P(W \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert W)P(W)}{P(\mathbf{X})} }</script>
 
@@ -447,7 +447,7 @@ To simplify the calculation, Naive Bayes Classifiers assumes that the features a
 
 <script type="math/tex; mode=display">\mathsf{ P(L \lvert \mathbf{X}) = \frac{P( \mathbf{X} \lvert L)P(L)}{P(\mathbf{X})} = \frac{0.04 \times 0.35}{0.21} = 0.07 }</script>
 
-<p>The Naive Bayes Classifier says our team has a 93% chance of winning the upcoming game, and only a 7% chance of losing!  We can safely predict that our team will win game!</p>
+<p>The Naive Bayes Classifier says our team has a 93% chance of winning the upcoming game, and only a 7% chance of losing!  We can safely predict that our team will win the game!</p>
 
 <h1 id="closing-remarks">Closing remarks</h1>
 
