@@ -14,7 +14,7 @@ A discussion of Bayes theorem and how it is used in Naive Bayes Classifiers.
 TABLE OF CONTENTS
 
 
-Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denegrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
+Welcome back to our on-going Pokemon Go analysis series.  In the previous post, we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denigrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
 
 In this post, we'll discuss the following topics:
 
@@ -45,12 +45,12 @@ A few notes about the above equation:
 
 <a name="goback"></a>
 
-In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured, $$\mathsf{P(A \lvert B)}$$, is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring, $$\mathsf{P( W \cap H)}$$, divided by the probability of $$\mathsf{B}$$ occuring.
+In words, [Equation 2](#eq2) is stating that the probability of $$\mathsf{A}$$ occurring given $$\mathsf{B}$$ has occurred, $$\mathsf{P(A \lvert B)}$$, is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occurring, $$\mathsf{P( W \cap H)}$$, divided by the probability of $$\mathsf{B}$$ occurring.
 
 
 # <a name="totalprob"></a> The Law of Total Probability
 
-Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The **Law of Total Probability** states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partioned into $$n$$ different outcomes, then for some event $$\mathsf{A}$$:
+Now, suppose that we knew how often our favorite team won when playing at home, and we knew how often they won while playing away, but we neglected to keep track of how often the team won in general, regardless of where they played.  The **Law of Total Probability** states how to turn a set of conditional probabilities into a prior probability.  In general, if our sample space is partitioned into $$n$$ different outcomes, then for some event $$\mathsf{A}$$:
 
 $$\mathsf{P(A) = \sum_{i=1}^n P(A \cap B_i) = \sum_{i=1}^n P(A \lvert B_i)P(B_i)}\tag{3}$$
 
@@ -98,7 +98,7 @@ Solving for $$\mathsf{P(A \lvert B)}$$, we arrive a **Bayes' Theorem**:
 
 $$\mathsf{P(A \lvert B) = \frac{P( B \lvert A)P(A)}{P(B)}}\tag{10}$$ 
 
-In words, Bayes' Theorem simply another way of stating that the probability of $$\mathsf{A}$$ occuring given $$\mathsf{B}$$ has occured, $$\mathsf{P(A \lvert B)}$$, is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occuring, $$\mathsf{P( B \lvert A)P(A)}$$, divided by the probability of $$\mathsf{B}$$ occuring.  Notice that this is the exact same statement that we made when discussing conditional dependence at the end of the first section!  If you are having a hard time intuitively undestanding Bayes' Theorem, I encourage you to [go back](#goback) to the first section and convince yourself that Bayes' Theorem is simply a different mathematical statement for the easier-to-grasp conditional probability theorem.
+In words, Bayes' Theorem simply another way of stating that the probability of $$\mathsf{A}$$ occurring given $$\mathsf{B}$$ has occurred, $$\mathsf{P(A \lvert B)}$$, is equal to the probability of $$\mathsf{A}$$ and $$\mathsf{B}$$ both occurring, $$\mathsf{P( B \lvert A)P(A)}$$, divided by the probability of $$\mathsf{B}$$ occurring.  Notice that this is the exact same statement that we made when discussing conditional dependence at the end of the first section!  If you are having a hard time intuitively understanding Bayes' Theorem, I encourage you to [go back](#goback) to the first section and convince yourself that Bayes' Theorem is simply a different mathematical statement for the easier-to-grasp conditional probability theorem.
 
 Often, we need to use the **Law of Total Probability** to calculate the denominator, $$\mathsf{P(B)}$$, in Bayes' Theorem.  Therefore, it's sometimes more useful to combine the two statements into the more explicit form of Bayes' Theorem:
 
@@ -130,10 +130,10 @@ To evaluate Bayes' theorem we need to determine the three probabilities on the r
 
 $$\mathsf{ P(C_i)= \frac{number \; of \; training \; samples \; in \; class \; C_i}{number \; of \; training \; samples} \tag{13}}$$
 
-In pratice, the probability of the observed features occuring given the sample belongs to class $$\mathsf{C_i}$$ can be hard to calculate.
+In practice, the probability of the observed features occurring given the sample belongs to class $$\mathsf{C_i}$$ can be hard to calculate.
 To simplify the calculation, Naive Bayes Classifiers assume that the features are **conditional independent**.  This means that once we know the sample belongs to a particular class, knowledge of the outcome of one feature does not grant us knowledge of the outcome of any other feature. This assumption is often naive in the real world, since separate features such as temperature and humidity are often correlated &mdash; hence the name *Naive* Bayes Classifier.  None the less, the algorithm often performs better than much more complex machine learning models.
 
-Mathematically, the consquence of this assumption is that the probability of observing the evidence $$\mathbf{X}$$, given that the sample belongs to some class $$\mathsf{C_i}$$, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to $$\mathsf{C_i}$$:
+Mathematically, the consequence of this assumption is that the probability of observing the evidence $$\mathbf{X}$$, given that the sample belongs to some class $$\mathsf{C_i}$$, is equal to the product of the probabilities of each individual feature outcome given that the sample belongs to $$\mathsf{C_i}$$:
 
 <a name="eq14"></a>
 
@@ -151,7 +151,7 @@ The denominator in [Equation 12](#eq12), $$\mathsf{P(\mathbf{X})}$$, is the same
 
 Once we know $$\mathsf{P(C_i \lvert X)}$$ for all classes, we can predict which class the sample belongs to based on a decision rule.  One of the most common and straightforward decision rules, known as the "maximum posteriori hypothesis," predicts that the sample belongs to whichever class has the highest probability $$\mathsf{P(X \lvert C_i)}$$.
 
-As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continous values have a Gaussian distribution with mean $$\mu$$ and standard deviation $$\sigma$$, such that
+As a final note, we may want to consider how to use a Naive Bayes Classifier when we have a feature that is continuous (such as the amount of rainfall on a game day) rather than discrete (such as whether or not it rained on a game day).  In such a case, we typically assume that the continuous values have a Gaussian distribution with mean $$\mu$$ and standard deviation $$\sigma$$, such that
 
 <a name="eq16"></a>
 

@@ -17,7 +17,7 @@ Put a link to each part of the series here
 Unless you’ve been living under a rock for the past week, you’ve heard of the new augmented reality game Pokemon Go.  Within two days of release the app was [installed on over 5% of all android devices in the US](https://www.similarweb.com/blog/pokemon-go), more than doubling the installations of other popular applications such as Tinder.  
 
 The game uses your phone’s GPS coordinates to track your real-world location as you play.  Pokemon appear in the world around you, displayed on your phone’s screen through an augmented reality version of your surroundings.
-As with all pokemon games, the main objective is to complete your collection of pokemon and “catch ‘em all.”  
+As with all Pokemon games, the main objective is to complete your collection of Pokemon and “catch ‘em all.”  
 
 The game includes some secondary, player-versus-player objectives as well.  Once your avatar reaches level 10 you choose to join one of three teams — Team Mystic (blue), Team Valor (red), or Team Instinct (yellow).  These teams battle each other for control over Pokemon Gyms that are scattered around the world.  Owning a gym grants access to limited amounts of premium currency which can be used to buy resources in the game.
 
@@ -27,7 +27,7 @@ I thought this would be a great opportunity to explain how to collect data from 
 
 1. Develop an understanding of the Twitter API 
 2. Collect tweets that mention each Pokemon Go team using Python's Tweepy library
-3. Use Python's Pandas library to perform an inital clean up of the data
+3. Use Python's Pandas library to perform an initial clean up of the data
 4. Develop an understanding of Naive Bayes classifiers
 5. Perform a sentiment analysis to determine if a tweet is saying something positive or negative about the team
 6. Count the number of positive tweets about each team in each state.  At the same time, measure statistical and systematic errors on our results and produce confidence intervals

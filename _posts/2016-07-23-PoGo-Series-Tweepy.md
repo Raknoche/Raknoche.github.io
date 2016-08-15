@@ -138,7 +138,7 @@ searchQuery = 'place:96683cc9126741d1 #teammystic OR #teaminstinct OR #teamvalor
               '"team mystic" OR "team valor" OR "team instinct"'
 ```
 
-We also need to define the maximum number of tweets that we want to collect, and the maximum number of tweets that we want to recieve from each query that we send:
+We also need to define the maximum number of tweets that we want to collect, and the maximum number of tweets that we want to receive from each query that we send:
 
 
 ```python
@@ -149,7 +149,7 @@ maxTweets = 1000000
 tweetsPerQry = 100
 ```
 
-Note that the Search API limits us to 100 tweets per query, and that we may not collect the maximum number of tweets that we specified since the Search API only collects the past week of tweets.  The easieset way to send our query to the Search API is through [Tweepy's Cursor method](http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html).  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a `for` loop, and write the JSON formatted tweet to a text file using the `jsonpickle` library:
+Note that the Search API limits us to 100 tweets per query, and that we may not collect the maximum number of tweets that we specified since the Search API only collects the past week of tweets.  The easiest way to send our query to the Search API is through [Tweepy's Cursor method](http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html).  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a `for` loop, and write the JSON formatted tweet to a text file using the `jsonpickle` library:
 
 
 ```python
