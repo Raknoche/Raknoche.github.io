@@ -398,6 +398,11 @@ After we've finished manually classifying our training set, we should save the d
 PoGo_labeled.to_csv('PoGo_Sentiment_Labeled.csv')
 ```
 
+We should also save the full collection of tweets (after removing multi-team tweets), for use in the future.
+
+```python
+PoGo_tweets.to_csv('PoGo_Sentiment_AllTweets.csv')
+```
 
 # <a name="sets"></a> Training sets, Test sets, and Cross Validation sets
 

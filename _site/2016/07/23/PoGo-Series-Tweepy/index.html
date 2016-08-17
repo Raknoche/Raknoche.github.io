@@ -281,7 +281,7 @@
 </code></pre>
 </div>
 
-<p>We also need to define the maximum number of tweets that we want to collect, and the maximum number of tweets that we want to recieve from each query that we send:</p>
+<p>We also need to define the maximum number of tweets that we want to collect, and the maximum number of tweets that we want to receive from each query that we send:</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Maximum number of tweets we want to collect </span>
 <span class="n">maxTweets</span> <span class="o">=</span> <span class="mi">1000000</span>
@@ -291,7 +291,7 @@
 </code></pre>
 </div>
 
-<p>Note that the Search API limits us to 100 tweets per query, and that we may not collect the maximum number of tweets that we specified since the Search API only collects the past week of tweets.  The easieset way to send our query to the Search API is through <a href="http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html">Tweepy’s Cursor method</a>.  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a <code class="highlighter-rouge">for</code> loop, and write the JSON formatted tweet to a text file using the <code class="highlighter-rouge">jsonpickle</code> library:</p>
+<p>Note that the Search API limits us to 100 tweets per query, and that we may not collect the maximum number of tweets that we specified since the Search API only collects the past week of tweets.  The easiest way to send our query to the Search API is through <a href="http://tweepy.readthedocs.io/en/v3.5.0/cursor_tutorial.html">Tweepy’s Cursor method</a>.  The Cursor will automatically send queries to the Search API until we have collected the maximum number of tweets that we specified, or until we reach the end of the Search API database.  We can iterate over each tweet that the Cursor gathers using a <code class="highlighter-rouge">for</code> loop, and write the JSON formatted tweet to a text file using the <code class="highlighter-rouge">jsonpickle</code> library:</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">tweetCount</span> <span class="o">=</span> <span class="mi">0</span>
 

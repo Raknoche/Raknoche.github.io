@@ -518,6 +518,12 @@
 </code></pre>
 </div>
 
+<p>We should also save the full collection of tweets (after removing multi-team tweets), for use in the future.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s">'PoGo_Sentiment_AllTweets.csv'</span><span class="p">)</span>
+</code></pre>
+</div>
+
 <h1 id="a-namesetsa-training-sets-test-sets-and-cross-validation-sets"><a name="sets"></a> Training sets, Test sets, and Cross Validation sets</h1>
 
 <p>Before we use the training set to build our sentiment analyzer, we need to consider how to properly handle the data.  Suppose we fed all of our training set to the sentiment analyzer, allowing it to extract whatever features were needed to maximize its prediction accuracy.  In this case, we run the risk of over constraining our sentiment analyzer with obscure features that are only relevant to a handful of tweets.  For instance, maybe one of the tweets that was not included in our training set contains the text “I really love #TeamValor.  Psych!”  Without using the fairly uncommon word “psych” as a feature, our analyzer would probably classify this tweet as positive.  The only chance we have of correctly identifying the tweet as negative is if the word “psych” was also used in one of our training set tweets.  There is no chance that our training set contains every word (including misspellings and acronyms) that will show up in our entire collection of tweets, so if we evaluate the performance of our classifier based on the tweets it was trained on we will likely overestimate its performance.</p>
