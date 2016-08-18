@@ -688,8 +688,7 @@ plt.show()
 ```
 
 SHOW POGO BARMAP PLOT HERE
-![png](Part%206%20-%20Making%20a%20Choropleth%20Map_files/Part%206%20-%20Making%20a%20Choropleth%20Map_36_0.png)
-
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/Multithreaded-hours-timeline.png)
 
 # Closing remarks
 
