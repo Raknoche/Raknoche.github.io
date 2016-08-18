@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-16T21:44:52-04:00</updated>
+ <updated>2016-08-18T14:53:18-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -13,10 +13,18 @@
 
  
  <entry>
+   <title>PoGo Series&#58; Making a Choropleth Map</title>
+   <link href="http://www.dealingdata.net/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/"/>
+   <updated>2016-08-03T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/08/03/PoGo-Series-Making a Choropleth Map</id>
+   <content type="html">&lt;p&gt;Visualizing the dominance of each Pokemon Go team with a Choropleth map.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;TABLE OF CONTENTS&lt;/p&gt; &lt;p&gt;Welcome to the final post in our Pokemon Go analysis series. Last time, we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state. We used the fraction...</content>
+ </entry>
+ 
+ <entry>
    <title>PoGo Series&#58; Statistical Analysis of Data</title>
-   <link href="http://www.dealingdata.net/2016/07/31/Statistical-Analysis-of-the-Data/"/>
+   <link href="http://www.dealingdata.net/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/"/>
    <updated>2016-07-31T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/31/Statistical-Analysis-of-the-Data</id>
+   <id>http://www.dealingdata.net/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data</id>
    <content type="html">&lt;p&gt;Measuring the dominance of each time in each state while properly accounting for statistical and systematic errors.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;TABLE OF CONTENTS&lt;/p&gt; &lt;p&gt;Welcome to the second-to-last post in our Pokemon Go analysis series. Last time, we trained a sentiment analyzer that will allow us to remove negative tweets from our collection....</content>
  </entry>
  
