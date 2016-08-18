@@ -31,6 +31,55 @@
  * Update the foundational and global aspects of the page.
  */
 
+/* Tables */
+table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+td,
+th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+tbody tr:nth-child(odd) td,
+tbody tr:nth-child(odd) th {
+  background-color: #f9f9f9;
+}
+
+
+/* Bokeh Table */
+.bokehTable{
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+.bokehTable th {
+  padding: none;
+  border: none;
+}
+.bokehTable tbody tr td, .bokehTable tbody tr th{
+  background-color: #f9f9f9;
+}
+
+/* UnBokeh Table */
+.unbokehTable{
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+.unbokehTable th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+.unbokehTable tbody tr:nth-child(odd) td, .unbokehTable tbody tr:nth-child(odd) th{
+  background-color: #f9f9f9;
+}
+
+
 html {
   font-family: "PT Serif", Georgia, "Times New Roman", serif;
 }
@@ -574,5 +623,3 @@ a.pagination-item:hover {
     margin: 0 auto;
     display: block;
 }
-
-
