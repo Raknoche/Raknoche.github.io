@@ -20,6 +20,7 @@ We'll cover the following topics:
 2. [Converting RYB fractions to RGB colors](#ryb)
 3. [Making an interactive Choropleth map with Bokeh](#bokeh)
 4. [Making a Basemap Colored by Prominent Team](#basemap)
+5. [Discussing the Analysis Results](#discuss)
 
 
 # <a name="loading"></a> Loading the data
@@ -41,13 +42,7 @@ stateInfo_nosenti = stateInfo_nosenti.set_index(['State'])
 stateInfo.head(n=5)
 ```
 
-    /Users/richardknoche/anaconda/lib/python3.5/site-packages/matplotlib/__init__.py:1035: UserWarning: Duplicate key in file "/Users/richardknoche/.matplotlib/matplotlibrc", line #2
-      (fname, cnt))
-
-
-
-
-
+ 
 <div>
 <table border="1" class="dataframe">
   <thead>
@@ -256,10 +251,6 @@ for r_level in np.arange(0,1,0.0002):
         
 ```
 
-    /Users/richardknoche/anaconda/lib/python3.5/site-packages/ipykernel/__main__.py:49: DeprecationWarning: using a non-integer number instead of an integer will result in an error in the future
-
-
-
 ```python
 #Display the final canvas
 plt.imshow(color_map,origin='lower',interpolation='none')
@@ -276,11 +267,10 @@ plt.axis('off')
 plt.savefig('ColorLegend.png')
 ```
 
-SHOW PLOT LEGEND HERE
-![png](Part%206%20-%20Making%20a%20Choropleth%20Map_files/Part%206%20-%20Making%20a%20Choropleth%20Map_6_0.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png)
 
 
-<h1> Making an Interactive Choropleth Map with Bokeh </h1>
+# <a name="bokeh"></a> Making an Interactive Choropleth Map with Bokeh </h1>
 
 There are a number of Python libraries we could use to produce our Choropleth map.  In this section, we'll use Python's [Bokeh library](http://bokeh.pydata.org/en/0.11.1/docs/gallery/choropleth.html).  The Bokeh library provides a variety of tools to produce interactive visualizations of data in an html format.  Compared to other plotting libraries such a `matplotlib`, including interactive functionality with Bokeh is a breeze.
 
@@ -415,7 +405,7 @@ p.grid.grid_line_color = None
 
 ```
 
-We can import all of the information we collected above into Bokeh by feeding it in a as a dict to Bokeh's '`ColumnDataSource` method.
+We can import all of the information we collected above into Bokeh by feeding it in a as a dict to Bokeh's `ColumnDataSource` method.
 
 
 ```python
@@ -483,9 +473,10 @@ output_file("Pokemon Go Team Dominance.html", title="Pokemon Go Team Dominance")
 #Show the plot
 show(p)
 ```
+{% include PoGo_TeamDominance.html %}
 
-SHOW BOKEH PLOT HERE
-SHOW PLOT LEGEND HERE
+
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png){: .center-image }
 
 # <a name="basemap"></a> Making a Basemap Colored by Prominent Team
 
@@ -620,15 +611,10 @@ plt.figure(figsize=(30,20))
 plt.savefig('PoGo_DominantTeam')        
 ```
 
-SHOW BASEMAP PLOT HERE
-![png](Part%206%20-%20Making%20a%20Choropleth%20Map_files/Part%206%20-%20Making%20a%20Choropleth%20Map_34_0.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_DominantTeam.png){: .center-image }
 
 
-
-    <matplotlib.figure.Figure at 0x1228d4f60>
-
-
-# Discussing the analysis results
+# <a name="discuss"></a> Discussing the analysis results
 
 If we only look at the basemap result, we see that Team Valor is the most dominant team in 23 states.  Team Mystic claims eight states, and ties for ownership with Team Valor in 18 states (including Peurto Rico and DC).  Team Instinct seems less popular, only having shared ownership of three states.  In two of the states, we could not say that any particular team owned the state with statistical signifance.
 
@@ -687,8 +673,7 @@ plt.xlim([-0.1, 1.2])
 plt.show()
 ```
 
-SHOW POGO BARMAP PLOT HERE
-![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/Multithreaded-hours-timeline.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_Bar.png){: .center-image }
 
 # Closing remarks
 
