@@ -163,7 +163,7 @@ stateInfo.head(n=5)
 
 A [Choropleth map](http://www.datavizcatalogue.com/methods/choropleth.html) divides geographic areas into distinct regions, and colors those regions to visualize patterns in your data.  We can apply this technique to our data to visualize the dominance of each Pokemon Go team in each state.  We'll begin with a map of the United States, with boundaries drawn at the state level.  The fraction of tweets referencing each team in a particular state will tell us how much red, yellow, and blue (RYB) to mix into the color of that state.  For instance, if a particular state has an equal number of blue and yellow team tweets, but no red team tweets, we'd like to color that state green.  
 
-Conventionally, colors are defined on a red, green, and blue (RGB) colorscale.  We need a way to convert our RYB measurements into an RGB measurement.  I modified a [trilinear interpolation method from Gossett and Chen](http://vis.computer.org/vis2004/DVD/infovis/papers/gossett.pdf) for this purpose.  The method requires us to construct a cube of colors on an RYB coordinate system.  The color red would appear at the coordinates (1,0,0) while the color yellow would appear at the coordinates (0,1,0) in this such a system.  Next, we must explicitly map the RYB colors to an RGB basis.  In the case of yellow, the point (0,1,0) in the RYB basis would map to the point (1,1,0) in the RGB basis, since red and green mix to make yellow.  Once we've done this for each point on our cube, we can use a [trilinear interpolation](https://en.wikipedia.org/wiki/Trilinear_interpolation) of the RYB to RGB cube mapping to convert any RYB coordinate to the RGB basis.  The code for doing so is included below:
+Conventionally, colors are defined on a red, green, and blue (RGB) color scale.  We need a way to convert our RYB measurements into an RGB measurement.  I modified a [trilinear interpolation method from Gossett and Chen](http://vis.computer.org/vis2004/DVD/infovis/papers/gossett.pdf) for this purpose.  The method requires us to construct a cube of colors on an RYB coordinate system.  The color red would appear at the coordinates (1,0,0) while the color yellow would appear at the coordinates (0,1,0) in this such a system.  Next, we must explicitly map the RYB colors to an RGB basis.  In the case of yellow, the point (0,1,0) in the RYB basis would map to the point (1,1,0) in the RGB basis, since red and green mix to make yellow.  Once we've done this for each point on our cube, we can use a [trilinear interpolation](https://en.wikipedia.org/wiki/Trilinear_interpolation) of the RYB to RGB cube mapping to convert any RYB coordinate to the RGB basis.  The code for doing so is included below:
 
 
 ```python
@@ -194,7 +194,7 @@ def RYB_to_RGB(r,y,b):
     return rgb
 ```
 
-We'll need a legend that indicates what each color on our Choropleth map means.  Imagine a triangle whose center lies at the origin of a coordinate system.  The top of the triangle, at $\left(x=1,y=0\right)$, can represent the red color of our map when we only have Team Valor tweets.  The bottom left of the triangle, at $\left(x=\frac{-\sqrt{3}}{2}, y=\frac{-1}{2}\right)$, can represent the yellow color of our map when we only have Team Instinct tweets.  The bottom right of the triangle, at $\left(x=\frac{\sqrt{3}}{2}, y=\frac{-1}{2}\right)$, can represent the blue color of our map when we only have Team Mystic tweets.  To fill in the rest of the triangle, we loop through each possible combination of red team, yellow team, and blue team fractions.  We determine the x and y coordinate of each combination by treating the individual red, yellow, and blue components as a vector and adding the individual vector coordinates together.  We then use our `RYB_to_RGB` function to determine the RGB color of those coordinates.
+We'll need a legend that indicates what each color on our Choropleth map means.  Imagine a triangle whose center lies at the origin of a coordinate system.  The top of the triangle, at $$\left(x=1,y=0\right)$$, can represent the red color of our map when we only have Team Valor tweets.  The bottom left of the triangle, at $$\left(x=\frac{-\sqrt{3}}{2}, y=\frac{-1}{2}\right)$$, can represent the yellow color of our map when we only have Team Instinct tweets.  The bottom right of the triangle, at $$\left(x=\frac{\sqrt{3}}{2}, y=\frac{-1}{2}\right)$$, can represent the blue color of our map when we only have Team Mystic tweets.  To fill in the rest of the triangle, we loop through each possible combination of red team, yellow team, and blue team fractions.  We determine the x and y coordinate of each combination by treating the individual red, yellow, and blue components as a vector and adding the individual vector coordinates together.  We then use our `RYB_to_RGB` function to determine the RGB color of those coordinates.
 
 
 ```python
@@ -267,10 +267,11 @@ plt.axis('off')
 plt.savefig('ColorLegend.png')
 ```
 
-![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png){: .center-image }
 
 
-# <a name="bokeh"></a> Making an Interactive Choropleth Map with Bokeh </h1>
+
+# <a name="bokeh"></a> Making an Interactive Choropleth Map with Bokeh 
 
 There are a number of Python libraries we could use to produce our Choropleth map.  In this section, we'll use Python's [Bokeh library](http://bokeh.pydata.org/en/0.11.1/docs/gallery/choropleth.html).  The Bokeh library provides a variety of tools to produce interactive visualizations of data in an html format.  Compared to other plotting libraries such a `matplotlib`, including interactive functionality with Bokeh is a breeze.
 
@@ -289,23 +290,14 @@ output_notebook()
 ```
 
 
-
-    <div class="bk-root">
-        <a href="http://bokeh.pydata.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-        <span id="d86dca9c-4635-4a3f-8e84-bf6784d3855f">Loading BokehJS ...</span>
-    </div>
-
-
-
-
-Convenientally, Bokeh provides [sample data](https://github.com/bokeh/bokeh/tree/master/bokeh/sampledata) for a number of topics, one of which is geographic information about the boundaries of US states.  We can access this information from `bokeh.sampledata`
+Conveniently, Bokeh provides [sample data](https://github.com/bokeh/bokeh/tree/master/bokeh/sampledata) for a number of topics, one of which is geographic information about the boundaries of US states.  We can access this information from `bokeh.sampledata`
 
 
 ```python
 from bokeh.sampledata.us_states import data as statesData
 ```
 
-The `statesData` object we just imported is a dictionary.  The keys for the dictionary are the abbreviations for each state, and the values of the dictionary define the boundaries of each state by using lists of lattitude and longitude coordinates.  We'll want to extract the coordinates of the boundaries.
+The `statesData` object we just imported is a dictionary.  The keys for the dictionary are the abbreviations for each state, and the values of the dictionary define the boundaries of each state by using lists of latitude and longitude coordinates.  We'll want to extract the coordinates of the boundaries.
 
 
 ```python
@@ -313,7 +305,7 @@ The `statesData` object we just imported is a dictionary.  The keys for the dict
 del statesData["HI"]
 del statesData["AK"]
 
-#Extract longitude and lattitude of the state boundaries
+#Extract longitude and latitude of the state boundaries
 state_xs = [statesData[code]["lons"] for code in statesData]
 state_ys = [statesData[code]["lats"] for code in statesData]
 
@@ -425,7 +417,7 @@ data_source = ColumnDataSource(data=dict(
     ))
 ```
 
-Now, we can tell Bokeh to fill in patches of color inbetween the x and y coordinates of each state.  Once we declare our `data_source` object as the source of information, Bokeh will be able to extract the x and y coordinates of the state boundaries, as well as the color we assigned to each state, by referencing the `data_source` dictionary keys.  
+Now, we can tell Bokeh to fill in patches of color in between the x and y coordinates of each state.  Once we declare our `data_source` object as the source of information, Bokeh will be able to extract the x and y coordinates of the state boundaries, as well as the color we assigned to each state, by referencing the `data_source` dictionary keys.  
 
 
 ```python
@@ -435,13 +427,6 @@ p.patches('x', 'y', source=data_source,
           line_color="white", line_width=0.5)
 
 ```
-
-
-
-
-    <bokeh.models.renderers.GlyphRenderer at 0x104135e10>
-
-
 
 We can include the mouse over functionality we previously discussed using Bokeh's `HoverTool` method.  The `tooltips` method allows us to specify which information we'd like to display during a mouse over.  In this case, I chose to show the state name and the fraction of tweets which refer to each team (along with the errors).  
 
@@ -475,8 +460,8 @@ show(p)
 ```
 {% include PoGo_TeamDominance.html %}
 
-
 ![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png){: .center-image }
+
 
 # <a name="basemap"></a> Making a Basemap Colored by Prominent Team
 
@@ -486,7 +471,7 @@ First, we need to determine which team "owns" each state.  We do so by comparing
 
 
 ```python
-#Fill in stateInfo dominant column using whichever dataframe is more accruate 
+#Fill in stateInfo dominant column using whichever dataframe is more accurate 
 #(even if the data comes from stateInfo_nosenti, we only fill in the Dominant column in the stateInfo dataframe)
 for row in range(len(stateInfo)):
     
@@ -540,7 +525,7 @@ for row in range(len(stateInfo)):
         stateInfo.ix[row,'Dominant'] = 'white'
 ```
 
-We'll use the [Basemap library](https://basemaptutorial.readthedocs.io/en/latest/installation.html) to make this simplified, noninteractive map.  First we need to import the library and some of its functions.
+We'll use the [Basemap library](https://basemaptutorial.readthedocs.io/en/latest/installation.html) to make this simplified, non-interactive map.  First we need to import the library and some of its functions.
 
 
 ```python
@@ -610,15 +595,14 @@ plt.title('Pokemon Go Team Dominance')
 plt.figure(figsize=(30,20))
 plt.savefig('PoGo_DominantTeam')        
 ```
-
 ![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_DominantTeam.png){: .center-image }
 
 
 # <a name="discuss"></a> Discussing the analysis results
 
-If we only look at the basemap result, we see that Team Valor is the most dominant team in 23 states.  Team Mystic claims eight states, and ties for ownership with Team Valor in 18 states (including Peurto Rico and DC).  Team Instinct seems less popular, only having shared ownership of three states.  In two of the states, we could not say that any particular team owned the state with statistical signifance.
+If we only look at the basemap result, we see that Team Valor is the most dominant team in 23 states.  Team Mystic claims eight states, and ties for ownership with Team Valor in 18 states (including Puerto Rico and DC).  Team Instinct seems less popular, only having shared ownership of three states.  In two of the states, we could not say that any particular team owned the state with statistical significance.
 
-The popularity of the Pokemon Go teams are not as one sided as the Basemap would lead you to believe.  Our interactive Bokeh plot shows that the majority of states are tinted purple when you account for the fraction of tweets from every team in the state.  This indicates that even though Team Valor is the most dominant team in many states, Team Mystic is a close second in popularity.  In fact, if we look at the total number of tweets about each team, regardless of the location of those tweets, we see that Team Valor represents 40 $\pm$ 1% of our tweets, Team Mystic represents 37 $\pm$ 1% of our tweets, and Team Instinct represents 23 $\pm$ 0.5% of our tweets.
+The popularity of the Pokemon Go teams are not as one sided as the Basemap would lead you to believe.  Our interactive Bokeh plot shows that the majority of states are tinted purple when you account for the fraction of tweets from every team in the state.  This indicates that even though Team Valor is the most dominant team in many states, Team Mystic is a close second in popularity.  In fact, if we look at the total number of tweets about each team, regardless of the location of those tweets, we see that Team Valor represents 40 $$\pm$$ 1% of our tweets, Team Mystic represents 37 $$\pm$$ 1% of our tweets, and Team Instinct represents 23 $$\pm$$ 0.5% of our tweets.
 
 
 ```python
@@ -677,4 +661,4 @@ plt.show()
 
 # Closing remarks
 
-It too a lot of work, but we succesfully used Twitter to quantify the dominance of the Pokemon Go teams in each state.  Along the way we learned details of the Twitter API, and how to use Python's Tweepy library to interface with the API and collect tweets. We built an understanding of Naive Bayes Classifiers, and trained one to classify the sentiment of each tweet that we collected.  We used the sentiment analyzer to remove negative tweets from our collection, along with the multi-team tweets, and repeated-user tweets that we removed with Pandas.  With the cleaned data, we performed a statistical analysis to determine the dominance of each Pokemon Go team in every state while properly accounting for errors on our measurement.  Finally, we visualized discussed our results in this final post.  Congratulations on making it through the six-post series.  If you learned anything useful along the way, or have any questions about the topics we covered, feel free to leave a comment below. 
+It too a lot of work, but we successfully used Twitter to quantify the dominance of the Pokemon Go teams in each state.  Along the way we learned details of the Twitter API, and how to use Python's Tweepy library to interface with the API and collect tweets. We built an understanding of Naive Bayes Classifiers, and trained one to classify the sentiment of each tweet that we collected.  We used the sentiment analyzer to remove negative tweets from our collection, along with the multi-team tweets, and repeated-user tweets that we removed with Pandas.  With the cleaned data, we performed a statistical analysis to determine the dominance of each Pokemon Go team in every state while properly accounting for errors on our measurement.  Finally, we visualized discussed our results in this final post.  Congratulations on making it through the six-post series.  If you learned anything useful along the way, or have any questions about the topics we covered, feel free to leave a comment below. 

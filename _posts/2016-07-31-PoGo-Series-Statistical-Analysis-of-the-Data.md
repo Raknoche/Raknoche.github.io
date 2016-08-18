@@ -957,13 +957,13 @@ In this section, I'll discuss how to properly account for statistical and system
 
 In statistics, a [Poisson distribution](https://www.pp.rhul.ac.uk/~cowan/stat/notes/PoissonNote.pdf) is used to describe the number of times an event occurs within a time interval.  This representation is appropriate if:
 
-* The number of times the event occurs ($\mathsf{N}$) in an interval is discrete (0,1,2,...)
+* The number of times the event occurs ($$\mathsf{N}$$) in an interval is discrete (0,1,2,...)
 * The event occurs independent of other events
 * The rate at which events occur is approximately constant.
 * The probability of events occurring at the same time is negligible.
 * The probability of an event occurring in an interval is proportional to the length of the interval.
 
-The number of Pokemon Go tweets within each state meets all of the above conditions, so we can use the Poisson distribution to determine the statistical error on our measurement.  The standard deviation of a Poisson distribution is given by the square root of the number of events observed.  (A derivation of this can be found in the previous link.)  Therefore, the statistical error of the count of tweets ($\mathsf{N}$) is simply:
+The number of Pokemon Go tweets within each state meets all of the above conditions, so we can use the Poisson distribution to determine the statistical error on our measurement.  The standard deviation of a Poisson distribution is given by the square root of the number of events observed.  (A derivation of this can be found in the previous link.)  Therefore, the statistical error of the count of tweets ($$\mathsf{N}$$) is simply:
 
 $$\mathsf{ \sigma_{N,stat} = \sqrt{N} }\tag{1}$$
 
@@ -995,7 +995,7 @@ When we use our sentiment analyzer to reduce the number of negative tweets in ou
 <a name="eq5"></a>
 $$\mathsf{ N_{with \; analyzer} = 0.0892*N_{without \;analyzer}*(1-R^-) + (1-0.0892)*N_{without \; analyzer}*R^+ = 0.732 * N_{without \;analyzer} }\tag{5}$$
 
-Where I've used the fact that the negative recall of our classifier was $\mathsf{R^- = 0.789}$, and the positive recall of our classifier was $\mathsf{R^+=0.783}$. 
+Where I've used the fact that the negative recall of our classifier was $$\mathsf{R^- = 0.789}$$, and the positive recall of our classifier was $$\mathsf{R^+=0.783}$$. 
 
 Plugging [Equation 5](#eq5) into [Equation 4](#eq4) and simplifying yields the result that our classifier will improve the relative error on our measurement when 
 
@@ -1004,32 +1004,32 @@ $$\mathsf{ N_{without \; analyzer} \ge 50 }\tag{6}$$
 
 ## Propagating errors to our team dominance metric
 
-To make our team dominance map, we want to determine the fraction of tweets from each state that reference a particular team.  With the number of tweets about a team in a particular state given by $\mathsf{N_{team}}$, and the number of total tweets in that state given by $\mathsf{N_{state}}$, the dominance of a particular team in a state is given by:
+To make our team dominance map, we want to determine the fraction of tweets from each state that reference a particular team.  With the number of tweets about a team in a particular state given by $$\mathsf{N_{team}}$$, and the number of total tweets in that state given by $$\mathsf{N_{state}}$$, the dominance of a particular team in a state is given by:
 
 $$\mathsf{T \equiv Team \; Dominance =  \frac{N_{team}}{N_{state}} } \tag{6}$$
 
-To determine the error on the team dominance measurement, we need to propagate the individual errors from the numerator and denominator.  The general equation for propagating the errors of numerous variables, $\mathsf{\mathbf{X} = \lbrace x_1,x_2,x_3,\dotsc,x_n \rbrace}$, to some function of those variables $\mathsf{F(\mathbf{X})}$ is given by:
+To determine the error on the team dominance measurement, we need to propagate the individual errors from the numerator and denominator.  The general equation for propagating the errors of numerous variables, $$\mathsf{\mathbf{X} = \lbrace x_1,x_2,x_3,\dotsc,x_n \rbrace}$$, to some function of those variables $$\mathsf{F(\mathbf{X})}$$ is given by:
 
 <a name="eq7"></a>
 $$\mathsf{ \sigma_F ^2 = \sum_{i=1}^n \sigma_{x_i}^2 \left( \frac{ \delta F }{\delta x_i} \right)^2 + \sum_{i=1}^n \sum_{i \ne j}^n \sigma_{x_i,x_j}^2 \left( \frac{ \delta F }{\delta x_i} \right)\left( \frac{ \delta F }{\delta x_j} \right) }\tag{7}$$
 
-where $\mathsf{\sigma_{x_i,x_j}^2}$ is the covariance of the variables $\mathsf{x_i}$ and $\mathsf{x_j}$.  In the case of uncorrelated variables, $\mathsf{\sigma_{x_i,x_j}^2 = 0}$, so the last term in [Equation 7](#eq7) vanishes.  
+where $$\mathsf{\sigma_{x_i,x_j}^2}$$ is the covariance of the variables $$\mathsf{x_i}$$ and $$\mathsf{x_j}$$.  In the case of uncorrelated variables, $$\mathsf{\sigma_{x_i,x_j}^2 = 0}$$, so the last term in [Equation 7](#eq7) vanishes.  
 
-As it stands, the variables in our team dominance measurement, $\mathsf{N_{team}}$ and $\mathsf{N_{state}}$, are correlated, since $\mathsf{N_{state}}$ is equal to the sum of the tweet counts for each individual team.  To simplify our analysis, we can rewrite the team dominance equation in terms of the number of tweets referencing that team ($\mathsf{N_{team}}$) and the number of tweets referencing a different team ($\mathsf{N_{other}}$):
+As it stands, the variables in our team dominance measurement, $$\mathsf{N_{team}}$$ and $$\mathsf{N_{state}}$$, are correlated, since $$\mathsf{N_{state}}$$ is equal to the sum of the tweet counts for each individual team.  To simplify our analysis, we can rewrite the team dominance equation in terms of the number of tweets referencing that team ($$\mathsf{N_{team}}$$) and the number of tweets referencing a different team ($$\mathsf{N_{other}}$$):
 
 <a name="eq8"></a>
 $$\mathsf{T =  \frac{N_{team}}{N_{team} + N_{other}} } \tag{8}$$
 
-[Equation 8](#eq8) has no correlated variables, so we don't need to worry about measuring the covariance of any terms when propagating error measurements.  Therefore, with the team dominance denoted as $\mathsf{T}$,
+[Equation 8](#eq8) has no correlated variables, so we don't need to worry about measuring the covariance of any terms when propagating error measurements.  Therefore, with the team dominance denoted as $$\mathsf{T}$$,
 
 
 $$ \mathsf{ \sigma_T ^2 = \sigma_{N_{team},tot}^2 \left( \frac{ \delta T}{\delta N_{team}} \right)^2 + \sigma_{N_{other},tot}^2 \left( \frac{ \delta T }{\delta N_{other}} \right)^2 } \tag{9}$$
 
-We can use the [product rule](https://www.math.ucdavis.edu/~kouba/CalcOneDIRECTORY/productruledirectory/ProductRule.html) to calculate the partial derivative of $\mathsf{F}$ with respect to $\mathsf{N_{team}}$:
+We can use the [product rule](https://www.math.ucdavis.edu/~kouba/CalcOneDIRECTORY/productruledirectory/ProductRule.html) to calculate the partial derivative of $$\mathsf{F}$$ with respect to $$\mathsf{N_{team}}$$:
 
 $$\mathsf{ \frac {\delta T}{\delta N_{team}} = \frac{N_{other}}{(N_{team} + N_{other})^2} } \tag{10}$$
 
-Similarly, we can use the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) to calculate the partial derivative of $\mathsf{F}$ with respect to $\mathsf{N_{other}}$:
+Similarly, we can use the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) to calculate the partial derivative of $$\mathsf{F}$$ with respect to $$\mathsf{N_{other}}$$:
 
 $$\mathsf{ \frac {\delta T}{\delta N_{other}} = \frac{-N_{team}}{(N_{team} + N_{other})^2} } \tag{11}$$
 
