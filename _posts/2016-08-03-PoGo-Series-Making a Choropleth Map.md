@@ -459,7 +459,7 @@ output_file("Pokemon Go Team Dominance.html", title="Pokemon Go Team Dominance")
 show(p)
 ```
 
-{% include PoGo_TeamDominance.html %}{: .bokehTable}
+{% include PoGo_TeamDominance.html %}{.bokehTable}
 
 ![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/PoGo_ColorLegend.png){: .center-image }
 
