@@ -10,13 +10,13 @@ An introduction to the seven part series covering various analysis techniques us
 
 Table of Contents:
 
-1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 
 ---------------------

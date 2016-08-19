@@ -10,17 +10,17 @@ Creating a sentiment analyzer using Python's Natural Learning Toolkit, with a fo
 
 Table of Contents:
 
-1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 ---------------------
 
-This is the fifth post in an on-going Pokemon Go analysis series.  [Last time](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/), we discussed how a Naive Bayes Classifier can be used to predict the class of a sample given a number of features about that sample.  In this post, we'll apply that technique to our Pokemon Go tweets to build a [sentiment analyzer](http://www.nltk.org/book/ch06.html) that automatically classifies whether each tweet has a positive or negative tone.  Once complete, we'll use the sentiment analyzer to remove negative tweets from our data set before using the positive tweets to map out the dominance of each team in each state.  Strap yourselves in &mdash; properly tuning a classifier for your data requires careful implementation. This will be the most detailed post of our Pokemon Go series, but the intuition we'll build will be invaluable.  
+This is the fifth post in an on-going Pokemon Go analysis series.  [Last time](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/), we discussed how a Naive Bayes Classifier can be used to predict the class of a sample given a number of features about that sample.  In this post, we'll apply that technique to our Pokemon Go tweets to build a [sentiment analyzer](http://www.nltk.org/book/ch06.html) that automatically classifies whether each tweet has a positive or negative tone.  Once complete, we'll use the sentiment analyzer to remove negative tweets from our data set before using the positive tweets to map out the dominance of each team in each state.  Strap yourselves in &mdash; properly tuning a classifier for your data requires careful implementation. This will be the most detailed post of our Pokemon Go series, but the intuition we'll build will be invaluable.  
 
 
 We'll cover the following topics:
@@ -36,7 +36,7 @@ We'll cover the following topics:
 
 # <a name="labeling"></a> Manually classifying a training set
 
-Recall from our [last post](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/) that the implementation of a Naive Bayes Classifier requires a training set of samples which have known features and known classes.  Right now, all of the tweets we've collected are unclassified.  Before we create our sentiment analyzer, we'll have to manually label a subset of the tweets as positive or negative to form our training set.  If you want to avoid manually labeling tweets, you could take an [unsupervised machine learning approach](https://marcobonzanini.com/2015/05/17/mining-twitter-data-with-python-part-6-sentiment-analysis-basics/) instead, but these typically have poor performance compared to a supervised approach such as Naive Bayes Classifiers.
+Recall from our [last post](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/) that the implementation of a Naive Bayes Classifier requires a training set of samples which have known features and known classes.  Right now, all of the tweets we've collected are unclassified.  Before we create our sentiment analyzer, we'll have to manually label a subset of the tweets as positive or negative to form our training set.  If you want to avoid manually labeling tweets, you could take an [unsupervised machine learning approach](https://marcobonzanini.com/2015/05/17/mining-twitter-data-with-python-part-6-sentiment-analysis-basics/) instead, but these typically have poor performance compared to a supervised approach such as Naive Bayes Classifiers.
 
 The process of manually labeling tweets is going to be time consuming and tedious, but we can use Python to make the process a little more bearable.  First, we'll import the Pandas and JSON libraries.
 
@@ -884,7 +884,7 @@ eval_classifier(test_set)
     Recall [positive]: 0.7831695331695332
     Negative contamination improved by  71.406449288021 percent
 
-We should also explicitly calculate the initial negative contamination, and the final negative contamination of our tweet collection.  This will be useful in the [next blog post](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/).
+We should also explicitly calculate the initial negative contamination, and the final negative contamination of our tweet collection.  This will be useful in the [next blog post](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/).
 
 ```python
 #Calculating initial and final negative contamination
@@ -909,4 +909,4 @@ After a lot of hard work, we have a sentiment analyzer that will remove 78.9% of
 
 Congratulations on making it through the most detailed post of this series!  It took a lot of work, but in the end we learned how to use Python's NLTK library to properly implement a sentiment analyzer.  Many of the techniques we discussed, such as using training sets, cross validation sets, and test sets to evaluate recall, precision, and the f1-score are applicable to general machine learning tasks.  The intuition that we developed for the feature extraction and hyperparameter tuning process will also be invaluable for future work.
 
-In the [next post](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/), we'll use our sentiment analyzer to remove negative tweets from our collection.  We'll also apply a few other data selection cuts to clean up our data before calculating the fraction of tweets from each state that belong to each Pokemon Go team.  We'll focus on error analysis techniques along the way, so that we can present the uncertainty in our team dominance measurements along with the results.
+In the [next post](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/), we'll use our sentiment analyzer to remove negative tweets from our collection.  We'll also apply a few other data selection cuts to clean up our data before calculating the fraction of tweets from each state that belong to each Pokemon Go team.  We'll focus on error analysis techniques along the way, so that we can present the uncertainty in our team dominance measurements along with the results.

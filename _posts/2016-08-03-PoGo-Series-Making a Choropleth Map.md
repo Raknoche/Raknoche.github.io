@@ -11,17 +11,17 @@ Visualizing the dominance of each Pokemon Go team with a Choropleth map.
 
 Table of Contents:
 
-1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 ---------------------
 
-Welcome to the final post in our Pokemon Go analysis series.  [Last time](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/), we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we'll use Python's `Bokeh` and `Basemap` libraries to visualize our results in a [Choropleth map](http://www.datavizcatalogue.com/methods/choropleth.html).
+Welcome to the final post in our Pokemon Go analysis series.  [Last time](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/), we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we'll use Python's `Bokeh` and `Basemap` libraries to visualize our results in a [Choropleth map](http://www.datavizcatalogue.com/methods/choropleth.html).
 
 We'll cover the following topics:
 
@@ -34,7 +34,7 @@ We'll cover the following topics:
 
 # <a name="loading"></a> Loading the data
 
-Before we begin, we'll need to load the data analysis results from our [previous post](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/).  
+Before we begin, we'll need to load the data analysis results from our [previous post](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/).  
 
 
 ```python

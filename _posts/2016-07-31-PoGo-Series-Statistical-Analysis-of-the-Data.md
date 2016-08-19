@@ -11,17 +11,17 @@ Measuring the dominance of each time while properly accounting for statistical a
 
 Table of Contents:
 
-1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 ---------------------
 
-Welcome to the second-to-last post in our Pokemon Go analysis series.  [Last time](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), we trained a sentiment analyzer that will allow us to remove negative tweets from our collection.  In this post, we'll use this analyzer to clean up our data and determine the dominance of each Pokemon Go team in each state.  Once we've cleaned the data, we'll count the number of tweets referencing each Pokemon Go team in every state.  In the end, we'll use the fraction of tweets referencing each team as a measure of the dominance of the teams in each state.  Along the way, we'll discuss how to properly account for statistical and systematic errors in our measurement.
+Welcome to the second-to-last post in our Pokemon Go analysis series.  [Last time](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), we trained a sentiment analyzer that will allow us to remove negative tweets from our collection.  In this post, we'll use this analyzer to clean up our data and determine the dominance of each Pokemon Go team in each state.  Once we've cleaned the data, we'll count the number of tweets referencing each Pokemon Go team in every state.  In the end, we'll use the fraction of tweets referencing each team as a measure of the dominance of the teams in each state.  Along the way, we'll discuss how to properly account for statistical and systematic errors in our measurement.
 
 
 We'll cover the following topics:
@@ -34,7 +34,7 @@ We'll cover the following topics:
 
 # <a name="cleaning"></a> Cleaning the Data
 
-Before we begin, we'll need to load the our collection of tweets into Pandas.  We already did this in our [last post](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), and saved to the result to a csv file. We can load that csv file with the following code:
+Before we begin, we'll need to load the our collection of tweets into Pandas.  We already did this in our [last post](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), and saved to the result to a csv file. We can load that csv file with the following code:
 
 
 ```python
@@ -117,7 +117,7 @@ PoGo_tweets.head(n=5)
 
 Recall that the csv file has already had all tweets that reference multiple teams removed, since we decided it would be too hard to identify which team the Twitter user was on from such tweets. 
 
-We'd like to remove any negatively-toned tweets from our collection so that we can assume any remaining tweets about the team indicates that the Twitter user is a member of that team.  We can do so by applying the sentiment analyzer that we developed in our [last post](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/).  First, we use `pickle` to load the sentiment analyzer and feature list that we created.
+We'd like to remove any negatively-toned tweets from our collection so that we can assume any remaining tweets about the team indicates that the Twitter user is a member of that team.  We can do so by applying the sentiment analyzer that we developed in our [last post](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/).  First, we use `pickle` to load the sentiment analyzer and feature list that we created.
 
 
 ```python
@@ -975,7 +975,7 @@ The number of Pokemon Go tweets within each state meets all of the above conditi
 
 $$\mathsf{ \sigma_{N,stat} = \sqrt{N} }\tag{1}$$
 
-From our [last post](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), we know that 8.92% of our tweet collection is contaminated with negative tweets when we do not apply our sentiment analyzer.  Once we apply our sentiment analyzer to remove negative tweets, this contamination falls to 2.4%.  We can treat the contamination of negative tweets as a systematic uncertainty on the number of tweets we count in each state:
+From our [last post](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/), we know that 8.92% of our tweet collection is contaminated with negative tweets when we do not apply our sentiment analyzer.  Once we apply our sentiment analyzer to remove negative tweets, this contamination falls to 2.4%.  We can treat the contamination of negative tweets as a systematic uncertainty on the number of tweets we count in each state:
 
 $$\mathsf{ \sigma_{N, sys} = \begin{cases}
 0.0892*N_{without \; analyzer}  & \text{if analyzer is not applied} \\
@@ -1389,7 +1389,7 @@ for state in stateInfo.index[stateInfo['Improved'] == True]:
     Oregon
 
 
-Now that we've finished our statistical analysis, let's save the data frames so that we can visualize the results in our [next and final blog post](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/).
+Now that we've finished our statistical analysis, let's save the data frames so that we can visualize the results in our [next and final blog post](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/).
 
 
 ```python
