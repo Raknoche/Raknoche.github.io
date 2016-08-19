@@ -42,6 +42,6 @@ I thought this would be a great opportunity to explain how to collect data from 
 
 Before we get into the details of the analysis, here's a sneak peak of the final result.
 
-<div class="bokehTable">
+<div class="bokehTable" style="width: 50%">
 {% include PoGo_TeamDominance.html %}
 </div>

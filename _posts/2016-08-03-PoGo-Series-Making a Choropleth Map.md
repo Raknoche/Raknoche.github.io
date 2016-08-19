@@ -468,7 +468,7 @@ output_file("Pokemon Go Team Dominance.html", title="Pokemon Go Team Dominance")
 show(p)
 ```
 
-<div class="bokehTable">
+<div class="bokehTable" style="width: 90%">
 {% include PoGo_TeamDominance.html %}
 </div>
 
