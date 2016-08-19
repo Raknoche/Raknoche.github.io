@@ -10,13 +10,13 @@ An introduction to Twitter's API.
 
 Table of Contents:
 
-1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 ---------------------
 
@@ -81,4 +81,4 @@ If we want to collect tweets in real-time, we would need to use Twitter's [Strea
 
 # Closing remarks
 
-We've built a solid understanding of the Twitter API, how to obtain access to it, and the options that the Search API and Streaming API provide us with when collecting tweets.  In our [next post](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we'll discuss how to interface with the Twitter API through Python's Tweepy library.
+We've built a solid understanding of the Twitter API, how to obtain access to it, and the options that the Search API and Streaming API provide us with when collecting tweets.  In our [next post](http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we'll discuss how to interface with the Twitter API through Python's Tweepy library.

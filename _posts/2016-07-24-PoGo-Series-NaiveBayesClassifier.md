@@ -11,18 +11,18 @@ A discussion of Bayes theorem and how it is used in Naive Bayes Classifiers.
 
 Table of Contents:
 
-1. [Introduction to the Series](http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
-2. [The Twitter API](http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
-3. [The Tweepy Library](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
-4. [Naive Bayes Classifiers](http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
-5. [Training a Sentiment Analyzer](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
-6. [Statistical Analysis of the Data](http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
-7. [Visualizing the Data with Choropleth Maps](http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+1. [Introduction to the Series](http://raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](http://raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](http://raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](http://raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](http://raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
 ---------------------
 
 
-Welcome back to our on-going Pokemon Go analysis series.  In the [previous post](http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denigrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
+Welcome back to our on-going Pokemon Go analysis series.  In the [previous post](http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we used Python's Tweepy package to collect tweets about each Pokemon Go team and store them in a text file.  Some of the tweets mention the Pokemon Go teams in a positive light, while others denigrate the team that's mentioned.  We'll be training a Naive Bayes Classifier to differentiate these two classes of tweets, but before we do that, we need to understand what a Naive Bayes Classifier is.
 
 In this post, we'll discuss the following topics:
 
@@ -241,4 +241,4 @@ The Naive Bayes Classifier says our team has a 93% chance of winning the upcomin
 
 # Closing remarks
 
-We've developed an understanding of Naive Bayes Classifiers and the Bayesian statistics from which they are derived.  In the [next post](http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/) we'll learn how to extract useful features from our Pokemon Go tweets, and use them to train a sentiment analyzer implemented with the Natural Language Tool Kit's (NLTK) built-in Naive Bayes Classifier.
+We've developed an understanding of Naive Bayes Classifiers and the Bayesian statistics from which they are derived.  In the [next post](http://raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/) we'll learn how to extract useful features from our Pokemon Go tweets, and use them to train a sentiment analyzer implemented with the Natural Language Tool Kit's (NLTK) built-in Naive Bayes Classifier.
