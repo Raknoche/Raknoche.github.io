@@ -21,9 +21,11 @@ Welcome to my blog!  I'll be posting tutorials which explain various data scienc
 
     <span class="post-date-index">{{ post.date | date_to_string }}</span>
 
+    <div class="post-abstract-index">
     {% if post.excerpt %}
       {{ post.excerpt }}
     {% endif %}
+    </div>
 
     <!--Replaced this line with post.excerpt from above -->
     <!-- {post.content}} -->

@@ -32,6 +32,14 @@
  */
 
 /* Tables */
+
+
+#table-scroll {
+  overflow:auto;  
+  margin-top:20px;
+}
+
+
 table {
   margin-bottom: 1rem;
   width: 100%;
@@ -55,6 +63,7 @@ tbody tr:nth-child(odd) th {
   width: 100%;
   border: none;
   border-collapse: collapse;
+  overflow:auto;
 }
 .bokehTable th {
   padding: none;
@@ -121,6 +130,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: left;
   }
 }
+
 
 /* Sidebar content */
 .sidebar a {
@@ -265,7 +275,7 @@ a.sidebar-nav-item:focus {
 @media (min-width: 48em) {
   .content {
     max-width: 60rem;
-    margin-left: 20rem;
+    margin-left: 18rem;
     margin-right: 2rem;
   }
 }
@@ -274,6 +284,15 @@ a.sidebar-nav-item:focus {
   .content {
     margin-left: 22rem;
     margin-right: 4rem;
+  }
+}
+
+@media (max-width: 48em) {
+
+  .content p{
+    margin-left:  0rem;
+    margin-right: 1rem;
+
   }
 }
 
@@ -305,6 +324,7 @@ a.sidebar-nav-item:focus {
 /* posts */
 
 
+/*index page layout for large screens */
 .post-index{
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -324,10 +344,89 @@ a.sidebar-nav-item:focus {
   color: #9a9a9a; 
 }
 
+
+/*Index page layout for small screen */
+@media (max-width: 48em) {
+  .post-index {
+    padding-top:    0rem;
+    padding-bottom: 0rem;
+    margin-left:  3rem;
+    padding-left: 2rem;
+  }
+  .post-title-index {
+    padding-top:    0rem;
+    padding-bottom: 0rem;
+    margin-left:  -2rem;
+    padding-left: 0rem;
+  }
+  .post-date-index {
+    padding-top:    0rem;
+    padding-bottom: 0rem;
+    margin-left:  -2rem;
+    padding-left: 0rem;
+  }
+  .post-abstract-index{
+    margin-left: -2rem;
+  }
+}
+
+
+
+/* post page layout for small screens */
+@media (max-width: 48em) {
+  .post{
+    margin-left: 4rem;
+    margin-right: 1rem;
+  }
+  .post-title {
+    margin-left:  -3rem;
+    margin-right: 0rem;
+  }
+  .post-date{
+    margin-left: -3rem;
+    margin-right: 0rem;
+  }
+  .post-content{
+    margin-left:-3rem;
+    margin-right:0rem;
+  }
+}
+
+/* post page layout for semi small screens */
+@media (min-width: 48em) and (max-width: 64em) {
+  .post{
+    margin-left: 0rem;
+    margin-right: 1rem;
+  }
+  .post-title {
+    margin-left:  0rem;
+    margin-right: 0rem;
+  }
+  .post-date{
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+  .post-content{
+    margin-left:-3rem;
+    margin-right:0rem;
+  }
+}
+
+/*Posts page layout for large screens */
+
+@media (min-width: 64em) {
 .post{
+  margin-left: -3rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  margin-right: 3rem;
+  margin-right: 0rem;
+}
+.post-title{
+  margin-left: 0rem;
+}
+.post-content{
+  margin-left:-3rem;
+}
 }
 
 .page-title,
@@ -351,14 +450,6 @@ a.sidebar-nav-item:focus {
   margin-left: -4rem;
   color: #9a9a9a;
 }
-
-@media (max-width: 48em) {
-  .post-title {
-    margin-left:  0rem;
-  }
-  .post-date{
-    margin-left: 0rem;
-  }
 }
 
 
@@ -468,7 +559,7 @@ a.pagination-item:hover {
   .index-content {
     padding-top:    0rem;
     padding-bottom: 0rem;
-    margin-left:  0rem;
+    margin-left:  2rem;
     padding-left: 0rem;
     border-bottom: 1px solid black;
   }

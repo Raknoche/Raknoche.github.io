@@ -82,7 +82,7 @@ PoGo_tweets.head(n=5)
 
 
 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -177,7 +177,7 @@ PoGo_tweets.head(n=5)
 
 
 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -248,7 +248,7 @@ PoGo_tweets.head(n=5)
 
 
 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -318,7 +318,7 @@ PoGo_tweets.head(n=5)
 
 
 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">

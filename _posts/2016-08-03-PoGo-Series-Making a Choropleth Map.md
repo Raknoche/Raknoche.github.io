@@ -51,8 +51,7 @@ stateInfo_nosenti = stateInfo_nosenti.set_index(['State'])
 stateInfo.head(n=5)
 ```
 
- 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -165,7 +164,6 @@ stateInfo.head(n=5)
   </tbody>
 </table>
 </div>
-
 
 
 # <a name="ryb"></a> Converting RYB fractions to RGB colors

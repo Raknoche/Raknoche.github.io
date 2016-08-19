@@ -170,7 +170,7 @@ pre {
   white-space: pre;
   word-break: break-all;
   word-wrap: break-word;
-  overflow-x:scroll;
+  overflow-x:auto;
   background-color: #f9f9f9;
 }
 pre code {
@@ -317,6 +317,12 @@ img {
 .page,
 .post {
   margin-bottom: 4em;
+}
+
+@media (max-width: 48em) {
+  .page {
+    margin-left: 4rem;
+  }
 }
 
 /* Blog post or page title */

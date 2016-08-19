@@ -141,7 +141,7 @@
 
     <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
          content to avoid any CSS collisions with our real content. -->
-    <div class="wrap">
+    <div>
       <div class="masthead">
         <div class="container-mast">
           <h3 class="masthead-title">
@@ -155,24 +155,25 @@
         <div class="post">
   <h1 class="post-title">PoGo Series&#58; Making a Choropleth Map</h1>
   <span class="post-date">03 Aug 2016</span>
+  <div class="post-content">
   
     
 
 <p>Table of Contents:</p>
 
 <ol>
-  <li><a href="#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/">Introduction to the Series</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/">The Twitter API</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/">The Tweepy Library</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/">Naive Bayes Classifiers</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/">Training a Sentiment Analyzer</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">Statistical Analysis of the Data</a></li>
-  <li><a href="#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/">Visualizing the Data with Choropleth Maps</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/20/PoGo-Series-Intro/">Introduction to the Series</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/">The Twitter API</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/">The Tweepy Library</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/">Naive Bayes Classifiers</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/">Training a Sentiment Analyzer</a></li>
+  <li><a href="http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">Statistical Analysis of the Data</a></li>
+  <li><a href="http://raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/">Visualizing the Data with Choropleth Maps</a></li>
 </ol>
 
 <hr />
 
-<p>Welcome to the final post in our Pokemon Go analysis series.  <a href="#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">Last time</a>, we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we’ll use Python’s <code class="highlighter-rouge">Bokeh</code> and <code class="highlighter-rouge">Basemap</code> libraries to visualize our results in a <a href="http://www.datavizcatalogue.com/methods/choropleth.html">Choropleth map</a>.</p>
+<p>Welcome to the final post in our Pokemon Go analysis series.  <a href="http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">Last time</a>, we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we’ll use Python’s <code class="highlighter-rouge">Bokeh</code> and <code class="highlighter-rouge">Basemap</code> libraries to visualize our results in a <a href="http://www.datavizcatalogue.com/methods/choropleth.html">Choropleth map</a>.</p>
 
 <p>We’ll cover the following topics:</p>
 
@@ -186,7 +187,7 @@
 
 <h1 id="a-nameloadinga-loading-the-data"><a name="loading"></a> Loading the data</h1>
 
-<p>Before we begin, we’ll need to load the data analysis results from our <a href="#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">previous post</a>.</p>
+<p>Before we begin, we’ll need to load the data analysis results from our <a href="http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/">previous post</a>.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#Import Pandas library</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -202,7 +203,7 @@
 </code></pre>
 </div>
 
-<div>
+<div id="table-scroll">
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -614,13 +615,13 @@
 <script type="text/javascript">
     Bokeh.set_log_level("info");
 </script>
-        <style>
+       <style>
           html {
             width: 100%;
             height: 100%;
           }
           body {
-            width: 90%;
+            width: 100%;
             height: 100%;
             margin: auto;
           }
@@ -843,6 +844,7 @@
 <p>It too a lot of work, but we successfully used Twitter to quantify the dominance of the Pokemon Go teams in each state.  Along the way we learned details of the Twitter API, and how to use Python’s Tweepy library to interface with the API and collect tweets. We built an understanding of Naive Bayes Classifiers, and trained one to classify the sentiment of each tweet that we collected.  We used the sentiment analyzer to remove negative tweets from our collection, along with the multi-team tweets, and repeated-user tweets that we removed with Pandas.  With the cleaned data, we performed a statistical analysis to determine the dominance of each Pokemon Go team in every state while properly accounting for errors on our measurement.  Finally, we visualized discussed our results in this final post.  Congratulations on making it through the seven-post series.  If you learned anything useful along the way, or have any questions about the topics we covered, feel free to leave a comment below.</p>
 
   
+  </div>
 </div>
 
 
