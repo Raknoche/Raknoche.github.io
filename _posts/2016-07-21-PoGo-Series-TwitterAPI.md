@@ -8,7 +8,17 @@ An introduction to Twitter's API.
 
 <!--more-->
 
-TABLE OF CONTENTS
+Table of Contents:
+
+1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+
+---------------------
 
 Welcome to the second post in the Pokemon Go analysis series.  Recall that our goal is to construct a map of the dominance of each Pokemon Go team within each state.  The first step of this process is to collect tweets about each team from Twitter.  To do so, we'll need to interact with Twitter's Application Programming Interface ([API](https://www.quora.com/What-is-an-API-4)).
 
@@ -71,4 +81,4 @@ If we want to collect tweets in real-time, we would need to use Twitter's [Strea
 
 # Closing remarks
 
-We've built a solid understanding of the Twitter API, how to obtain access to it, and the options that the Search API and Streaming API provide us with when collecting tweets.  In our next post, we'll discuss how to interface with the Twitter API through Python's Tweepy library.
+We've built a solid understanding of the Twitter API, how to obtain access to it, and the options that the Search API and Streaming API provide us with when collecting tweets.  In our [next post](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we'll discuss how to interface with the Twitter API through Python's Tweepy library.

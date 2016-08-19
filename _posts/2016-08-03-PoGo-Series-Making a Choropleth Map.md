@@ -9,10 +9,19 @@ Visualizing the dominance of each Pokemon Go team with a Choropleth map.
 
 <!--more-->
 
-TABLE OF CONTENTS
+Table of Contents:
 
+1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
 
-Welcome to the final post in our Pokemon Go analysis series.  Last time, we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we'll use Python's `Bokeh` and `Basemap` libraries to visualize our results in a [Choropleth map](http://www.datavizcatalogue.com/methods/choropleth.html).
+---------------------
+
+Welcome to the final post in our Pokemon Go analysis series.  [Last time](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/), we cleaned up our tweet collection before counting tweets from each Pokemon Go team in every state.  We used the fraction of tweets about a particular team as a measure of the dominance of that team in the state, and performed a statistical analysis to account for errors in our measurement.  In this post, we'll use Python's `Bokeh` and `Basemap` libraries to visualize our results in a [Choropleth map](http://www.datavizcatalogue.com/methods/choropleth.html).
 
 We'll cover the following topics:
 
@@ -25,7 +34,7 @@ We'll cover the following topics:
 
 # <a name="loading"></a> Loading the data
 
-Before we begin, we'll need to load the data analysis results from our previous post.  
+Before we begin, we'll need to load the data analysis results from our [previous post](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/).  
 
 
 ```python
@@ -664,4 +673,4 @@ plt.show()
 
 # Closing remarks
 
-It too a lot of work, but we successfully used Twitter to quantify the dominance of the Pokemon Go teams in each state.  Along the way we learned details of the Twitter API, and how to use Python's Tweepy library to interface with the API and collect tweets. We built an understanding of Naive Bayes Classifiers, and trained one to classify the sentiment of each tweet that we collected.  We used the sentiment analyzer to remove negative tweets from our collection, along with the multi-team tweets, and repeated-user tweets that we removed with Pandas.  With the cleaned data, we performed a statistical analysis to determine the dominance of each Pokemon Go team in every state while properly accounting for errors on our measurement.  Finally, we visualized discussed our results in this final post.  Congratulations on making it through the six-post series.  If you learned anything useful along the way, or have any questions about the topics we covered, feel free to leave a comment below. 
+It too a lot of work, but we successfully used Twitter to quantify the dominance of the Pokemon Go teams in each state.  Along the way we learned details of the Twitter API, and how to use Python's Tweepy library to interface with the API and collect tweets. We built an understanding of Naive Bayes Classifiers, and trained one to classify the sentiment of each tweet that we collected.  We used the sentiment analyzer to remove negative tweets from our collection, along with the multi-team tweets, and repeated-user tweets that we removed with Pandas.  With the cleaned data, we performed a statistical analysis to determine the dominance of each Pokemon Go team in every state while properly accounting for errors on our measurement.  Finally, we visualized discussed our results in this final post.  Congratulations on making it through the seven-post series.  If you learned anything useful along the way, or have any questions about the topics we covered, feel free to leave a comment below. 

@@ -8,9 +8,19 @@ How to collect tweets using Python's Tweepy library.
 
 <!--more-->
 
-TABLE OF CONTENTS
+Table of Contents:
 
-This is the third post in an on-going Pokemon Go analysis series.  Last time, we discussed Twitter's Search and Streaming APIs.  In this post, we'll discuss how to use Python's Tweepy library to interface with Twitter's API and start collecting tweets about the Pokemon Go teams.
+1. [Introduction to the Series](#http://www.raknoche.github.io/2016/07/20/PoGo-Series-Intro/)
+2. [The Twitter API](#http://www.raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/)
+3. [The Tweepy Library](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/) 
+4. [Naive Bayes Classifiers](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/)
+5. [Training a Sentiment Analyzer](#http://www.raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/)
+6. [Statistical Analysis of the Data](#http://www.raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/)
+7. [Visualizing the Data with Choropleth Maps](#http://www.raknoche.github.io/2016/08/03/PoGo-Series-Making-a-Choropleth-Map/)
+
+---------------------
+
+This is the third post in an on-going Pokemon Go analysis series.  [Last time](#http://www.raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/), we discussed Twitter's Search and Streaming APIs.  In this post, we'll discuss how to use Python's Tweepy library to interface with Twitter's API and start collecting tweets about the Pokemon Go teams.
 
 
 We'll cover the following topics:
@@ -174,7 +184,7 @@ with open('PoGo_USA_Tutorial.json', 'w') as f:
 
 ```
 
-    Downloaded 2006 tweets
+    Downloaded 18850 tweets
 
 
 Let's take a closer look at the information we are storing in the text file.  The Twitter API returns the tweet in [JSON format](http://json.org/), and Tweepy parses the JSON text into a tweet class. First, let's look at the raw JSON text that Twitter returns.  This is what we are saving to our text file in the `for` loop:
@@ -484,4 +494,4 @@ condition in our class definition.
 
 # Closing remarks
 
-That was a lot of content to digest for one blog post!  We covered how to use Tweepy to collect historical tweets through Twitter's Search API, and how to use Tweepy to collect new tweets in real-time through Twitter's Streaming API.  Now that we have a text file full of tweets, we'll lay the ground work for classifying the tweets as positive or negative in our next post.
+That was a lot of content to digest for one blog post!  We covered how to use Tweepy to collect historical tweets through Twitter's Search API, and how to use Tweepy to collect new tweets in real-time through Twitter's Streaming API.  Now that we have a text file full of tweets, we'll lay the ground work for classifying the tweets as positive or negative in our [next post](#http://www.raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/).
