@@ -165,5 +165,5 @@ class App(object):
 
 If you run the main function at this point, it will produce the following (functionless) GUI.
 
-![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_QueryPanel.png){: .center-image }
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_QueryPanel){: .center-image }
       
