@@ -8,7 +8,7 @@ Introduction to MySQL databases and Python's Tkinter library.
 
 <!--more-->
 
-With the start of every school year comes a number of undergraduates interested in working in our physics lab.  In the past, new students had to learn how to interact with our MySQL databases before they could begin any data analysis.  This year, I decided to write a Python GUI that will make accessing and cleaning our data easier for new students.  The GUI will have a number of predefined query fields which the students can use to obtain data from our MySQL database before saving that data to a local csv file. This approach will also reduce the number of students directly interacting with our MySQL database, and thereby reduce the risk of unintentional alterations to the data.
+With the start of every school year comes a number of undergraduates interested in working in our physics lab.  In the past, new students had to learn how to interact with our MySQL databases before they could begin any data analysis.  This year, I decided to write a Python GUI that will make accessing and cleaning our data easier for new students.  The GUI will have a number of predefined query fields which the students can use to obtain data before saving that data to a local csv file. This approach will also reduce the number of students directly interacting with our MySQL database, and thereby reduce the risk of unintentional alterations to the data.
 
 
 We'll cover the following topics:
@@ -21,15 +21,11 @@ We'll cover the following topics:
 
 # <a name="MySQL"></a> Introduction to MySQL
 
-MySQL is a free, open source [Relational Database Management System](https://en.wikipedia.org/wiki/Relational_database_management_system) (RDBMS) that uses [Structured Query Language](https://en.wikipedia.org/wiki/SQL) (SQL) to manage the content of various databases.
-
-The SQL programming language is purpose-built for the manipulation of tabular data held in [Relational Database Management Systems](https://en.wikipedia.org/wiki/Relational_database_management_system) (RDBMS).  There are a number of RDBMS options available for use, including the free and open source [MySQL](https://www.mysql.com/) platform. 
-
-You can install a MySQL database on your own computer with a few simple steps.  If you're a Mac or Linux user:
+MySQL is a free, open source [Relational Database Management System](https://en.wikipedia.org/wiki/Relational_database_management_system) (RDBMS) that uses [Structured Query Language](https://en.wikipedia.org/wiki/SQL) (SQL) to manage the content of various databases.  You can install a MySQL database on your own computer with a few simple steps.  If you're a Mac or Linux user:
 
 1. Download the latest DMG file from [MySQL](http://dev.mysql.com/downloads/mysql/)
 2. Use the DMG file to install MySQL on your computer
-3. Add the MySQL path to your system profile by typing `echo "export PATH=${PATH}:/usr/local/mysql/bin/" >> ~/.bash_profile` in the command line 
+3. Add the MySQL path to your system profile by typing `echo "export PATH=${PATH}:/usr/local/mysql/bin/" >> ~/.bash_profile` at the command line 
 4. Configure a secure installation by typing `mysql_secure_installation` at the command line
 5. Start MySQL by clicking apple $$\rightarrow$$ system preferences $$\rightarrow$$  MySQL $$\rightarrow$$  Start MySQL Server
 
@@ -37,13 +33,13 @@ If your a Windows user, follow the installation directions on [MySQL's website](
 
 You'll also want to install the Python MySQL library.  This allows you to interact with a MySQL database through Python.  Installing the library is as simple as typing `pip install pymysql` at the command line.
 
-If you've never used SQL, I suggest using [Mode Analytics'](https://sqlschool.modeanalytics.com) or [SQLZoo's](sqlzoo.net/wiki/SQL_Tutorial) tutorials to familiarize yourself with the language.  You'll be able to follow this post without doing so, but you'll have trouble making a GUI for your own needs without knowledge of SQL.
+If you've never used SQL, I suggest following [Mode Analytics'](https://sqlschool.modeanalytics.com) or [SQLZoo's](sqlzoo.net/wiki/SQL_Tutorial) tutorials to familiarize yourself with the language.  You'll be able to follow this post without doing so, but you'll have trouble making a GUI for your own needs without knowledge of SQL.
 
 # <a name="tkinter"></a> Making a Python GUI with Tkinter
 
-Python's Tkinter library provides an easy to use interface to the Tk GUI toolkit.  To install Tkinter, type `pip install tkinter` at the command line.
+Python's Tkinter library provides an easy to use interface to the Tk GUI toolkit.  We'll be using it to build our custom-built GUI. To install Tkinter, type `pip install tkinter` at the command line.
 
-Before we include any functionality in our GUI, lets build the basic layout.  First, we'll need to create a Tk GUI window in Python.  We'll pass this window to a customized class object (which I'm naming `App`) that will set up the layout our GUI in its `__init__` method.  Note that in this post any code that belongs to the `__init__` method will be indicated by two indents, just as it would be in our real Python code.  The `mainloop` method will open the window and display our GUI.
+Before we include any functionality in our GUI, lets build the basic layout.  First, we'll need to create a Tk GUI window in Python.  We'll pass this window to a customized class object (which I'm naming `App`) that will set up the layout of our GUI in its `__init__` method.  Note that in this post any code that belongs to the `__init__` method will be indicated by two indents, just as it would appear in our real Python code.  The `mainloop` method will open the window and display our GUI.
 
 ```python 
 from tkinter import *
@@ -67,11 +63,11 @@ if __name__ == "__main__":
 
 Suppose our MySQL database contains data from a radioactivity counter.  The data table has the following columns
 
-* `run_tag`: A string indicating the run which the data belongs to
+* `run_tag`: A string indicating a collection which the data belongs to
 * `clock_time`: A timestamp indicating when the radioactive decay occurred. Uses the format YYYY-MM-DD HH:MM:SS 
 * `amplitude`: The energy of the observed decay
 
-We'd like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three.  To do so, we'll want to create some entry boxes in our GUI where the user can specify these parameters. I'll refer to this section of our GUI as the "query panel." 
+We'd like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three parameters.  To do so, we'll need to create some entry boxes in our GUI where the user can specify these parameters. I'll refer to this section of our GUI as the "query panel." 
 
 In the first row of our query panel, we'll ask the user to specify a run tag.  We can create an empty class variable to store the run tag by using Tkinter's `StringVar()` function.  
 
@@ -79,7 +75,7 @@ In the first row of our query panel, we'll ask the user to specify a run tag.  W
     	self.runtag_text = StringVar()
 ```
 
-To assign a string to the variable we use Tkinter's `Entry` object, passing the variable we just created as the second argument.  This will display an entry box on our GUI that our user can type run tag labels into.  
+To assign a string to the variable we use Tkinter's `Entry` object, passing the variable we just created as the second argument.  This will display an entry box on our GUI that our user can type run tags into.  
 
 ```python
     	self.runtag_entry = Entry(window, textvariable=self.runtag_text)
@@ -98,7 +94,7 @@ We'll want display text on the GUI window that indicates the entry box we just c
     	self.runtag_label = Label (window, text= "Run Tag: ")
     	self.runtag_label.grid(row=self.current_row,column=0)
 ```
-We can repeat this process for each of the three parameters, incrementing the `self.current_row` by one for each new entry box.  
+We can repeat this process for each of the three query parameters, incrementing the `self.current_row` by one for each new entry box.  
 
 
 At the bottom of our query panel, we'll want to add a button that will submit the user's query to our MySQL database.  I'll discuss how to implement the functionality of this button later in the post, but for now we can place it on the GUI using Tkinter's `Button` object.  We can indicate the purpose of the button by specifying the button's text in the second argument of the `Button` method.  Since the button will be on a row by itself, we can place it in between column zero and column one by specifying a `columnspan` of two when we use the `grid` method.
@@ -114,7 +110,7 @@ Eventually, we'll want the button to execute a method that we define in the `App
     	#self.query_button.configure(command=self.sendQuery)
 ``` 
      
-We should also add a `Label` object underneath the query button that displays the status of our query after it is sent.  By default we'll leave the query status as an empty string.  After completing our query panel code, our `App` class will look like this:
+We should also add a `Label` object underneath the query button that displays the status of our query after it is sent.  By default we'll set the query status as an empty string.  After completing our query panel code, our `App` class will look like this:
 
 ```python
 class App(object):
@@ -183,13 +179,13 @@ First, we define the new method within the `App` class.  Within the method, we c
         run_tag = self.runtag_text.get()
 ```
 
-Now we need to build a MySQL query using the strings we just collected above.  It's possible our user didn't place any text in the entry boxes, in which case our MySQL query should default to collecting all the timestamps and energies of the decay events in our database.  Assuming our data is stored in a table named `summarydata`, the syntax for this query would be
+Now we need to build a MySQL query using the strings we just collected above.  It's possible our user didn't place any text in the entry boxes, in which case our MySQL query should default to collecting all the data in our database.  Assuming our data is stored in a table named `summarydata`, the syntax for this query would be
 
 ```sql
 SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL
 ```
 
-The `IS NOT NULL` condition is not strictly necessary for this default query.  It ensures we do not collect data from our table if the energy information of an event is missing.  Regardless of whether we actually have missing energy data, we should still include the `IS NOT NULL` condition for another reason &mdash; it allows us to add additional conditions to our query with `AND` statements.  For instance, if our user provides a start time and end time in the entry boxes, our query would become
+The `IS NOT NULL` ensures we do not collect data from our table if the energy record of an event is missing.  Regardless of whether we actually have missing energy data, we should still include the `IS NOT NULL` condition for another reason &mdash; it allows us to add additional conditions to our query with `AND` statements.  For instance, if our user provides a start time and end time in the entry boxes, our query would become
 
 ```sql
 SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL AND clock_time BETWEEN start_time AND end_time
@@ -206,7 +202,7 @@ To build our entire MySQL query, we will start with empty strings which represen
         time_string = ''
 ```
 
-Next, we'll check each of the entry box variables to see if our user entered text in each box.  If text was entered in an entry box, we change the empty condition string to a MySQL condition, such as `time_string = 'AND clock_time > start_t'`.  Note that the time condition requires the use of SQL's `BETWEEN` syntax if the user specifies both the start and end time of the query.
+Next, we'll check each of the entry box variables to see if our user entered text in each box.  If text was entered in an entry box, we change the corresponding condition string to a MySQL condition, such as `time_string = 'AND clock_time > start_t'`.  
 
 ```python   
         #Toggle query conditions on if the GUI field isn't blank
@@ -238,7 +234,7 @@ import pymysql as mdb
 import pandas as pd
 ```
 
-We can use the `connect` method of the PyMySQL library to open a connection to our database.  we need to provide an IP address, a username, a password, and a database name for the connection to work.  
+We can use the `connect` method of the PyMySQL library to open a connection to our database.  We need to provide an IP address, a username, a password, and a database name for the connection to work.  
    
 ```python
         con = mdb.connect(self.ip, self.user, self.pswd, self.db);
@@ -275,7 +271,7 @@ if __name__ == "__main__":
     main(sys.argv)
 ```
 
-Once our MySQL connection is established, we create a `cursor` object which we'll use to interact with the database.  We tell the cursor to execute our MySQL query using the `execute` method, and we can fetch the return of the query using the `cur.fetchall()` method.  The data is returned as a tuple of tuples, with the outer tuple representing the row of the data table and the inner tuple representing the column.  It's convenient to store the data in a Pandas data frame, which we can easily do using list comprehensions.  Note that the timestamp from the database is returned in the `YYYY-MM-DD HH:MM:SS` format, so we should use the `mktime` method from Python's time library to convert it to a more convenient unix timestamp.
+Once our MySQL connection is established, we create a `cursor` object which we'll use to interact with the database.  We tell the cursor to execute our MySQL query using the `execute` method, and we can fetch the return of the query using the `cur.fetchall()` method.  The data is returned as a tuple of tuples, with the outer tuple representing the row of the data table and the inner tuple representing the column.  It's convenient to store the data in a Pandas data frame, which we can easily do using list comprehensions.  Note that the timestamp from our database is returned in the `YYYY-MM-DD HH:MM:SS` format, so we should use the `mktime` method from Python's time library to convert it to a more convenient unix timestamp.
 
 ```python
         with con:
@@ -419,7 +415,7 @@ if __name__ == "__main__":
 
 # <a name="saving"></a> Saving data with our GUI
 
-Now that our GUI has a functional query panel, we'd like to let our users save a the data their query returns to a local csv file.  We can set up the layout of our "saving panel" using the same methods that we did for our "query panel."  Within out `App` class' `__init__` method, we add the following code:
+Now that our GUI has a functional query panel, we'd like to let our users save the data to a local csv file.  We can set up the layout of our "saving panel" using the same methods that we did for our query panel.  Within the `App` class' `__init__` method, we add the following code:
 
 ```python
         '''Saving Panel'''  
@@ -448,12 +444,12 @@ Now that our GUI has a functional query panel, we'd like to let our users save a
 
 The only unfamiliar piece of the code above is the first six lines.  These lines use Tkinter's `Canvas` and `create_line` methods to draw a solid black line that separates the saving panel from the query panel.  The canvas is positioned using the `grid` method that we are already familiar with.
 
-If we run the main program at this point, the GUI will now look like this:
+If we run the main program at this point, the GUI will look like this:
 
 ![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPanel.png)
 
 
-Now we need to write the `self.save_to_csv` method that correspond to the three buttons we just added.  We define this new method within the `App` class, and use the familiar `get()` method from Tkinter to obtain the save location from the Entry box we just added.  Pandas provides a convenient `to_csv` method to save the data frame we created to a csv file at the specified location.
+Now we need to write the `self.save_to_csv` method that correspond to the button we just added.  We define this new method within the `App` class, and use the familiar `get()` method from Tkinter to obtain the save location from the entry box we just created.  Once we have the desired save location, Pandas provides a convenient `to_csv` method to save the data frame to a csv file.
 
 ```python
     def save_to_csv(self):
@@ -611,5 +607,5 @@ if __name__ == "__main__":
 
 # Closing remarks
 
-The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions wont't be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you'd like to learn how to implement similar functionality, feel free to look at the [complete code](#link) on my Github page and ask any questions you may have here.  Note that the code is still a work in progress and lacks proper error handling at this point.  For instance, if a user neglects the instructions on the GUI and fails to use the appropriate format for each Entry box, the code won't behave properly.  You should make sure to use proper error handling in the final version of your own code, as I'll be doing in mine once all of the functionality is implemented.
+The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions won't be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you'd like to learn how to implement similar functionality, feel free to look at the [complete code](https://github.com/Raknoche/MyCode/blob/master/CodeForDealingData/radonGUI.py) on my Github page and ask any questions you may have here.  Note that the code is still a work in progress and lacks proper error handling at this point.  For instance, if a user neglects the instructions on the GUI and fails to use the appropriate format for each entry box, the code won't behave properly.  You should make sure to use proper error handling in the final version of your own code, as I'll be doing in mine once all of the functionality is implemented.
 
