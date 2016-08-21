@@ -277,19 +277,19 @@ if __name__ == "__main__":
 Once our MySQL connection is established, we create a `cursor` object which we'll use to interact with the database.  We tell the cursor to execute our MySQL query using the `execute` method, and we can fetch the return of the query using the `cur.fetchall()` method.  The data is returned as a tuple of tuples, with the outer tuple representing the row of the data table and the inner tuple representing the column.  It's convenient to store the data in a Pandas data frame, which we can easily do using list comprehensions.  Note that the timestamp from the database is returned in the `YYYY-MM-DD HH:MM:SS` format, so we should use the `mktime` method from Python's time library to convert it to a more convenient unix timestamp.
 
 ```python
-  with con:
-        cur = con.cursor()
-
-        #Send select statement
-        cur.execute(self.query)
-
-        #Fetch the data from our query
-        rows = cur.fetchall()
-
-        #Fill a pandas data frame with timestamps and amplitude info
-        self.df = pd.DataFrame()
-        self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
-        self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+		with con:
+		    cur = con.cursor()
+			
+		    #Send select statement
+		    cur.execute(self.query)
+			
+		    #Fetch the data from our query
+		    rows = cur.fetchall()
+			
+		    #Fill a pandas data frame with timestamps and amplitude info
+		    self.df = pd.DataFrame()
+		    self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
+		    self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
 ```
 
 Finally, we should update the query status label to inform our user that we have finished collecting all the data.
@@ -416,43 +416,45 @@ def main(argv):
 if __name__ == "__main__":
     main(sys.argv)	
 ```
-# <a name="cleaning"></a> Cleaning data with our GUI
+# <a name="saving"></a> Saving data with our GUI
 
-Now that our GUI has a functional query panel, we'd like to let our users examine the data and clean it prior to saving the data to a local csv file.  With the push of a button, the user should be able to see a plot of time versus energy which they can select data from.  After selecting data, the user should be able to delete everything that is selected, or delete everything that is not selected.  We can set up the layout of our "cleaning panel" using the same methods that we did for our "query panel."  Within out `App` class' `__init__` method, we add the following code:
+Now that our GUI has a functional query panel, we'd like to let our users save a the data their query returns to a local csv file.  We can set up the layout of our "saving panel" using the same methods that we did for our "query panel."  Within out `App` class' `__init__` method, we add the following code:
 
 ```python
-		'''Cleaning Panel''' 
+		'''Saving Panel'''  
 		#Line to separate panels
-        canvas = Canvas(master=window, width=500, height=40)
-        canvas.create_line(0, 20, 500, 20, fill="black")
-        canvas.grid(row=self.current_row,column=0,columnspan=2)
-        self.current_row += 1
-           
-        #Buttons for selecting data 
-        self.select_button = Button (window, text="Select Data from EvT")
-        #self.select_button.configure(command=self.EvT_select)
-        self.select_button.grid(row=self.current_row,column=0,columnspan=2)
-        self.current_row += 1
-        
-        #Button for deleting selection
-        self.delete_button = Button (window, text="Delete Selection")
-        #self.delete_button.configure(command=self.EvT_delete)
-        self.delete_button.grid(row=self.current_row,column=0,columnspan=1)
+		canvas = Canvas(master=window, width=500, height=40)
+		canvas.create_line(0, 20, 500, 20, fill="black")
+		canvas.grid(row=self.current_row,column=0,columnspan=2)
+		self.current_row += 1
+		    
+		#Label for Entry box
+		self.save_label = Label (window, text= "Save Location: ")
+		self.save_label.grid(row=self.current_row, column=0, columnspan=2)          
+		self.current_row += 1 
+		     
+		#Entry box for save location  
+		self.save_text = StringVar()
+		self.save_entry = Entry(window, textvariable=self.save_text)
+		self.save_entry.grid(row=self.current_row,column=0, columnspan=2)
+		self.current_row += 1 
 
-        #Button for deleting all but the selection
-        self.select_only_button = Button (window, text="Delete All But Selection")
-        #self.select_only_button.configure(command=self.EvT_select_only)
-        self.select_only_button.grid(row=self.current_row,column=1,columnspan=1)
-        self.current_row += 1
+		self.save_button = Button (window, text="Save Data")
+		#self.save_button.configure(command=self.save_to_csv)
+		self.save_button.grid(row=self.current_row,column=0,columnspan=2)
+		self.current_row += 1
 ```
 
 The only unfamiliar piece of the code above is the first six lines.  These lines use Tkinter's `Canvas` and `create_line` methods to draw a solid black line that separates the cleaning panel from the query panel.  The canvas is positioned using the `grid` method that we are already familiar with.
 
-If we run the main program at this point, the GUI will look like
+If we run the main program at this point, the GUI will now look like this:
+
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPanel.png)
 
 
-discuss how to select data from a plot with a new class
-discuss how to manipulate the pandas dataframe after selecting the data
+Now we need to write the `self.EvT_select`, `self.EvT_delete`, and `self.EvT_select_only` methods that correspond to the three buttons we just added.
+
+
 
 # <a name="saving"></a> Saving data with our GUI
 
