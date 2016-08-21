@@ -4,13 +4,21 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-19T12:41:47-04:00</updated>
+ <updated>2016-08-21T15:10:43-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Making a MySQL GUI with Tkinter</title>
+   <link href="http://www.dealingdata.net/2016/08/21/Python-MySQL-GUI/"/>
+   <updated>2016-08-21T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/08/21/Python-MySQL-GUI</id>
+   <content type="html">&lt;p&gt;Introduction to MySQL databases and Python’s Tkinter library.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;With the start of every school year comes a number of undergraduates interested in working in our physics lab. In the past, new students had to learn how to interact with our MySQL databases before they could begin any data analysis....</content>
+ </entry>
  
  <entry>
    <title>PoGo Series&#58; Making a Choropleth Map</title>
