@@ -449,7 +449,7 @@ The only unfamiliar piece of the code above is the first six lines.  These lines
 
 If we run the main program at this point, the GUI will now look like this:
 
-![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPanel.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPa)
 
 
 Now we need to write the `self.EvT_select`, `self.EvT_delete`, and `self.EvT_select_only` methods that correspond to the three buttons we just added.
