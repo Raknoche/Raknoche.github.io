@@ -29,7 +29,7 @@ MySQL is a free, open source [Relational Database Management System](https://en.
 4. Configure a secure installation by typing `mysql_secure_installation` at the command line
 5. Start MySQL by clicking apple $$\rightarrow$$ system preferences $$\rightarrow$$  MySQL $$\rightarrow$$  Start MySQL Server
 
-If your a Windows user, follow the installation directions on [MySQL's website](http://dev.mysql.com/downloads/windows/).  
+If you're a Windows user, follow the installation directions on [MySQL's website](http://dev.mysql.com/downloads/windows/).  
 
 You'll also want to install the Python MySQL library.  This allows you to interact with a MySQL database through Python.  Installing the library is as simple as typing `pip install pymysql` at the command line.
 
