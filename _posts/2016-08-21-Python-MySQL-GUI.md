@@ -37,12 +37,22 @@ If you've never used SQL, I suggest following [Mode Analytics'](https://sqlschoo
 
 # <a name="tkinter"></a> Making a Python GUI with Tkinter
 
-Python's Tkinter library provides an easy to use interface to the Tk GUI toolkit.  We'll be using it to build our custom-built GUI. To install Tkinter, type `pip install tkinter` at the command line.
+Python's Tkinter library provides an easy to use interface to the Tk GUI toolkit.  We'll be using it to build our customized GUI. To install Tkinter, type `pip install tkinter` at the command line.
 
-Before we include any functionality in our GUI, lets build the basic layout.  First, we'll need to create a Tk GUI window in Python.  We'll pass this window to a customized class object (which I'm naming `App`) that will set up the layout of our GUI in its `__init__` method.  Note that in this post any code that belongs to the `__init__` method will be indicated by two indents, just as it would appear in our real Python code.  The `mainloop` method will open the window and display our GUI.
+Before we include any functionality in our GUI, lets build the basic layout.  First, we'll need to create a Tk GUI window in Python.  We'll pass this window to a customized class object (which I'm naming `App`) that will set up the layout of our GUI in its `__init__` method.  Note that in this post any code that belongs to the `__init__` method will be indicated by two indents, just as it would appear in our real Python code.  The `mainloop` method will open the window and display our GUI.  
 
 ```python 
+#We aren't using all of the libraries right now
+#but we will use them later in the post
+
 from tkinter import *
+import pymysql as mdb
+import pandas as pd
+import time
+from tkinter import messagebox
+import datetime
+import re
+import os
 
 #Define a class to set up our GUI
 class App(object):
@@ -67,7 +77,7 @@ Suppose our MySQL database contains data from a radioactivity counter.  The data
 * `clock_time`: A timestamp indicating when the radioactive decay occurred. Uses the format YYYY-MM-DD HH:MM:SS 
 * `amplitude`: The energy of the observed decay
 
-We'd like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three parameters.  To do so, we'll need to create some entry boxes in our GUI where the user can specify these parameters. I'll refer to this section of our GUI as the "query panel." 
+We'd like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three.  To do so, we'll need to create some entry boxes in our GUI where the user can specify these parameters. I'll refer to this section of our GUI as the "query panel." 
 
 In the first row of our query panel, we'll ask the user to specify a run tag.  We can create an empty class variable to store the run tag by using Tkinter's `StringVar()` function.  
 
@@ -179,7 +189,75 @@ First, we define the new method within the `App` class.  Within the method, we c
         run_tag = self.runtag_text.get()
 ```
 
-Now we need to build a MySQL query using the strings we just collected above.  It's possible our user didn't place any text in the entry boxes, in which case our MySQL query should default to collecting all the data in our database.  Assuming our data is stored in a table named `summarydata`, the syntax for this query would be
+Before we use any text that was entered, we need to verify that it is a valid string to use in our query.  We can use Python's [regular expression](https://docs.python.org/2/library/re.html) library to confirm that the start time and end time are in the YYYY-MM-DD HH:MM:SS format (if they were entered at all).  If the time parameters are in the correct format, we'll also need to verify that the date specified is a valid date.  For instance, a start time of 2001-02-31 10:05:42 should be identified as a mistake since February does not have 31 days.  We can do so by trying to convert the string to a timestamp with `datetime.datetime`.  If the string is not a valid date, `datetime.datetime` will raise an exception which we can use to flag the date as being invalid.
+
+```python
+        #Check that date is valid
+        time_format = re.compile('^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$')
+        start_t_okay=None
+        if (start_t) and (time_format.match(start_t)):
+            start_year=int(start_t[0:4])
+            start_month=int(start_t[5:7])
+            start_day=int(start_t[8:10])
+            start_hour=int(start_t[11:13])
+            start_min=int(start_t[14:16])
+            start_sec=int(start_t[17:19])
+            try:
+                datetime.datetime(start_year,start_month,start_day,start_hour,start_min,start_sec)
+                start_t_okay='yes'
+            except:
+                start_t_okay='no'
+
+
+        end_t_okay=None
+        if (end_t) and (time_format.match(end_t)):
+            end_year=int(end_t[0:4])
+            end_month=int(end_t[5:7])
+            end_day=int(end_t[8:10])
+            end_hour=int(end_t[11:13])
+            end_min=int(end_t[14:16])
+            end_sec=int(end_t[17:19])
+            try:
+                datetime.datetime(end_year,end_month,end_day,end_hour,end_min,end_sec)
+                end_t_okay='yes'
+            except:
+                end_t_okay='no'
+``` 
+
+Now that we have determined if the start and end times are valid, we need to go through a list of possible errors before constructing our MySQL query.  Here's everything that could go wrong:
+
+* The start time is not the correct format
+* The end time is not the correct format
+* The start time is not a valid date 
+* The end time is not a valid date
+* The start time doesn't come before the end time
+* The run tag doesn't exist in our database
+
+If any of these failure modes occur, we'll want to display a message to the user to inform them of the mistake.  We can do so using Tkinter's `messagebox.showinfo` method.
+
+```python
+        '''Error Handling'''
+        #Check that the date is in the correct format
+        if (start_t) and (not time_format.match(start_t)):
+            messagebox.showinfo('Query Error', 'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        elif (end_t) and (not time_format.match(end_t)):
+            messagebox.showinfo('Query Error', 'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        #Check that the date is a valid date
+        elif (start_t) and (start_t_okay == 'no'):        
+            messagebox.showinfo('Query Error', 'Error: Start time is not valid')
+        elif (end_t) and (end_t_okay == 'no'):
+            messagebox.showinfo('Query Error', 'Error: End time is not valid')
+        #Check that start_t < end_t
+        elif (start_t) and (end_t) and (start_t > end_t):         
+            messagebox.showinfo('Query Error', 'Start time must come before end time')    
+        else:
+            #Construct and send the query
+```
+
+You may have noticed we did not check if the specified run tag exists in our database.  Assuming our data is stored in a table named `summarydata`, we could get a list of all of the run tags by sending a `SELECT DISTINCT(run_tag) FROM summarydata` query to the database.  This query scans the entire database to collect a list of every run tag, so it can take a while to run.  Instead of explicitly checking this condition, it would be more efficient to send the query with a nonexistent run tag and inform the user that the query did not return any data.  We'll implement this later in the code.
+
+
+Now that we've ensured our user has entered valid text, we need to build a MySQL query using that text.  It's possible our user didn't place any text in the entry boxes at all, in which case our MySQL query should default to collecting all the data in our database.  The syntax for this query would be
 
 ```sql
 SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL
@@ -193,51 +271,49 @@ SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL AND cl
 
 If we did not have the `IS NOT NULL` condition in our default query, we would have to determine which query condition was first, and only add `AND` to the subsequent conditions.
 
-To build our entire MySQL query, we will start with empty strings which represent the time and run tag conditions of our query.
+To include conditional statements in our MySQL query, we will start with empty strings which represent the time and run tag conditions of our query.
 
 
 ```python
-        #Default to not including the conditions in the query
-        run_tag_string = ''
-        time_string = ''
+        #error checking was done up here
+		
+        else:
+            #Default to not including the conditions in the query
+            run_tag_string = ''
+            time_string = '''
 ```
 
-Next, we'll check each of the entry box variables to see if our user entered text in each box.  If text was entered in an entry box, we change the corresponding condition string to a MySQL condition, such as `time_string = 'AND clock_time > start_t'`.  
+
+
+If text was entered in an entry box, we change the corresponding condition string to a MySQL condition, such as `time_string = 'AND clock_time > start_t'`.  
 
 ```python   
-        #Toggle query conditions on if the GUI field isn't blank
+            #Toggle query conditions on if the GUI field isn't blank
 	    
-        #Run tag condition
-        if run_tag != '':
-            run_tag_string = 'AND run_tag = "%s"' %(run_tag)
+            #Run tag condition
+            if run_tag != '':
+                run_tag_string = 'AND run_tag = "%s"' %(run_tag)
 	        
-        #Time window condition (in order: both set, only start set, only end set)
-        if start_t != '' and end_t != '':
-            time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
-        elif start_t != '':
-            time_string = 'AND clock_time > "%s"' %(start_t)
-        elif end_t != '':
-            time_string = 'AND clock_time < "%s"' %(end_t)    
+            #Time window condition (in order: both set, only start set, only end set)
+            if start_t != '' and end_t != '':
+                time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
+            elif start_t != '':
+                time_string = 'AND clock_time > "%s"' %(start_t)
+            elif end_t != '':
+                time_string = 'AND clock_time < "%s"' %(end_t)    
 ```      
 
 Once we have determined the additional conditions to add to our default query, we simply append them to our original string to produce the final MySQL query.
   
 ```python                  
-        #Setting the query
-        self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
+            #Setting the query
+            self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
 ``` 
 
-To send the query to our MySQL database, we need to import the PyMySQL library at the top of our code. We'll also be using the Pandas library to store the data that our query returns, so we should import that as well.
-
-```python
-import pymysql as mdb
-import pandas as pd
-```
-
-We can use the `connect` method of the PyMySQL library to open a connection to our database.  We need to provide an IP address, a username, a password, and a database name for the connection to work.  
+To send the query to our MySQL database, we need to import the PyMySQL library at the top of our code.  We can use the `connect` method of the PyMySQL library to open a connection to our database.  We need to provide an IP address, a username, a password, and a database name for the connection to work.  
    
 ```python
-        con = mdb.connect(self.ip, self.user, self.pswd, self.db);
+            con = mdb.connect(self.ip, self.user, self.pswd, self.db);
 ```
 
 It would be a security risk to include this information in the code itself, so instead we'll need to have each item passed into our program as a command line argument, and in turn pass them into our `App` class.
@@ -274,26 +350,35 @@ if __name__ == "__main__":
 Once our MySQL connection is established, we create a `cursor` object which we'll use to interact with the database.  We tell the cursor to execute our MySQL query using the `execute` method, and we can fetch the return of the query using the `cur.fetchall()` method.  The data is returned as a tuple of tuples, with the outer tuple representing the row of the data table and the inner tuple representing the column.  It's convenient to store the data in a Pandas data frame, which we can easily do using list comprehensions.  Note that the timestamp from our database is returned in the `YYYY-MM-DD HH:MM:SS` format, so we should use the `mktime` method from Python's time library to convert it to a more convenient unix timestamp.
 
 ```python
-        with con:
-            cur = con.cursor()
+            with con:
+                cur = con.cursor()
 			
-            #Send select statement
-            cur.execute(self.query)
+                #Send select statement
+                cur.execute(self.query)
 			
-            #Fetch the data from our query
-            rows = cur.fetchall()
+                #Fetch the data from our query
+                rows = cur.fetchall()
 			
-            #Fill a pandas data frame with timestamps and amplitude info
-            self.df = pd.DataFrame()
-            self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
-            self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+                #Fill a pandas data frame with timestamps and amplitude info
+                self.df = pd.DataFrame()
+                self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
+                self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
 ```
 
-Finally, we should update the query status label to inform our user that we have finished collecting all the data.
+Once our query is complete, we should update the query status label to inform our user that we have finished collecting all the data.
 
 ```python
-        self.querystatus.configure(text = "Finished")
+            self.querystatus.configure(text = "Finished")
 ```
+
+Finally, we should check to see if our query actually returned data from out database.  If the data frame is empty, we should display a warning to our user that no data was collected from the query.  Note that this will also handle any issues with nonexistent run tags that our user may have entered earlier.
+
+```python
+            #Check if the query returned data
+            if self.df.empty:
+                 messagebox.showinfo('Query Warning', 'Warning: Query returned no data')
+```
+
 
 Now that we have a working `sendQuery` method, we need to uncomment the line which assigns the `sendQuery` method to our query button.  Our entire code now looks like this:
 
@@ -302,6 +387,10 @@ from tkinter import *
 import pymysql as mdb
 import pandas as pd
 import time
+from tkinter import messagebox
+import datetime
+import re
+import os
 
 class App(object):
     def __init__(self, window,ip,user,pswd,db):
@@ -357,44 +446,95 @@ class App(object):
         end_t = self.end_t_text.get()
         run_tag = self.runtag_text.get()
 
-        #Default to not including the conditions in the query
-        run_tag_string = ''
-        time_string = ''
+        #Check that date is valid
+        time_format = re.compile('^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$')
+        start_t_okay=None
+        if (start_t) and (time_format.match(start_t)):
+            start_year=int(start_t[0:4])
+            start_month=int(start_t[5:7])
+            start_day=int(start_t[8:10])
+            start_hour=int(start_t[11:13])
+            start_min=int(start_t[14:16])
+            start_sec=int(start_t[17:19])
+            try:
+                datetime.datetime(start_year,start_month,start_day,start_hour,start_min,start_sec)
+                start_t_okay='yes'
+            except:
+                start_t_okay='no'
 
-        #Toggle query conditions on if the GUI field isn't blank
 
-        #Run tag condition
-        if run_tag != '':
-            run_tag_string = 'AND run_tag = "%s"' %(run_tag)
-		    
-        #Time window condition (in order: both set, only start set, only end set)
-        if start_t != '' and end_t != '':
-            time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
-        elif start_t != '':
-            time_string = 'AND clock_time > "%s"' %(start_t)
-        elif end_t != '':
-            time_string = 'AND clock_time < "%s"' %(end_t)           
-		                
-        #Setting the query
-        self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
+        end_t_okay=None
+        if (end_t) and (time_format.match(end_t)):
+            end_year=int(end_t[0:4])
+            end_month=int(end_t[5:7])
+            end_day=int(end_t[8:10])
+            end_hour=int(end_t[11:13])
+            end_min=int(end_t[14:16])
+            end_sec=int(end_t[17:19])
+            try:
+                datetime.datetime(end_year,end_month,end_day,end_hour,end_min,end_sec)
+                end_t_okay='yes'
+            except:
+                end_t_okay='no'        
 
-        con = mdb.connect(self.ip, self.user, self.pswd, self.db);
+        '''Error Handling'''
+        #Check that the date is in the correct format
+        if (start_t) and (not time_format.match(start_t)):
+            messagebox.showinfo('Query Error', 'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        elif (end_t) and (not time_format.match(end_t)):
+            messagebox.showinfo('Query Error', 'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        #Check that the date is a valid date
+        elif (start_t) and (start_t_okay == 'no'):        
+            messagebox.showinfo('Query Error', 'Error: Start time is not valid')
+        elif (end_t) and (end_t_okay == 'no'):
+            messagebox.showinfo('Query Error', 'Error: End time is not valid')
+        #Check that start_t < end_t
+        elif (start_t) and (end_t) and (start_t > end_t):         
+            messagebox.showinfo('Query Error', 'Start time must come before end time')    
+        else:
+            #Default to not including the conditions in the query
+            run_tag_string = ''
+            time_string = ''
 
-        with con:
-            cur = con.cursor()
+            #Toggle query conditions on if the GUI field isn't blank
 
-            #Send select statement
-            cur.execute(self.query)
+            #Run tag condition
+            if run_tag != '':
+                run_tag_string = 'AND run_tag = "%s"' %(run_tag)
+                
+            #Time window condition (in order: both set, only start set, only end set)
+            if start_t != '' and end_t != '':
+                time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
+            elif start_t != '':
+                time_string = 'AND clock_time > "%s"' %(start_t)
+            elif end_t != '':
+                time_string = 'AND clock_time < "%s"' %(end_t)           
+                            
+            #Setting the query
+            self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
 
-            #Fetch the data from our query
-            rows = cur.fetchall()
+            con = mdb.connect(self.ip, self.user, self.pswd, self.db);
 
-            #Fill a pandas data frame with timestamps and amplitude info
-            self.df = pd.DataFrame()
-            self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
-            self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+            with con:
+                cur = con.cursor()
 
-        self.querystatus.configure(text = "Finished")
+                #Send select statement
+                cur.execute(self.query)
+
+                #Fetch the data from our query
+                rows = cur.fetchall()
+
+                #Fill a pandas data frame with timestamps and amplitude info
+                self.df = pd.DataFrame()
+                self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
+                self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+
+            self.querystatus.configure(text = "Finished")
+
+            #Check if the query returned data
+            if self.df.empty:
+                 messagebox.showinfo('Query Warning', 'Warning: Query returned no data')
+           
 
 def main(argv):
     '''
@@ -410,7 +550,7 @@ def main(argv):
     window.mainloop()
 
 if __name__ == "__main__":
-    main(sys.argv)	
+    main(sys.argv)
 ```
 
 # <a name="saving"></a> Saving data with our GUI
@@ -449,12 +589,38 @@ If we run the main program at this point, the GUI will look like this:
 ![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPanel.png)
 
 
-Now we need to write the `self.save_to_csv` method that correspond to the button we just added.  We define this new method within the `App` class, and use the familiar `get()` method from Tkinter to obtain the save location from the entry box we just created.  Once we have the desired save location, Pandas provides a convenient `to_csv` method to save the data frame to a csv file.
+Now we need to write the `self.save_to_csv` method that corresponds to the button we just added.  We define this new method within the `App` class, and use the familiar `get()` method from Tkinter to obtain the save location from the entry box we just created.  We'll need to check that the directory specified in the save path exists, and that the path ends with an appropriate `filename.csv` filename.  We should also verify that the data frame is not empty, since we can not save data that doesn't exist.  Once we have an appropriate save location, Pandas provides a convenient `to_csv` method to save the data frame to a csv file.
 
 ```python
     def save_to_csv(self):
-        self.save_loc = self.save_text.get() 
-        self.df.to_csv(self.save_loc)
+        #Verify that the data frame is not empty
+        if self.df.empty:
+             messagebox.showinfo('Save Error', 'Error: Can not save empty data frame')
+
+        #If we have data
+        else:
+            #Get the save location and extract the directory path
+            self.save_loc = self.save_text.get() 
+            self.save_dir = os.sep.join(self.save_loc.split(os.sep)[:-1])
+
+            #Verify that the directory exists
+            if os.path.isdir(self.save_dir):
+
+                #Verify that the filename is more than just '.csv'
+                if len(self.save_loc.split(os.sep)[-1]) < 5:
+                    messagebox.showinfo('Save Error', 'Error: Path should end in filename.csv')
+
+                #Verify that the filename ends in '.csv'
+                elif self.save_loc.split(os.sep)[-1][-4:] != '.csv':
+                    messagebox.showinfo('Save Error', 'Error: File should end in filename.csv')
+
+                #Save the data if it passes error checking
+                else:
+                    self.df.to_csv(self.save_loc)
+                    
+            #Error if the directory doesn't exist        
+            else:
+                messagebox.showinfo('Save Error', 'Error: File directory does not exist')
 ```
 
 After uncommenting the line which assigns functionality to the save button, our final GUI code looks like this:
@@ -464,6 +630,10 @@ from tkinter import *
 import pymysql as mdb
 import pandas as pd
 import time
+from tkinter import messagebox
+import datetime
+import re
+import os
 
 class App(object):
     def __init__(self, window,ip,user,pswd,db):
@@ -543,49 +713,127 @@ class App(object):
         end_t = self.end_t_text.get()
         run_tag = self.runtag_text.get()
 
-        #Default to not including the conditions in the query
-        run_tag_string = ''
-        time_string = ''
+        #Check that date is valid
+        time_format = re.compile('^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$')
+        start_t_okay=None
+        if (start_t) and (time_format.match(start_t)):
+            start_year=int(start_t[0:4])
+            start_month=int(start_t[5:7])
+            start_day=int(start_t[8:10])
+            start_hour=int(start_t[11:13])
+            start_min=int(start_t[14:16])
+            start_sec=int(start_t[17:19])
+            try:
+                datetime.datetime(start_year,start_month,start_day,start_hour,start_min,start_sec)
+                start_t_okay='yes'
+            except:
+                start_t_okay='no'
 
-        #Toggle query conditions on if the GUI field isn't blank
 
-        #Run tag condition
-        if run_tag != '':
-            run_tag_string = 'AND run_tag = "%s"' %(run_tag)
-		    
-        #Time window condition (in order: both set, only start set, only end set)
-        if start_t != '' and end_t != '':
-            time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
-        elif start_t != '':
-            time_string = 'AND clock_time > "%s"' %(start_t)
-        elif end_t != '':
-            time_string = 'AND clock_time < "%s"' %(end_t)           
-		                
-        #Setting the query
-        self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
+        end_t_okay=None
+        if (end_t) and (time_format.match(end_t)):
+            end_year=int(end_t[0:4])
+            end_month=int(end_t[5:7])
+            end_day=int(end_t[8:10])
+            end_hour=int(end_t[11:13])
+            end_min=int(end_t[14:16])
+            end_sec=int(end_t[17:19])
+            try:
+                datetime.datetime(end_year,end_month,end_day,end_hour,end_min,end_sec)
+                end_t_okay='yes'
+            except:
+                end_t_okay='no'        
 
-        con = mdb.connect(self.ip, self.user, self.pswd, self.db);
+        '''Error Handling'''
+        #Check that the date is in the correct format
+        if (start_t) and (not time_format.match(start_t)):
+            messagebox.showinfo('Query Error', 'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        elif (end_t) and (not time_format.match(end_t)):
+            messagebox.showinfo('Query Error', 'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty')
+        #Check that the date is a valid date
+        elif (start_t) and (start_t_okay == 'no'):        
+            messagebox.showinfo('Query Error', 'Error: Start time is not valid')
+        elif (end_t) and (end_t_okay == 'no'):
+            messagebox.showinfo('Query Error', 'Error: End time is not valid')
+        #Check that start_t < end_t
+        elif (start_t) and (end_t) and (start_t > end_t):         
+            messagebox.showinfo('Query Error', 'Start time must come before end time')    
+        else:
+            #Default to not including the conditions in the query
+            run_tag_string = ''
+            time_string = ''
 
-        with con:
-            cur = con.cursor()
+            #Toggle query conditions on if the GUI field isn't blank
 
-            #Send select statement
-            cur.execute(self.query)
+            #Run tag condition
+            if run_tag != '':
+                run_tag_string = 'AND run_tag = "%s"' %(run_tag)
+    		    
+            #Time window condition (in order: both set, only start set, only end set)
+            if start_t != '' and end_t != '':
+                time_string = 'AND clock_time BETWEEN "%s" AND "%s"' %(start_t,end_t)
+            elif start_t != '':
+                time_string = 'AND clock_time > "%s"' %(start_t)
+            elif end_t != '':
+                time_string = 'AND clock_time < "%s"' %(end_t)           
+    		                
+            #Setting the query
+            self.query = "SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL %s %s" % (run_tag_string, time_string)
 
-            #Fetch the data from our query
-            rows = cur.fetchall()
+            con = mdb.connect(self.ip, self.user, self.pswd, self.db);
 
-            #Fill a pandas data frame with timestamps and amplitude info
-            self.df = pd.DataFrame()
-            self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
-            self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+            with con:
+                cur = con.cursor()
 
-        self.querystatus.configure(text = "Finished")
+                #Send select statement
+                cur.execute(self.query)
+
+                #Fetch the data from our query
+                rows = cur.fetchall()
+
+                #Fill a pandas data frame with timestamps and amplitude info
+                self.df = pd.DataFrame()
+                self.df['timestamp']=[time.mktime(rows[i][0].timetuple()) for i in range(len(rows))]
+                self.df['amplitude'] = [rows[i][1] for i in range(len(rows))]
+
+            self.querystatus.configure(text = "Finished")
+
+            #Check if the query returned data
+            if self.df.empty:
+                 messagebox.showinfo('Query Warning', 'Warning: Query returned no data')
+           
 
 
     def save_to_csv(self):
-        self.save_loc = self.save_text.get() 
-        self.df.to_csv(self.save_loc)
+        #Verify that the data frame is not empty
+        if self.df.empty:
+             messagebox.showinfo('Save Error', 'Error: Can not save empty data frame')
+
+        #If we have data
+        else:
+            #Get the save location and extract the directory path
+            self.save_loc = self.save_text.get() 
+            self.save_dir = os.sep.join(self.save_loc.split(os.sep)[:-1])
+
+            #Verify that the directory exists
+            if os.path.isdir(self.save_dir):
+
+                #Verify that the filename is more than just '.csv'
+                if len(self.save_loc.split(os.sep)[-1]) < 5:
+                    messagebox.showinfo('Save Error', 'Error: Path should end in filename.csv')
+
+                #Verify that the filename ends in '.csv'
+                elif self.save_loc.split(os.sep)[-1][-4:] != '.csv':
+                    messagebox.showinfo('Save Error', 'Error: File should end in filename.csv')
+
+                #Save the data if it passes error checking
+                else:
+                    self.df.to_csv(self.save_loc)
+                    
+            #Error if the directory doesn't exist        
+            else:
+                messagebox.showinfo('Save Error', 'Error: File directory does not exist')
+
 
 
 def main(argv):
@@ -607,5 +855,4 @@ if __name__ == "__main__":
 
 # Closing remarks
 
-The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions won't be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you'd like to learn how to implement similar functionality, feel free to look at the [complete code](https://github.com/Raknoche/MyCode/blob/master/CodeForDealingData/radonGUI.py) on my Github page and ask any questions you may have here.  Note that the code is still a work in progress and lacks proper error handling at this point.  For instance, if a user neglects the instructions on the GUI and fails to use the appropriate format for each entry box, the code won't behave properly.  You should make sure to use proper error handling in the final version of your own code, as I'll be doing in mine once all of the functionality is implemented.
-
+The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions won't be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you'd like to learn how to implement similar functionality, feel free to look at the [complete code](https://github.com/Raknoche/MyCode/blob/master/CodeForDealingData/radonGUI.py) on my Github page and ask any questions you may have here.  

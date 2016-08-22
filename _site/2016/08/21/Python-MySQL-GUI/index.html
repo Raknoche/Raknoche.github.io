@@ -190,11 +190,21 @@
 
 <h1 id="a-nametkintera-making-a-python-gui-with-tkinter"><a name="tkinter"></a> Making a Python GUI with Tkinter</h1>
 
-<p>Python’s Tkinter library provides an easy to use interface to the Tk GUI toolkit.  We’ll be using it to build our custom-built GUI. To install Tkinter, type <code class="highlighter-rouge">pip install tkinter</code> at the command line.</p>
+<p>Python’s Tkinter library provides an easy to use interface to the Tk GUI toolkit.  We’ll be using it to build our customized GUI. To install Tkinter, type <code class="highlighter-rouge">pip install tkinter</code> at the command line.</p>
 
 <p>Before we include any functionality in our GUI, lets build the basic layout.  First, we’ll need to create a Tk GUI window in Python.  We’ll pass this window to a customized class object (which I’m naming <code class="highlighter-rouge">App</code>) that will set up the layout of our GUI in its <code class="highlighter-rouge">__init__</code> method.  Note that in this post any code that belongs to the <code class="highlighter-rouge">__init__</code> method will be indicated by two indents, just as it would appear in our real Python code.  The <code class="highlighter-rouge">mainloop</code> method will open the window and display our GUI.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c">#We aren't using all of the libraries right now</span>
+<span class="c">#but we will use them later in the post</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pymysql</span> <span class="kn">as</span> <span class="nn">mdb</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="c">#Define a class to set up our GUI</span>
 <span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -222,7 +232,7 @@
   <li><code class="highlighter-rouge">amplitude</code>: The energy of the observed decay</li>
 </ul>
 
-<p>We’d like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three parameters.  To do so, we’ll need to create some entry boxes in our GUI where the user can specify these parameters. I’ll refer to this section of our GUI as the “query panel.”</p>
+<p>We’d like to select data from the database by providing our GUI a run tag, a start time, an end time, or any combination of the three.  To do so, we’ll need to create some entry boxes in our GUI where the user can specify these parameters. I’ll refer to this section of our GUI as the “query panel.”</p>
 
 <p>In the first row of our query panel, we’ll ask the user to specify a run tag.  We can create an empty class variable to store the run tag by using Tkinter’s <code class="highlighter-rouge">StringVar()</code> function.</p>
 
@@ -330,7 +340,76 @@
 </code></pre>
 </div>
 
-<p>Now we need to build a MySQL query using the strings we just collected above.  It’s possible our user didn’t place any text in the entry boxes, in which case our MySQL query should default to collecting all the data in our database.  Assuming our data is stored in a table named <code class="highlighter-rouge">summarydata</code>, the syntax for this query would be</p>
+<p>Before we use any text that was entered, we need to verify that it is a valid string to use in our query.  We can use Python’s <a href="https://docs.python.org/2/library/re.html">regular expression</a> library to confirm that the start time and end time are in the YYYY-MM-DD HH:MM:SS format (if they were entered at all).  If the time parameters are in the correct format, we’ll also need to verify that the date specified is a valid date.  For instance, a start time of 2001-02-31 10:05:42 should be identified as a mistake since February does not have 31 days.  We can do so by trying to convert the string to a timestamp with <code class="highlighter-rouge">datetime.datetime</code>.  If the string is not a valid date, <code class="highlighter-rouge">datetime.datetime</code> will raise an exception which we can use to flag the date as being invalid.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="c">#Check that date is valid</span>
+        <span class="n">time_format</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">'^</span><span class="err">\</span><span class="s">d{4}-</span><span class="err">\</span><span class="s">d{2}-</span><span class="err">\</span><span class="s">d{2} </span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}$'</span><span class="p">)</span>
+        <span class="n">start_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">start_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">start_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">start_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">start_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">start_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">start_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span><span class="n">start_month</span><span class="p">,</span><span class="n">start_day</span><span class="p">,</span><span class="n">start_hour</span><span class="p">,</span><span class="n">start_min</span><span class="p">,</span><span class="n">start_sec</span><span class="p">)</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'no'</span>
+
+
+        <span class="n">end_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">end_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">end_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">end_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">end_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">end_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">end_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">end_year</span><span class="p">,</span><span class="n">end_month</span><span class="p">,</span><span class="n">end_day</span><span class="p">,</span><span class="n">end_hour</span><span class="p">,</span><span class="n">end_min</span><span class="p">,</span><span class="n">end_sec</span><span class="p">)</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'no'</span>
+</code></pre>
+</div>
+
+<p>Now that we have determined if the start and end times are valid, we need to go through a list of possible errors before constructing our MySQL query.  Here’s everything that could go wrong:</p>
+
+<ul>
+  <li>The start time is not the correct format</li>
+  <li>The end time is not the correct format</li>
+  <li>The start time is not a valid date</li>
+  <li>The end time is not a valid date</li>
+  <li>The start time doesn’t come before the end time</li>
+  <li>The run tag doesn’t exist in our database</li>
+</ul>
+
+<p>If any of these failure modes occur, we’ll want to display a message to the user to inform them of the mistake.  We can do so using Tkinter’s <code class="highlighter-rouge">messagebox.showinfo</code> method.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="s">'''Error Handling'''</span>
+        <span class="c">#Check that the date is in the correct format</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="c">#Check that the date is a valid date</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>        
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time is not valid'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time is not valid'</span><span class="p">)</span>
+        <span class="c">#Check that start_t &lt; end_t</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t</span> <span class="o">&gt;</span> <span class="n">end_t</span><span class="p">):</span>         
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Start time must come before end time'</span><span class="p">)</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Construct and send the query</span>
+</code></pre>
+</div>
+
+<p>You may have noticed we did not check if the specified run tag exists in our database.  Assuming our data is stored in a table named <code class="highlighter-rouge">summarydata</code>, we could get a list of all of the run tags by sending a <code class="highlighter-rouge">SELECT DISTINCT(run_tag) FROM summarydata</code> query to the database.  This query scans the entire database to collect a list of every run tag, so it can take a while to run.  Instead of explicitly checking this condition, it would be more efficient to send the query with a nonexistent run tag and inform the user that the query did not return any data.  We’ll implement this later in the code.</p>
+
+<p>Now that we’ve ensured our user has entered valid text, we need to build a MySQL query using that text.  It’s possible our user didn’t place any text in the entry boxes at all, in which case our MySQL query should default to collecting all the data in our database.  The syntax for this query would be</p>
 
 <div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">clock_time</span><span class="p">,</span> <span class="n">amplitude</span> <span class="k">FROM</span> <span class="n">summarydata</span> <span class="k">WHERE</span> <span class="n">amplitude</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
 </code></pre>
@@ -344,49 +423,45 @@
 
 <p>If we did not have the <code class="highlighter-rouge">IS NOT NULL</code> condition in our default query, we would have to determine which query condition was first, and only add <code class="highlighter-rouge">AND</code> to the subsequent conditions.</p>
 
-<p>To build our entire MySQL query, we will start with empty strings which represent the time and run tag conditions of our query.</p>
+<p>To include conditional statements in our MySQL query, we will start with empty strings which represent the time and run tag conditions of our query.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="c">#Default to not including the conditions in the query</span>
-        <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
-        <span class="n">time_string</span> <span class="o">=</span> <span class="s">''</span>
-</code></pre>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="c">#error checking was done up here</span>
+		
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Default to not including the conditions in the query</span>
+            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'''
+</span></code></pre>
 </div>
 
-<p>Next, we’ll check each of the entry box variables to see if our user entered text in each box.  If text was entered in an entry box, we change the corresponding condition string to a MySQL condition, such as <code class="highlighter-rouge">time_string = 'AND clock_time &gt; start_t'</code>.</p>
+<p>If text was entered in an entry box, we change the corresponding condition string to a MySQL condition, such as <code class="highlighter-rouge">time_string = 'AND clock_time &gt; start_t'</code>.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
 	    
-        <span class="c">#Run tag condition</span>
-        <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
+            <span class="c">#Run tag condition</span>
+            <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
 	        
-        <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
-        <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>    
+            <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
+            <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>    
 </code></pre>
 </div>
 
 <p>Once we have determined the additional conditions to add to our default query, we simply append them to our original string to produce the final MySQL query.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="c">#Setting the query</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="c">#Setting the query</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
 </code></pre>
 </div>
 
-<p>To send the query to our MySQL database, we need to import the PyMySQL library at the top of our code. We’ll also be using the Pandas library to store the data that our query returns, so we should import that as well.</p>
+<p>To send the query to our MySQL database, we need to import the PyMySQL library at the top of our code.  We can use the <code class="highlighter-rouge">connect</code> method of the PyMySQL library to open a connection to our database.  We need to provide an IP address, a username, a password, and a database name for the connection to work.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pymysql</span> <span class="kn">as</span> <span class="nn">mdb</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-</code></pre>
-</div>
-
-<p>We can use the <code class="highlighter-rouge">connect</code> method of the PyMySQL library to open a connection to our database.  We need to provide an IP address, a username, a password, and a database name for the connection to work.</p>
-
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
 </code></pre>
 </div>
 
@@ -423,25 +498,33 @@
 
 <p>Once our MySQL connection is established, we create a <code class="highlighter-rouge">cursor</code> object which we’ll use to interact with the database.  We tell the cursor to execute our MySQL query using the <code class="highlighter-rouge">execute</code> method, and we can fetch the return of the query using the <code class="highlighter-rouge">cur.fetchall()</code> method.  The data is returned as a tuple of tuples, with the outer tuple representing the row of the data table and the inner tuple representing the column.  It’s convenient to store the data in a Pandas data frame, which we can easily do using list comprehensions.  Note that the timestamp from our database is returned in the <code class="highlighter-rouge">YYYY-MM-DD HH:MM:SS</code> format, so we should use the <code class="highlighter-rouge">mktime</code> method from Python’s time library to convert it to a more convenient unix timestamp.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 			
-            <span class="c">#Send select statement</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+                <span class="c">#Send select statement</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
 			
-            <span class="c">#Fetch the data from our query</span>
-            <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="c">#Fetch the data from our query</span>
+                <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
 			
-            <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+                <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
 </code></pre>
 </div>
 
-<p>Finally, we should update the query status label to inform our user that we have finished collecting all the data.</p>
+<p>Once our query is complete, we should update the query status label to inform our user that we have finished collecting all the data.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>        <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Finally, we should check to see if our query actually returned data from out database.  If the data frame is empty, we should display a warning to our user that no data was collected from the query.  Note that this will also handle any issues with nonexistent run tags that our user may have entered earlier.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code>            <span class="c">#Check if the query returned data</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                 <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Warning'</span><span class="p">,</span> <span class="s">'Warning: Query returned no data'</span><span class="p">)</span>
 </code></pre>
 </div>
 
@@ -451,6 +534,10 @@
 <span class="kn">import</span> <span class="nn">pymysql</span> <span class="kn">as</span> <span class="nn">mdb</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="n">user</span><span class="p">,</span><span class="n">pswd</span><span class="p">,</span><span class="n">db</span><span class="p">):</span>
@@ -506,44 +593,95 @@
         <span class="n">end_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_t_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="n">run_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtag_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
-        <span class="c">#Default to not including the conditions in the query</span>
-        <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
-        <span class="n">time_string</span> <span class="o">=</span> <span class="s">''</span>
+        <span class="c">#Check that date is valid</span>
+        <span class="n">time_format</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">'^</span><span class="err">\</span><span class="s">d{4}-</span><span class="err">\</span><span class="s">d{2}-</span><span class="err">\</span><span class="s">d{2} </span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}$'</span><span class="p">)</span>
+        <span class="n">start_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">start_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">start_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">start_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">start_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">start_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">start_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span><span class="n">start_month</span><span class="p">,</span><span class="n">start_day</span><span class="p">,</span><span class="n">start_hour</span><span class="p">,</span><span class="n">start_min</span><span class="p">,</span><span class="n">start_sec</span><span class="p">)</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'no'</span>
 
-        <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
 
-        <span class="c">#Run tag condition</span>
-        <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
-		    
-        <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
-        <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>           
-		                
-        <span class="c">#Setting the query</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
+        <span class="n">end_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">end_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">end_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">end_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">end_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">end_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">end_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">end_year</span><span class="p">,</span><span class="n">end_month</span><span class="p">,</span><span class="n">end_day</span><span class="p">,</span><span class="n">end_hour</span><span class="p">,</span><span class="n">end_min</span><span class="p">,</span><span class="n">end_sec</span><span class="p">)</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'no'</span>        
 
-        <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
+        <span class="s">'''Error Handling'''</span>
+        <span class="c">#Check that the date is in the correct format</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="c">#Check that the date is a valid date</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>        
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time is not valid'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time is not valid'</span><span class="p">)</span>
+        <span class="c">#Check that start_t &lt; end_t</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t</span> <span class="o">&gt;</span> <span class="n">end_t</span><span class="p">):</span>         
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Start time must come before end time'</span><span class="p">)</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Default to not including the conditions in the query</span>
+            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="n">time_string</span> <span class="o">=</span> <span class="s">''</span>
 
-        <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
 
-            <span class="c">#Send select statement</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+            <span class="c">#Run tag condition</span>
+            <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
+                
+            <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
+            <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>           
+                            
+            <span class="c">#Setting the query</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
 
-            <span class="c">#Fetch the data from our query</span>
-            <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
 
-            <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+            <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+                <span class="c">#Send select statement</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+
+                <span class="c">#Fetch the data from our query</span>
+                <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+                <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+
+            <span class="c">#Check if the query returned data</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                 <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Warning'</span><span class="p">,</span> <span class="s">'Warning: Query returned no data'</span><span class="p">)</span>
+           
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
     <span class="s">'''
@@ -559,7 +697,7 @@
     <span class="n">window</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>	
+    <span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </code></pre>
 </div>
 
@@ -598,11 +736,37 @@
 
 <p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/GUI_SavingPanel.png" alt="png" /></p>
 
-<p>Now we need to write the <code class="highlighter-rouge">self.save_to_csv</code> method that correspond to the button we just added.  We define this new method within the <code class="highlighter-rouge">App</code> class, and use the familiar <code class="highlighter-rouge">get()</code> method from Tkinter to obtain the save location from the entry box we just created.  Once we have the desired save location, Pandas provides a convenient <code class="highlighter-rouge">to_csv</code> method to save the data frame to a csv file.</p>
+<p>Now we need to write the <code class="highlighter-rouge">self.save_to_csv</code> method that corresponds to the button we just added.  We define this new method within the <code class="highlighter-rouge">App</code> class, and use the familiar <code class="highlighter-rouge">get()</code> method from Tkinter to obtain the save location from the entry box we just created.  We’ll need to check that the directory specified in the save path exists, and that the path ends with an appropriate <code class="highlighter-rouge">filename.csv</code> filename.  We should also verify that the data frame is not empty, since we can not save data that doesn’t exist.  Once we have an appropriate save location, Pandas provides a convenient <code class="highlighter-rouge">to_csv</code> method to save the data frame to a csv file.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">save_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="p">)</span>
+        <span class="c">#Verify that the data frame is not empty</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+             <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: Can not save empty data frame'</span><span class="p">)</span>
+
+        <span class="c">#If we have data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Get the save location and extract the directory path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="c">#Verify that the directory exists</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span><span class="p">):</span>
+
+                <span class="c">#Verify that the filename is more than just '.csv'</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: Path should end in filename.csv'</span><span class="p">)</span>
+
+                <span class="c">#Verify that the filename ends in '.csv'</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s">'.csv'</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: File should end in filename.csv'</span><span class="p">)</span>
+
+                <span class="c">#Save the data if it passes error checking</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="p">)</span>
+                    
+            <span class="c">#Error if the directory doesn't exist        </span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: File directory does not exist'</span><span class="p">)</span>
 </code></pre>
 </div>
 
@@ -612,6 +776,10 @@
 <span class="kn">import</span> <span class="nn">pymysql</span> <span class="kn">as</span> <span class="nn">mdb</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="n">user</span><span class="p">,</span><span class="n">pswd</span><span class="p">,</span><span class="n">db</span><span class="p">):</span>
@@ -691,49 +859,127 @@
         <span class="n">end_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_t_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="n">run_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtag_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
-        <span class="c">#Default to not including the conditions in the query</span>
-        <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
-        <span class="n">time_string</span> <span class="o">=</span> <span class="s">''</span>
+        <span class="c">#Check that date is valid</span>
+        <span class="n">time_format</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">'^</span><span class="err">\</span><span class="s">d{4}-</span><span class="err">\</span><span class="s">d{2}-</span><span class="err">\</span><span class="s">d{2} </span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}:</span><span class="err">\</span><span class="s">d{2}$'</span><span class="p">)</span>
+        <span class="n">start_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">start_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">start_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">start_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">start_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">start_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">start_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">start_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">start_year</span><span class="p">,</span><span class="n">start_month</span><span class="p">,</span><span class="n">start_day</span><span class="p">,</span><span class="n">start_hour</span><span class="p">,</span><span class="n">start_min</span><span class="p">,</span><span class="n">start_sec</span><span class="p">)</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">start_t_okay</span><span class="o">=</span><span class="s">'no'</span>
 
-        <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
 
-        <span class="c">#Run tag condition</span>
-        <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
-		    
-        <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
-        <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
-            <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>           
-		                
-        <span class="c">#Setting the query</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
+        <span class="n">end_t_okay</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">end_year</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+            <span class="n">end_month</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+            <span class="n">end_day</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+            <span class="n">end_hour</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">])</span>
+            <span class="n">end_min</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">14</span><span class="p">:</span><span class="mi">16</span><span class="p">])</span>
+            <span class="n">end_sec</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">end_t</span><span class="p">[</span><span class="mi">17</span><span class="p">:</span><span class="mi">19</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="n">end_year</span><span class="p">,</span><span class="n">end_month</span><span class="p">,</span><span class="n">end_day</span><span class="p">,</span><span class="n">end_hour</span><span class="p">,</span><span class="n">end_min</span><span class="p">,</span><span class="n">end_sec</span><span class="p">)</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'yes'</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">end_t_okay</span><span class="o">=</span><span class="s">'no'</span>        
 
-        <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
+        <span class="s">'''Error Handling'''</span>
+        <span class="c">#Check that the date is in the correct format</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">start_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">time_format</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">end_t</span><span class="p">)):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time Must have the format "YYYY-MM-DD HH:MM:SS" or be empty'</span><span class="p">)</span>
+        <span class="c">#Check that the date is a valid date</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>        
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: Start time is not valid'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t_okay</span> <span class="o">==</span> <span class="s">'no'</span><span class="p">):</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Error: End time is not valid'</span><span class="p">)</span>
+        <span class="c">#Check that start_t &lt; end_t</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">start_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">end_t</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">start_t</span> <span class="o">&gt;</span> <span class="n">end_t</span><span class="p">):</span>         
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Error'</span><span class="p">,</span> <span class="s">'Start time must come before end time'</span><span class="p">)</span>    
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Default to not including the conditions in the query</span>
+            <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="n">time_string</span> <span class="o">=</span> <span class="s">''</span>
 
-        <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="c">#Toggle query conditions on if the GUI field isn't blank</span>
 
-            <span class="c">#Send select statement</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+            <span class="c">#Run tag condition</span>
+            <span class="k">if</span> <span class="n">run_tag</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">run_tag_string</span> <span class="o">=</span> <span class="s">'AND run_tag = "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">run_tag</span><span class="p">)</span>
+    		    
+            <span class="c">#Time window condition (in order: both set, only start set, only end set)</span>
+            <span class="k">if</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time BETWEEN "</span><span class="si">%</span><span class="s">s" AND "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">,</span><span class="n">end_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">start_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &gt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">start_t</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">end_t</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">time_string</span> <span class="o">=</span> <span class="s">'AND clock_time &lt; "</span><span class="si">%</span><span class="s">s"'</span> <span class="o">%</span><span class="p">(</span><span class="n">end_t</span><span class="p">)</span>           
+    		                
+            <span class="c">#Setting the query</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"SELECT clock_time, amplitude FROM summarydata WHERE amplitude IS NOT NULL </span><span class="si">%</span><span class="s">s </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">run_tag_string</span><span class="p">,</span> <span class="n">time_string</span><span class="p">)</span>
 
-            <span class="c">#Fetch the data from our query</span>
-            <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pswd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">);</span>
 
-            <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+            <span class="k">with</span> <span class="n">con</span><span class="p">:</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+                <span class="c">#Send select statement</span>
+                <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">)</span>
+
+                <span class="c">#Fetch the data from our query</span>
+                <span class="n">rows</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+                <span class="c">#Fill a pandas data frame with timestamps and amplitude info</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'timestamp'</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="s">'amplitude'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">))]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">querystatus</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">text</span> <span class="o">=</span> <span class="s">"Finished"</span><span class="p">)</span>
+
+            <span class="c">#Check if the query returned data</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                 <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Query Warning'</span><span class="p">,</span> <span class="s">'Warning: Query returned no data'</span><span class="p">)</span>
+           
 
 
     <span class="k">def</span> <span class="nf">save_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="p">)</span>
+        <span class="c">#Verify that the data frame is not empty</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+             <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: Can not save empty data frame'</span><span class="p">)</span>
+
+        <span class="c">#If we have data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c">#Get the save location and extract the directory path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="c">#Verify that the directory exists</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_dir</span><span class="p">):</span>
+
+                <span class="c">#Verify that the filename is more than just '.csv'</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: Path should end in filename.csv'</span><span class="p">)</span>
+
+                <span class="c">#Verify that the filename ends in '.csv'</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">!=</span> <span class="s">'.csv'</span><span class="p">:</span>
+                    <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: File should end in filename.csv'</span><span class="p">)</span>
+
+                <span class="c">#Save the data if it passes error checking</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_loc</span><span class="p">)</span>
+                    
+            <span class="c">#Error if the directory doesn't exist        </span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s">'Save Error'</span><span class="p">,</span> <span class="s">'Error: File directory does not exist'</span><span class="p">)</span>
+
 
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
@@ -756,8 +1002,7 @@
 
 <h1 id="closing-remarks">Closing remarks</h1>
 
-<p>The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions won’t be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you’d like to learn how to implement similar functionality, feel free to look at the <a href="https://github.com/Raknoche/MyCode/blob/master/CodeForDealingData/radonGUI.py">complete code</a> on my Github page and ask any questions you may have here.  Note that the code is still a work in progress and lacks proper error handling at this point.  For instance, if a user neglects the instructions on the GUI and fails to use the appropriate format for each entry box, the code won’t behave properly.  You should make sure to use proper error handling in the final version of your own code, as I’ll be doing in mine once all of the functionality is implemented.</p>
-
+<p>The GUI we built in this post is a simplified version of the code I wrote for our new undergraduate students.  The complete GUI includes advanced functionality, such as the ability to change the units of our timestamps, plot the data in multiple ways at the push of a button, and select and delete data from those plots before saving the csv file.  These functions won’t be applicable to everybody who reads this post, as they are tuned to the specific type of data my GUI collects.  If you’d like to learn how to implement similar functionality, feel free to look at the <a href="https://github.com/Raknoche/MyCode/blob/master/CodeForDealingData/radonGUI.py">complete code</a> on my Github page and ask any questions you may have here.</p>
 
   
   </div>
