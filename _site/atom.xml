@@ -4,13 +4,21 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-22T13:01:41-04:00</updated>
+ <updated>2016-08-31T14:56:46-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Fantasy Football Predictions &mdash; A First Look</title>
+   <link href="http://www.dealingdata.net/2016/08/31/Fantasy-Football-Preview/"/>
+   <updated>2016-08-31T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/08/31/Fantasy-Football-Preview</id>
+   <content type="html">&lt;p&gt;A sneak peak at using machine learning to predict fantasy football scores.&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;Fantasy Football season is coming up, and with it comes millions of people with a vested interest in football data. This year, I’ve been working on a machine learning approach to predict the...</content>
+ </entry>
  
  <entry>
    <title>Making a MySQL GUI with Tkinter</title>
@@ -82,14 +90,6 @@
    <updated>2016-07-12T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/07/12/MakingAWebsite</id>
    <content type="html">&lt;p&gt;How to create a website like this blog with Jekyll.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;I thought it would be appropriate for my first post to explain how I created this website. There are many options on the web to help you build a blog. The most popular among these include &lt;a href=&quot;https://wordpress.com/create/&quot;&gt;WordPress&lt;/a&gt;, &lt;a...</content>
- </entry>
- 
- <entry>
-   <title>Hello, World!</title>
-   <link href="http://www.dealingdata.net/2016/07/08/HelloWorld/"/>
-   <updated>2016-07-08T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/08/HelloWorld</id>
-   <content type="html">&lt;p&gt;An introduction to the author, his transition from physics to data science, and the goals of this blog.&lt;/p&gt; &lt;!--more--&gt; &lt;h1 id=&quot;who-am-i&quot;&gt;Who am I?&lt;/h1&gt; &lt;p&gt;Hello, World! My name is Richard Knoche. I’m a graduate student working on my Ph.D. in Physics at the University of Maryland. My research focuses on advancing...</content>
  </entry>
  
 

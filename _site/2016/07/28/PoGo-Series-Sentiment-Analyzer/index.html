@@ -92,6 +92,10 @@
           
         
       
+        
+          
+        
+      
 
       <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
       <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
@@ -504,7 +508,7 @@
 </table>
 </div>
 
-<p>We’ll need to fairly large training set in order for our sentiment analyzer to perform well, but we don’t want to spend too much time manually labeling tweets.  After all, if we manually labeled all of the tweets in our collection there would be no need to train a sentiment analyzer.  Manually labeling about 4,000 of the ~20,000 tweets in our collection should be a good middle ground.  We’ll begin the process by putting the first 4,000 tweets of our collection into their own data frame.</p>
+<p>We’ll need a fairly large training set in order for our sentiment analyzer to perform well, but we don’t want to spend too much time manually labeling tweets.  After all, if we manually labeled all of the tweets in our collection there would be no need to train a sentiment analyzer.  Manually labeling about 4,000 of the ~20,000 tweets in our collection should be a good middle ground.  We’ll begin the process by putting the first 4,000 tweets of our collection into their own data frame.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">PoGo_labeled</span> <span class="o">=</span> <span class="n">PoGo_tweets</span><span class="o">.</span><span class="n">ix</span><span class="p">[:</span><span class="mi">4000</span><span class="p">]</span>
 </code></pre>
@@ -543,7 +547,7 @@
 
 <p>To solve this problem, we’ll set a portion of our original training set aside, not to be touched until we have finished training our sentiment analyzer.  This reserved set of data is known as the <strong>test set</strong>, which we will use to evaluate the performance of our sentiment analyzer once it is complete.</p>
 
-<p>When designing our sentiment analyzer, we’ll have a number of choices to make along the way.  How many features should we use?  Should we include the capitalization of words as a feature?  Should we label additional tweets to increase the size of our training set?  These types of choices are known as <strong>hyperparameters</strong> in machine learning, and the answers to each of these questions will effect the performance of our sentiment analyzer. To maximize performance,  we’ll need to evaluate our classifier under different hyperparameter settings — but which data should we for this evaluation?  We could evaluate the performance using the training set itself, but then we would run into the same risk of over constraining the analyzer that we discussed earlier.  We could evaluate the performance using the test set that we set aside earlier, but then we would be tuning our classifier to the test set.  This would defeat the purpose of setting that data aside in the first place.</p>
+<p>When designing our sentiment analyzer, we’ll have a number of choices to make along the way.  How many features should we use?  Should we include the capitalization of words as a feature?  Should we label additional tweets to increase the size of our training set?  These types of choices are known as <strong>hyperparameters</strong> in machine learning, and the answers to each of these questions will effect the performance of our sentiment analyzer. To maximize performance,  we’ll need to evaluate our classifier under different hyperparameter settings — but which data should we use for this evaluation?  We could evaluate the performance using the training set itself, but then we would run into the same risk of over constraining the analyzer that we discussed earlier.  We could evaluate the performance using the test set that we set aside earlier, but then we would be tuning our classifier to the test set.  This would defeat the purpose of setting that data aside in the first place.</p>
 
 <p>To solve this problem, we’ll set another portion of the original training set aside.  This new subset of data is called the <strong>cross validation set</strong>.  We can use it to evaluate the performance of our sentiment analyzer as we tune our hyperparameters.  Since the analyzer is not trained on data from the cross validation set, there is no chance that the performance evaluation will be skewed due to over fitting the data.  Likewise, since the analyzer is not trained on data from the test set, and since the the hyperparameters were not tuned with data from the test set, our final evaluation of our analyzer’s performance will be a true representation of how it will perform on unlabeled tweets from full collection.</p>
 
@@ -574,7 +578,7 @@ Number of tweets labeled negative: 304
 
 <p>Since the probability of seeing negative tweets, <script type="math/tex">\mathsf{P(Neg)}</script>, is so small, Bayes Theorem is likely to predict that the probability of any tweet being negative is small regardless of the evidence.  In fact, if the classifier predicted that all of the tweets we collected were positive it would be correct 90% of the time!  This isn’t a particularly useful classifier though, since it wouldn’t help us eliminate negative tweets from our collection at all.</p>
 
-<p>The are a few ways to deal with imbalanced classes.  One option is to <strong>up sample</strong> the the population of negative tweets in our training set.  This means that each time we put a negative tweet into our training set, we actually enter it multiple times.  In this case, we’d have to copy 10 instances of each negative tweet in our training set for the classes to be balanced.  Up sampling allows us to see a larger population of the positive tweets at the cost of giving each feature that we see in the negative tweets more weight.  This typically works best when we have very little data to work with.</p>
+<p>The are a few ways to deal with imbalanced classes.  One option is to <strong>up sample</strong> the the population of negative tweets in our training set.  This means that each time we put a negative tweet into our training set, we actually enter it multiple times.  In this case, we’d have to copy 9 instances of each negative tweet in our training set for the classes to be balanced.  Up sampling allows us to see a larger population of the positive tweets at the cost of giving each feature that we see in the negative tweets more weight.  This typically works best when we have very little data to work with.</p>
 
 <p>Alternatively, we could <strong>down sample</strong> the population of positive tweets in our training set.  This means that each time we put a negative tweet into our training set, we put one positive tweet in as well.  This will result in having far fewer positive tweets in the training sample than up sampling would, but the weight of negative features will be an exact representation of what we see in our population.  This typically works best when we have a large amount of data to work with.</p>
 
@@ -640,7 +644,7 @@ After importing the list of stop words, it’s easy to filter them out with an <
 </code></pre>
 </div>
 
-<p>Another way to address negation markers is to include <a href="http://www.nltk.org/howto/collocations.html">bigrams</a> in our list of features.  Doing so allows our classifier to recognize the collocation of words such as “(not,like)” in addition to the typical unigram features we would extract.  The inclusion of bigrams also allows our classifier to recognize collocations that do not mark negation, such as “(fuck, team)”, which is far more powerful than tracking the common words “fuck” and “team” as unigrams alone. (Pardon my French here, but this turned out to be the strongest example of bigrams features from our tweets.)</p>
+<p>Another way to address negation markers is to include <a href="http://www.nltk.org/howto/collocations.html">bigrams</a> in our list of features.  Doing so allows our classifier to recognize the collocation of words such as “(not,like)” in addition to the typical unigram features we would extract.  The inclusion of bigrams also allows our classifier to recognize collocations that do not mark negation, such as “(fuck, team)”, which is far more powerful than tracking the common words “fuck” and “team” as unigrams alone. (Pardon my language here, but this turned out to be the strongest example of bigrams features from our tweets.)</p>
 
 <p>Finally, we want to ensure that our sentiment analyzer performs equally well regardless of which Pokemon Go team the tweet is discussing.  If we were to misclassify every negative tweet about Team Valor as positive, but always correctly classify negative tweets about Team Mystic, then our final population of tweets would contain an overabundance of Team Valor tweets.  This would certainly skew the map of team dominance which we hope to make with our data.  To avoid this problem, I’ve excluded any words that could identify a Pokemon Go team from our list of features.</p>
 
