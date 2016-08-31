@@ -166,13 +166,17 @@
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-<p>Fantasy Football season is coming up, and with it comes millions of people with a vested interest in football data.  This year, I’ve been working on a machine learning approach to predict the fantasy points of each NFL player on a rest-of-season and week-by-week basis.   Projections are made using a <a href="http://cs229.stanford.edu/notes/cs229-notes3.pdf">Support Vector Machine (SVM)</a> with features taken from each player’s, team’s, and opponent’s stats over the past 17 regular season games. Games which a player did not participate in are not considered for that player’s average.</p>
+<p>Fantasy Football season is coming up, and with it comes millions of people with a vested interest in football data.  This year, I’ve been working on a machine learning approach to predict the fantasy points of each NFL player on a rest-of-season and week-by-week basis.</p>
+
+<p>Projections are made using a <a href="http://cs229.stanford.edu/notes/cs229-notes3.pdf">Support Vector Machine (SVM)</a> with features taken from each player’s, team’s, and opponent’s stats over the past 17 regular season games. Games which a player did not participate in are not considered for that player’s average.</p>
+
+<p>The model is still a work in progress, but it’s working well enough to release season projections before the regular season games start.  As usual, when I’ve finished polishing the project I’ll do a series of blog posts explaining the process in detail.</p>
 
 <h1 id="prediction-performance">Prediction Performance</h1>
 
-<p>I set aside a random sample of data from the 2009-2015 NFL seasons, as well as the entirety of the 2014 season to evaluate the prediction model’s performance.  The SVM was not tuned to these test data sets in any way, so they should be a good indication of the model’s performance.  I used a number of metrics during the performance evaluation, the easiest to explain being <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Pearson’s coefficient of determination</a>, commonly known as <script type="math/tex">R^2</script>.  An <script type="math/tex">R^2</script> value of one means that 100% of the data’s variation is explained by the model, while a <script type="math/tex">R^2</script> of zero means that the model’s predictions are not correlated with the real outcomes in any way.</p>
+<p>I set aside a random sample of data from the 2009-2015 NFL seasons, as well as the entirety of the 2014 season to evaluate the prediction model’s performance.  The SVM was not tuned to these test data sets in any way, so they should be a good indication of the model’s performance.  I used a number of metrics during the performance evaluation, the easiest of which to explain being <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Pearson’s coefficient of determination</a>, commonly known as <script type="math/tex">R^2</script>.  An <script type="math/tex">R^2</script> value of 1.0 means that 100% of the data’s variation is explained by the model, while an <script type="math/tex">R^2</script> value of zero means that the model’s predictions are not correlated with the real outcomes in any way.</p>
 
-<p>Here are the <script type="math/tex">R^2</script> results for the model for the sequestered 2014 season, using PPR scoring.</p>
+<p>Here are the <script type="math/tex">R^2</script> results for the current model on the sequestered 2014 season, using PPR scoring.</p>
 
 <table>
   <thead>
@@ -209,17 +213,17 @@
   </tbody>
 </table>
 
-<p>In the above table, “Season Projections” refers the performance of the model as the NFL stats update throughout the season. In this case, the stat averages are updated on a weekly basis and are used to predict the next week’s outcome.  This allows the model to improve it’s predictions as the season plays out, and results in extremely high performance (<script type="math/tex">R^2>0.95</script> for all positions) on the total points predicted for each player at the end of the season.</p>
+<p>In the above table, “<strong>Season Projections</strong>” refers the performance of the model as the NFL stats update throughout the season. In this case, the stat averages are updated on a weekly basis and are used to predict the next week’s outcome.  This allows the model to improve it’s predictions as the season plays out, and results in extremely high performance (<script type="math/tex">R^2>0.95</script> for all positions) on the total points predicted for each player at the end of the season.</p>
 
-<p>The “Initial Season Projections” refer to the season-long projections using only information that is available at the beginning of the 2014 season.  In other words, all of the stat averages come from the previous season and are projected throughout the entire 2016 season.  This is the metric to use when evaluating the performance of our model for the 2016 draft at the start of the fantasy football season.  We see that the model’s performance varies depending on the player’s position.  It can explain 72% of the variation in season-long wide receiver performance, 71% of the variation in season-long tight end performance, 67% of the variation in season-long quarterback performance, and 54% of the variation in season-long running back performance.</p>
+<p>The “<strong>Initial Season Projections</strong>” refer to the season-long projections using only information that is available at the beginning of the 2014 season.  In other words, all of the stat averages come from the previous season and are projected through the end of the 2014 season.  This is the metric we should use when evaluating the performance of our model for the 2016 draft.  We see that the model’s performance varies depending on the player’s position, explaining 72% of the variation in season-long wide receiver performance, 71% of the variation tight end performance, 67% of the variation quarterback performance, and 54% of the variation in running back performance.</p>
 
-<p>The “Week-by-Week Projections” refer to the performance of our model on a week-by-week basis.  Player’s often underperform or over perform during a particular game, so the <script type="math/tex">R^2</script> values of our model are much lower on a week-by-week basis than a season-long basis. Still, our model’s week-by-week average <script type="math/tex">R^2</script> value of about 0.475 is better than the many professional sites projections. (<a href="http://fantasyfootballanalytics.net/2016/03/best-fantasy-football-projections-2016-update.html">Source from FantasyFootballAnalytics</a>)</p>
+<p>The “<strong>Week-by-Week Projections</strong>” refer to the performance of our model on a week-by-week basis.  Player’s often underperform or over perform during a particular game, so the <script type="math/tex">R^2</script> values of our model are much lower on a week-by-week basis than a season-long basis. Still, our model’s week-by-week average <script type="math/tex">R^2</script> value of 0.475 is better than the many professional sites projections. (<a href="http://fantasyfootballanalytics.net/2016/03/best-fantasy-football-projections-2016-update.html">Source from FantasyFootballAnalytics</a>)</p>
 
 <p>To visualize the meaning of each <script type="math/tex">R^2</script> value, I’ve included a few plots below.  The first plot shows the “Season Projections” of wide receivers versus the actual season total in a PPR format.  This data has <script type="math/tex">R^2=0.96</script>.</p>
 
 <p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/FF_PPR/SeasonProjectionWR.png" alt="png" /></p>
 
-<p>Here’s a similar plot of the “Initial Season Projections” of wide receivers versus the actual season total in a PPR format.  This data has an <script type="math/tex">R^2=0.72</script>.</p>
+<p>Here’s a similar plot of the “Initial Season Projections” of wide receivers versus the actual season total in a PPR format.  This data has a lower <script type="math/tex">R^2</script> of <script type="math/tex">0.72</script> since all of the statistics come from the previous season.</p>
 
 <p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/FF_PPR/InitialSeasonProjectionWR.png" alt="png" /></p>
 
@@ -229,14 +233,16 @@
 
 <ol>
   <li>
-    <p>The machine learning predictions requires that a player has played at least one game in the past 17 regular season matches.  If this isn’t the case, there will not be any projections for that player.  In particular, first-year rookies or returning retired players (such as Josh Gordon) will not appear on the projections.  Players who have only played a handful of games recently will have poorly-measured averages, and are more likely to have incorrect predictions.</p>
+    <p>The machine learning predictions require that a player has played at least one game in the past 17 regular season matches.  If this isn’t the case, there will not be any projections for that player.  In particular, first-year rookies or returning retired players (such as Josh Gordon) will not appear on the projections.  Players who have only played a handful of games recently will have poorly-measured averages, and are more likely to have incorrect predictions.</p>
   </li>
   <li>
     <p>The projections do not consider fantasy news such as player suspensions, recent injuries, or coaches’ statements.  You should view these projections as a measure of how well a player is expected to perform if they play the entire season without injury, and in a similar role to last season.  For instance, if a player was a starting running back last season, and might be in a running-back-by-committee this season (I’m looking at you, Devonta Freeman) it is likely their projections will be too high.  Likewise, if a player is injured going into the 2016 season and will have to take it easy the first few games (for instance, Jamal Charles) their projected season total is also likely too high.</p>
   </li>
 </ol>
 
-<h1 id="ustandard-scoring-predictionsu"><u>Standard Scoring Predictions</u></h1>
+<p><br /></p>
+
+<h1 id="ustandard-format-predictionsu"><u>Standard Format Predictions</u></h1>
 <script language="javascript"> 
 function toggle(original,text,tog) {
 	var ele = document.getElementById(tog);
@@ -268,7 +274,7 @@ function toggle(original,text,tog) {
 
 <p><br /><br /></p>
 
-<h1 id="uppr-predictionsu"><u>PPR Predictions</u></h1>
+<h1 id="uppr-format-predictionsu"><u>PPR Format Predictions</u></h1>
 
 <p><a id="WRTextPPR" href="javascript:toggle('WR Predictions (PPR)','WRTextPPR','WRTextTogPPR');">WR Predictions (PPR)</a></p>
 <div id="WRTextTogPPR" style="display: none"><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/FF_PPR/WR_Predictions.png" /></div>
