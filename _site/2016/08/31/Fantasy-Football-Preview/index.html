@@ -233,12 +233,19 @@
 
 <ol>
   <li>
-    <p>The machine learning predictions require that a player has played at least one game in the past 17 regular season matches.  If this isn’t the case, there will not be any projections for that player.  In particular, first-year rookies or returning retired players (such as Josh Gordon) will not appear on the projections.  Players who have only played a handful of games recently will have poorly-measured averages, and are more likely to have incorrect predictions.</p>
+    <p>The machine learning predictions require that a player has played at least one game in the past 17 regular season matches.  If this isn’t the case, there will not be any projections for that player.  In particular, first-year rookies or returning retired players (such as Josh Gordon) will not appear on the projections.</p>
   </li>
   <li>
-    <p>The projections do not consider fantasy news such as player suspensions, recent injuries, or coaches’ statements.  You should view these projections as a measure of how well a player is expected to perform if they play the entire season without injury, and in a similar role to last season.  For instance, if a player was a starting running back last season, and might be in a running-back-by-committee this season (I’m looking at you, Devonta Freeman) it is likely their projections will be too high.  Likewise, if a player is injured going into the 2016 season and will have to take it easy the first few games (for instance, Jamal Charles) their projected season total is also likely too high.</p>
+    <p>The projections do not consider fantasy news such as player suspensions, recent injuries, or coaches’ statements.</p>
+  </li>
+  <li>
+    <p>I use a clustering algorithm to extract natural tiers of players from the projections. The idea comes from <a href="http://www.borischen.co/">Boris Chen’s</a> use of clustering in his aggregation of expert’s predictions.</p>
   </li>
 </ol>
+
+<p>You should not treat these projections as the the final word on who you should draft.  Instead, view them as a measure of how well a player is expected to perform if they play the entire season without injury, and in a similar role to last season.  The projections are particularly useful if you are trying to determine how well a player compares to the rest of the league, since each player’s performance is quantified with a projected score rather than a simple ranking.  For instance, you can see exactly how much better a player like Antonio Brown is expected to be compared to the rest of the wide receivers.</p>
+
+<p>If you do use these projections, be sure to look up recent news on a player before drafting them.  It’s entirely possible that a player is injured or expected to play a weaker role this season, which would not be reflected in the projections.  For instance, if a player was a starting running back last season, and might be in a running-back-by-committee this season (I’m looking at you, Devonta Freeman) it is likely their projections will be too high.  Likewise, if a player is injured going into the 2016 season and will have to take it easy the first few games (like Jamal Charles) their projected season total is also likely too high.</p>
 
 <p><br /></p>
 
