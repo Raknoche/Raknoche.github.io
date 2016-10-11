@@ -137,8 +137,19 @@ Figure 3: Nonstationary ACF
 
 In general, differencing introduces negative correlation to the series, driving the autocorrelation of the lag-1 term towards negative values.  If the lag-1 autocorrelation becomes negative, the series does not need to be differenced further.  If the lag-1 autocorrelation becomes less than -0.5, as it is in [Figure 4](#Fig4), it is possible the series is over-differenced.  
 
+<a name="Fig4"></a> 
+<center>
+Figure 4: Over-differenced ACF
+<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/OverdifferencedACF.png">
+</center>
 
-If the lag-1 autocorrelation is close to 1.0, or if the sum of tall autocorrelations is close to 1.0, the time series is said to have a "unit root".  This indicates that the series is nonstationary, and additional differencing operations should be applied.   Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.
+If the lag-1 autocorrelation is close to 1.0, or if the sum of all autocorrelations is close to 1.0, the time series is said to have a "unit root".  This indicates that the series is nonstationary, and additional differencing operations should be applied. An example of this is shown in [Figure 5](#Fig5)  Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.
+
+<a name="Fig5"></a> 
+<center>
+Figure 5: Under-differenced ACF
+<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/UnitRootACF.png">
+</center>
 
 
 Before we discuss the appropriate number of AR and MA terms to add to the model, we should discuss whether to include a constant fit parameter in the ARIMA model.  The constant fit parameter, $C$, is almost always included in an undifferenced ARIMA(p,0,q) model, since the addition of the parameter allows for a non-zero, constant mean in the time series. In an ARIMA(p,1,q) model, the constant fit parameter allows for a non-zero average trend over the original time series.  Therefore, if one difference operation has been applied the constant fit parameter should be included in the model if the original time series has a non-zero average trend.  Similarly, in an ARIMA(p,2,q) model, the constant fit parameter allows for a non-zero average curvature in the original time series.  It is rarely the case that we need to model a non-zero curvature in the original time series, so second order differencing models generally do not include the constant term.  Instead, data with a non-zero curvature (or with non-constant variance) can be addressed by transforming the initial series with a logarithm or square root operation.
