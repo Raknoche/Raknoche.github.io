@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-10-10T21:00:05-04:00</updated>
+ <updated>2016-10-10T23:56:49-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -17,7 +17,7 @@
    <link href="http://www.dealingdata.net/2016/10/10/Time-Series-Analysis/"/>
    <updated>2016-10-10T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/10/10/Time-Series-Analysis</id>
-   <content type="html">&lt;p&gt;A description of time series analysis and the ARIMA model.&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;A univariate time series describes a single variable that is measured at different points in time. The measurements are typically sequental, and spaced evenly in time. When analyzing such data, we want to develop a...</content>
+   <content type="html">&lt;p&gt;A description of time series analysis and the ARIMA model.&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;A univariate time series describes a single variable that is measured at different points in time. The measurements are typically sequential, and spaced evenly in time. When analyzing such data, we want to develop a...</content>
  </entry>
  
  <entry>

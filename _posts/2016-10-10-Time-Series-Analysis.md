@@ -11,7 +11,7 @@ A description of time series analysis and the ARIMA model.
 {% include math.html %}
 
 
-A univariate time series describes a single variable that is measured at different points in time.  The measurements are typically sequental, and spaced evenly in time.  When analyzing such data, we want to develop a time dependent model that can explain past observations or forecast future trends.  Usually, each measurement in a time series is influenced by the preceeding data points.  This implies the data is not independent, and standard regression models will not be suitable for the analysis.  
+A univariate time series describes a single variable that is measured at different points in time.  The measurements are typically sequential, and spaced evenly in time.  When analyzing such data, we want to develop a time dependent model that can explain past observations or forecast future trends.  Usually, each measurement in a time series is influenced by the preceding data points.  This implies the data is not independent, and standard regression models will not be suitable for the analysis.  
 
 I'll begin this post by describing a special type of time series data, known as a stationary time series.  In [Section 2](#wolds), we'll discuss Wold's theorem of decomposition, and the use of an autoregressive moving average (ARMA) model to forecast this type of data. The ARMA model consists of two halves &mdash;  an auto regressive (AR) half that will be described in [Section 3](#AR), and a moving average (MA) half that will be described in [Section 4](#MA).  In [Section 6](#ARIMA), we'll describe a modification of the ARMA model which can be applied to nonstationary data.  The final sections of this post will discuss how to properly implement these models in practice.  Below is a table of contents to help you navigate these sections.  
 
@@ -48,11 +48,11 @@ Selingkar Dakwat provides a number of stationary and nonstationary time series e
 
 # <a name="wolds"></a> Wold's Theorem of Decomposition
 
-[Wold's theorem of decomposition](https://en.wikipedia.org/wiki/Wold%27s_theorem) states that any stationary process can be decomposed into a deterministic component and a indeterministic, stochastic component.  Mathematically, this is written as
+[Wold's theorem of decomposition](https://en.wikipedia.org/wiki/Wold%27s_theorem) states that any stationary process can be decomposed into a deterministic component and an indeterministic, stochastic component.  Mathematically, this is written as
 
 $$ x_{t}=\eta _{t}+\sum_{j=0}^{\infty }\theta_{j}\epsilon _{t-j} $$
 
-where $$x_t$$ is the value of the time series at time $$t$$, and $$\epsilon_{t-j}$$ term is the error of the model at the prior $$x_{t-j}$$ measurement.  The first term on the right ($$\eta_t$$), is the deterministic component of the time series, and represents a perfectly predictable behavior based on past observations on $$x_t$$ alone. This resembles a autoregressive model, and will be discussed in [Section 3](#AR). The second term on the right represents the indeterministic component of the series.  It is a linear combination of past errors of the model due to random white noise, and represents a component of the time series that is impossible to predict perfectly. This resembles a moving average model, and will be discussed in section [Section 4](#MA). 
+where $$x_t$$ is the value of the time series at time $$t$$, and $$\epsilon_{t-j}$$ term is the error of the model at the prior $$x_{t-j}$$ measurement.  The first term on the right ($$\eta_t$$), is the deterministic component of the time series, and represents a perfectly predictable behavior based on past observations on $$x_t$$ alone. This resembles an autoregressive model, and will be discussed in [Section 3](#AR). The second term on the right represents the indeterministic component of the series.  It is a linear combination of past errors of the model due to random white noise, and represents a component of the time series that is impossible to predict perfectly. This resembles a moving average model, and will be discussed in section [Section 4](#MA). 
 
 Wold's theorem of decomposition motivates what is known as an autoregressive moving average (ARMA) model for stationary time series analysis.  In the next two sections we'll discuss the autoregressive (AR) and moving average (MA) terms separately, before detailing the full ARMA model in section [Section 5](#ARMA).
 
@@ -78,7 +78,7 @@ $$ AR(p): x_t = \phi_0 + \phi_1 x_{t−1} + \phi_2 x_{t−2} + \ldots + \phi_p x
 
 # <a name="MA"></a> The Moving Average Model
 
-We can also use a moving average (MA) model to describe our time series data. These models claim that the current observations are dependent on previous forecast errors. The order of an MA model is denoted with a q, and represents how many lag terms are included in the model.  Mathematically, a first order MA(1) model is represented by
+We can also use a moving average (MA) model to describe our time series data. These models claim that the current observations are dependent on previous forecast errors. The order of an MA model is denoted with a $$q$$, and represents how many lag terms are included in the model.  Mathematically, a first order MA(1) model is represented by
 
 $$ MA(1): x_t =  \epsilon_t - \theta_0 - \theta_1 \epsilon_{t−1} $$
 
@@ -103,7 +103,7 @@ where $$C$$ is a constant fit parameter, and $$p$$ and $$q$$ denote the orders o
 
 # <a name="ARIMA"></a> Differencing and the ARIMA Model
 
-Recall our discussion of Wold's decomposition theorem from [Section 2](#wolds).  We stated that any stationary time series data can be approximated by an ARMA model.  If the time series we're working with isn't stationary, we'll need to take some extra steps to make it so.  One way to accomplish this is to model the differences of each measurement in the dataset, rather than model the measurements themselves.  This process helps to stabilize the mean of our model.  An intuitive way to think about this is to imagine a time series which has a constant, upward slope.  This series is not stationary, since the upward trend implies a time dependence in the mean of the data.  However, since the slope is constant the difference between sequential points will be identical at all points on the line.  Therefore, a time series of the differences will be flat and stationary.  
+Recall our discussion of Wold's decomposition theorem from [Section 2](#wolds).  We stated that any stationary time series data can be approximated by an ARMA model.  If the time series we're working with isn't stationary, we'll need to take some extra steps to make it so.  One way to accomplish this is to model the differences of each measurement in the dataset, rather than model the measurements themselves.  This process helps to stabilize the mean of our model.  An intuitive way to think about this is to imagine a time series which has a constant, upward slope.  This series is not stationary, since the upward trend implies a time dependence in the mean of the data.  However, since the slope is constant the difference between sequential points will be identical at all points on the line, and a time series of the differences will be flat and stationary.  
 
 An autoregressive integrate moving average (ARIMA) model incorporates this differencing operation, and is the most general class of models which can be applied to data that can be made stationary by differencing.  In an ARIMA model, the data is differenced a number of times before the autoregressive and moving average terms are applied.  The number of difference operations is typically denoted with the letter $$d$$.  If $$d = 0$$, an ARIMA model reduces to the ARMA model.  If $$d = 1$$, the time series is differenced one time, resulting in a new time series $$X_t$$, where
 
@@ -117,7 +117,7 @@ After performing the differencing steps, the autoregressive and moving average t
 
 $$ ARIMA(p,d,q): X_t = C + \epsilon_t + \sum _{i=1}^{p}\phi _{i}X_{t-i} - \sum _{i=1}^{q}\theta _{i}\epsilon _{t-i} $$
 
-where $$p$$ is the number of autoregressive terms, $$q$$ is the number of moving average terms, and $$d$$ is the number of differences required to make the original time series stationary.  Note that the only difference between ARMA and the ARIMA equation is that the time series being modeled is the differenced series $$X_t$$, rather than the original series $$x_t$$. (If $$d = 0$$, the differenced series is equivalent to the original series).
+where $$p$$ is the number of autoregressive terms, $$q$$ is the number of moving average terms, and $$d$$ is the number of differences required to make the original time series stationary.  Note that the only difference between the ARMA equation and the ARIMA equation is that the time series being modeled is the differenced series $$X_t$$, rather than the original series $$x_t$$. (If $$d = 0$$, the differenced series is equivalent to the original series).
 
 
 # <a name="differencing"></a> Determining the number of Differences
@@ -127,7 +127,7 @@ The hardest part of implementing an ARIMA(p,d,q) model is determining the approp
 
 Two plots, known as the autocorrelation function (ACF) and the partial autocorrelation function (PACF), are extremely useful when addressing these questions.  An ACF plot is a bar graph of the coefficients of correlation between a time series and the lags of itself. If there is significant correlation between $$x_t$$ and $$x_{t-1}$$, as well as $$x_{t-1}$$ and $$x_{t-2}$$, then we should also find a correlation between $$x_t$$ and $$x_{t-2}$$.  In this way, the correlation from lower lag terms will propagate to higher lag terms in the ACF plot.  The PACF plot addresses this issue by plotting the partial correlation of coefficients between the time series and lags of itself, where the partial correlation between two variables is any correlation that is not explained by mutual relationships with lower order lag terms.
 
-If the series exhibits any long-term trends, this will produce positive autocorrelations out to a high number of lags in the ACF plot.  An example of this, taken from [Duke University's time series tutorial](http://people.duke.edu/~rnau/411arim2.htm), is shown in [Figure 3](#Fig3).  In this case, the series must be differenced at least one more time before the data is stationary.  Note that it is possible to "over-difference" a time series, resulting in an overly complicated model.  To avoid this issue, you should only apply the minimum number of difference required to produce a flat mean in the series, and  an ACF plot that decays to zero within a few lags.  
+If the series exhibits any long-term trends, this will produce positive autocorrelations out to a high number of lags in the ACF plot.  An example of this, taken from [Duke University's time series tutorial](http://people.duke.edu/~rnau/411arim2.htm), is shown in [Figure 3](#Fig3).  In this case, the series must be differenced at least one more time before the data is stationary.  Note that it is possible to "over-difference" a time series, resulting in an overly complicated model.  To avoid this issue, you should only apply the minimum number of differences required to produce a flat mean in the series, and  an ACF plot that decays to zero within a few lags.  
 
 <a name="Fig3"></a> 
 <center>
@@ -143,7 +143,7 @@ Figure 4: Over-differenced ACF
 <img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/OverdifferencedACF.png">
 </center>
 
-If the lag-1 autocorrelation is close to 1.0, or if the sum of all autocorrelations is close to 1.0, the time series is said to have a "unit root".  This indicates that the series is nonstationary, and additional differencing operations should be applied. An example of this is shown in [Figure 5](#Fig5).  Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.
+If the lag-1 autocorrelation is close to 1.0, or if the sum of all autocorrelations is close to 1.0, the time series is said to have a "unit root."  This indicates that the series is nonstationary, and additional differencing operations should be applied. An example of this is shown in [Figure 5](#Fig5).  Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.
 
 <a name="Fig5"></a> 
 <center>
@@ -159,17 +159,17 @@ Note:  All plots in this section and the following section were taken from [Duke
 
 # <a name="ARterms"></a> Determining the Number of AR terms
 
-After applying the appropriate number of differences, any mild under-differencing or over-differencing can be addressed by adding AR or MA terms to the model.  If the PACF displays a sharp cut off at a low number of lags, while the ACF decays slowly over a higher number of lags, we say the series displays an "AR signature". An example of this is shown in [Figures 6 and 7](#Fig6). These plots indicate that the autocorrelations of the differenced time series are best explained by adding additional AR terms to the model.  In particular, the partial autocorrelation at lag-k (where k is indicating some order of the lag) is approximately equal to the AR(k) coefficient in an autoregressive model. Therefore, if the PACF falls below a statistical significance at lag-k, then you should add $k$ AR terms to your ARIMA model.  Note that the cut-off of statistical significance is often ambiguous, with autocorrelations below 0.2 often being considered insignificant.  In the case of [Figure 7](#Fig7), the PACF indicates that we should add 2 AR terms to our model. 
+After applying the appropriate number of differences, any mild under-differencing or over-differencing can be addressed by adding AR or MA terms to the model.  If the PACF displays a sharp cut off at a low number of lags, while the ACF decays slowly over a higher number of lags, we say the series displays an "AR signature." An example of this is shown in [Figures 6 and 7](#Fig6). These plots indicate that the autocorrelations of the differenced time series are best explained by adding additional AR terms to the model.  In particular, the partial autocorrelation at lag-k (where k is indicating some order of the lag) is approximately equal to the AR(k) coefficient in an autoregressive model. Therefore, if the PACF falls below a statistical significance at lag-k, then you should add $$k$$ AR terms to your ARIMA model.  Note that the cut-off of statistical significance is often ambiguous, with autocorrelations below 0.2 often being considered insignificant.  In the case of [Figure 7](#Fig7), the PACF indicates that we should add two AR terms to our model. 
 
 <a name="Fig6"></a> 
 <center>
-Figure 5: AR Signature in an ACF
+Figure 6: AR Signature in an ACF
 <img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/ARSigACF.png">
 </center>
 
 <a name="Fig7"></a> 
 <center>
-Figure 5: AR Signature in a PACF
+Figure 7: AR Signature in a PACF
 <img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/ARSigPACF.png">
 </center>
 
@@ -179,7 +179,7 @@ An AR signature is often accompanied with a positive autocorrelation at lag-1, i
 # <a name="MAterms"></a>Determining the number of MA terms
 
 
-When determining the appropriate number of MA terms to add to your ARIMA model, the ACF plot plays an analogous role to the PACF plot in the previous section.  That is, if the ACF plot displays a sharp cut off at a low number of lags, while the PACF decays slowly over a higher number of lags, the series displays an "MA signature".  In this case, if the ACF plot cuts off at lag-k, it indicates that the the autocorrelations of the differenced time series are best explained by adding exactly k MA terms to our model.  An MA signature is often accompanied with a negative autocorrelation at lag-1, indicating a mild over-differencing in the time series.  As in the previous section, it is helpful to think of MA terms as partially canceling an order of differencing in our ARIMA model.  
+When determining the appropriate number of MA terms to add to your ARIMA model, the ACF plot plays an analogous role to the PACF plot in the previous section.  That is, if the ACF plot displays a sharp cut off at a low number of lags, while the PACF decays slowly over a higher number of lags, the series displays an "MA signature."  In this case, if the ACF plot cuts off at lag-k, it indicates that the the autocorrelations of the differenced time series are best explained by adding exactly $$k$$ MA terms to our model.  An MA signature is often accompanied with a negative autocorrelation at lag-1, indicating a mild over-differencing in the time series.  As in the previous section, it is helpful to think of MA terms as partially canceling an order of differencing in our ARIMA model.  
 
 
 
@@ -203,7 +203,7 @@ As a final note, some time series will not conform to the rules above.  These da
 
 # <a name="Evaluating"></a> Evaluating an ARIMA model
 
-As we've seen above, most time series analyses exploit the correlations between adjacent values to forecast future data.  Since this model is trained on dependent data, common validation techniques such as [Leave-One-Out cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) are not applicable when evaluating the model's performance.  Instead, we can evaluate our model's performance using the follow steps:
+As we've seen in this post, most time series analyses exploit the correlations between adjacent values to forecast future data.  Since these models are trained on dependent data, common validation techniques such as [Leave-One-Out cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) are not applicable when evaluating the models' performance.  Instead, we can evaluate each model's performance using the follow steps:
 
 1) Fit the model using data up to a specific time, denoted by $$x_T$$. 
 
@@ -224,7 +224,7 @@ The implementation of a seasonal ARIMA model is identical to the standard ARIMA 
 
 Often, a purely seasonal model will not provide a satisfactory forecast of future data.  In particular, since purely seasonal models forecast data using seasonal differences, sudden changes in the data are not reflected until an entire season has passed.  To address this issue, we can add non-seasonal differences to the model.  For instance, for data with a 12 month seasonal period, we may want to model the first difference of the season differences.  That is, we may want to model:
 
-$$ (x_t - x_{t-12}) - (x_{t-1} - x_{t-13}) $$ 
+$$ X_t = (x_t - x_{t-12}) - (x_{t-1} - x_{t-13}) $$ 
 
 
 This type of model is denoted as ARIMA(p,d,q)$$\times$$(P, D, Q)S, where $$p$$ is the non-seasonal AR order, $$d$$ is the non-seasonal differencing order, $$q$$ is the non-seasonal MA order, $$P$$ is the seasonal AR order, $$D$$ is the seasonal differencing order, $$Q$$ is seasonal MA order, and $$S$$ is number of measurements included in one seasonal pattern.  Such a model can be broken down into four components.  The short term, non-seasonal components are written:
