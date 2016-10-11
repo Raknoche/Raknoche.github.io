@@ -159,21 +159,27 @@ Note:  All plots in this section and the following section were taken from [Duke
 
 # <a name="ARterms"></a> Determining the Number of AR terms
 
-After applying the appropriate number of differences, any mild under-differencing or over-differencing can be addressed by adding AR or MA terms to the model.  If the PACF displays a sharp cut off at a low number of lags, while the ACF decays slowly over a higher number of lags, we say the series displays an "AR signature". An example of an AR signature is included in [Figures 6 and 7](#Fig6). This indicates that the autocorrelations of the differenced time series are best explained by adding additional AR terms to the model.  In particular, the partial autocorrelation at lag-k (where k is indicating some order of the lag) is approximately equal to the AR(k) coefficient in an autoregressive model. Therefore, if the PACF falls below a statistical significance at lag-k, then you should add $k$ AR terms to your ARIMA model.  Note that the cut-off of statistical significance is often ambiguous, with autocorrelations below 0.2 often being considered insignificant.
+After applying the appropriate number of differences, any mild under-differencing or over-differencing can be addressed by adding AR or MA terms to the model.  If the PACF displays a sharp cut off at a low number of lags, while the ACF decays slowly over a higher number of lags, we say the series displays an "AR signature". An example of this is shown in [Figures 6 and 7](#Fig6). These plots indicate that the autocorrelations of the differenced time series are best explained by adding additional AR terms to the model.  In particular, the partial autocorrelation at lag-k (where k is indicating some order of the lag) is approximately equal to the AR(k) coefficient in an autoregressive model. Therefore, if the PACF falls below a statistical significance at lag-k, then you should add $k$ AR terms to your ARIMA model.  Note that the cut-off of statistical significance is often ambiguous, with autocorrelations below 0.2 often being considered insignificant.  In the case of [Figure 7](#Fig7), the PACF indicates that we should add 2 AR terms to our model. 
 
-<a name="Fig5"></a> 
+<a name="Fig6"></a> 
 <center>
-Figure 5: Under-differenced ACF
-<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/UnderdifferencedACF.png">
+Figure 5: AR Signature in an ACF
+<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/ARSigACF.png">
 </center>
 
-An AR signature is often accompanied with a positive autocorrelation at lag-1, indicating a mild under-differencing in the time series.  Therefore, it is helpful to think of AR terms as adding partial differences to the ARIMA model.  This line of thinking is consistent with the unit roots discussed in the previous section, since an autocorrelation of approximately 1.0 at lag-1 indicates a significant under-differencing in the time series model.  In fact, any autocorrelation pattern in a stationary time series can be removed by adding enough AR terms, even if doing so isn't always the best approach.  For instance,  in the case of a unit root it is better to apply one full differencing operation at the beginning of the model, rather than apply multiple partial differencing operations via the addition of AR terms.
+<a name="Fig7"></a> 
+<center>
+Figure 5: AR Signature in a PACF
+<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/ARSigPACF.png">
+</center>
+
+An AR signature is often accompanied with a positive autocorrelation at lag-1, indicating a mild under-differencing in the time series.  Therefore, it is helpful to think of AR terms as adding partial differences to the ARIMA model.  This line of thinking is consistent with the unit roots discussed in the previous section, since an autocorrelation of approximately 1.0 at lag-1 indicates a significant under-differencing in the time series model.  In fact, any autocorrelation pattern in a stationary time series can be removed by adding enough AR terms, even if doing so isn't always the best approach.  For instance,  in the case of a unit root it is better to apply one full differencing operation at the beginning of the model, rather than apply multiple partial differencing operations via additional AR terms.
 
 
 # <a name="MAterms"></a>Determining the number of MA terms
 
 
-When determining the appropriate number of MA terms to add to your ARIMA model, the ACF plot plays an analogous role to the PACF plot in the previous section.  That is, if the ACF plot displays a sharp cut off at a low number of lags, while the PACF decays slowly over a higher number of lags, the series displays an "MA signature".  In this case, if the ACF plot cuts off at lag-k, it indicates that the the autocorrelations of the differenced time series are best explained by adding exactly k MA terms to our model.  An MA signature is often accompanied with a negative autocorrelation at lag-1, indicating a mild over-differencing in the time series.  As in the previous section, it is helpful to think of MA terms as partial canceling an order of differencing in our ARIMA model.  
+When determining the appropriate number of MA terms to add to your ARIMA model, the ACF plot plays an analogous role to the PACF plot in the previous section.  That is, if the ACF plot displays a sharp cut off at a low number of lags, while the PACF decays slowly over a higher number of lags, the series displays an "MA signature".  In this case, if the ACF plot cuts off at lag-k, it indicates that the the autocorrelations of the differenced time series are best explained by adding exactly k MA terms to our model.  An MA signature is often accompanied with a negative autocorrelation at lag-1, indicating a mild over-differencing in the time series.  As in the previous section, it is helpful to think of MA terms as partially canceling an order of differencing in our ARIMA model.  
 
 
 
@@ -192,36 +198,36 @@ The previous three sections can be summarized with the following list:
 * If the ACF cuts off sharply at lag-k, and the PACF falls off gradually, add k AR terms.  Typically, this will be accompanied by a negative lag-1 term in the ACF plot.
 
 
-As a final note, some time series will not conform to the rules above.  These data sets will require a mixed model that includes both AR and MA terms.  In this case, the AR and MA terms tend to work against each other, and it is easy for a model to spiral out of control by including incrementally more AR and MA terms.  In general, if using mixed ARIMA model you should favor models which use fewer terms.  For instance, if an ARIMA(1,1,2) model fits the model well, it's likely that the simpler ARIMA (0,1,1) model will work as well.  This issue can be usually be avoided by adding only one type of term in a step-by-step manner as described above.
+As a final note, some time series will not conform to the rules above.  These data sets will require a mixed model that includes both AR and MA terms.  In this case, the AR and MA terms tend to work against each other, and it is easy for a model to spiral out of control by including incrementally more AR and MA terms.  In general, if using a mixed ARIMA model you should favor models which use fewer terms.  For instance, if an ARIMA(1,1,2) model fits the model well, it's likely that the simpler ARIMA (0,1,1) model will work as well.  This issue can usually be avoided by adding only one type of term in a step-by-step manner as described above.
 
 
 # <a name="Evaluating"></a> Evaluating an ARIMA model
 
-As we've seen above, most time series analysis exploit the correlations between adjacent values to forecast future data.  Since this model is trained on dependent data, common validation techniques such as [Leave-One-Out cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) are not applicable when evaluating the model's performance.  Instead, we can evaluate our model's performance using the follow steps:
+As we've seen above, most time series analyses exploit the correlations between adjacent values to forecast future data.  Since this model is trained on dependent data, common validation techniques such as [Leave-One-Out cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) are not applicable when evaluating the model's performance.  Instead, we can evaluate our model's performance using the follow steps:
 
-1) Fit the model using data up to a specific time, denoted by $x_T$. 
+1) Fit the model using data up to a specific time, denoted by $$x_T$$. 
 
-2) Use the model to predict the next point in the time series, denoted as $\hatx_{T+1}$.
+2) Use the model to predict the next point in the time series, denoted as $$\hat{x}_{T+1}$$.
 
-3) Compute the error of the prediction using $\epsilon_{T+1} = x_{T+1} - \hatx{T+1}$, where $x_{T+1}$ is the true measurement at time $T+1$.
+3) Compute the error of the prediction using $$\epsilon_{T+1} = x_{T+1} - \hat{x}_{T+1}$$, where $$x_{T+1}$$ is the true measurement at time $$T+1$$.
 
-4) Repeat steps 1-3 for $T=m,\ldots,(n-1)$, where m is the minimum number of measurements needed to evaluate the model, and n is the total number of measurements in the time series.  For instance, if a model implemented lag-2 terms, m=2.
+4) Repeat steps 1-3 for $$T=m,\ldots,(n-1)$$, where $$m$$ is the minimum number of measurements needed to evaluate the model, and $$n$$ is the total number of measurements in the time series.  For instance, if a model implements lag-2 terms, $$m=2$$.
 
 5) Compute the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) using the results from step 4.
 
 
 # <a name="Seasonal"></a> Seasonal ARIMA models
 
-Some time series have seasonal trends in the data.  For instance, purchases of heavy coats would likely rise in winter, and fall in summer, every year.  We can stationarize this type of data by taking the seasonal difference of the time series.  That is, if the seasonal trends repeat every $S$ periods, we can remove them by modeling the difference of $x_t - x_{t-S}$.  In doing so, we force the model to predict future data based on the shape of the most recently observed seasonal pattern.  
+Some time series have seasonal trends in the data.  For instance, purchases of heavy coats would likely rise in winter, and fall in summer, every year.  We can stationarize this type of data by taking the seasonal difference of the time series.  That is, if the seasonal trends repeat every $$S$$ measurements, we can remove them by modeling the difference of $$x_t - x_{t-S}$$.  In doing so, we force the model to predict future data based on the shape of the most recently observed seasonal pattern.  
 
-The implementation of a seasonal ARIMA model is identical to the process outlined above, with that exception that the time series being modeled using the differences in seasonal data, rather than the differencing in adjacent data.  After difference, seasonal AR and MA terms can be added to the model as we did in sections ??.  Note that each lag of a seasonal model uses data that is a multiple of the seasonal period.  In other words, a lag-1 term would correspond to $x_t-x_{t-S}$, whereas a lag-2 term would correspond to $x_t-x_{t-2S}$.
+The implementation of a seasonal ARIMA model is identical to the standard ARIMA process, with that exception that the time series being modeled uses the seasonal differences of the data, rather than the differences of adjacent data.  After differencing, seasonal AR and MA terms can be added to the model as we did in [Sections 8 and 9](#ARterms).  Note that each lag of a seasonal model uses data that is a multiple of the seasonal period.  In other words, a lag-1 term would correspond to $$x_t-x_{t-S}$$, whereas a lag-2 term would correspond to $$x_t-x_{t-2S}$$.
 
 Often, a purely seasonal model will not provide a satisfactory forecast of future data.  In particular, since purely seasonal models forecast data using seasonal differences, sudden changes in the data are not reflected until an entire season has passed.  To address this issue, we can add non-seasonal differences to the model.  For instance, for data with a 12 month seasonal period, we may want to model the first difference of the season differences.  That is, we may want to model:
 
 $$ (x_t - x_{t-12}) - (x_{t-1} - x_{t-13}) $$ 
 
 
-This type of model is denoted as ARIMA(p,d,q)$\times$(P, D, Q)S, where $$p$$ is the non-seasonal AR order, $$d$$ is the non-seasonal differencing order, $$q$$ is the non-seasonal MA order, $$P$$ is the seasonal AR order, $$D$$ is the seasonal differencing order, $$Q$$ is seasonal MA order, and $$S$$ is time span of seasonal pattern.  Such a model can be broken down into four components.  The short term, non-seasonal components are written:
+This type of model is denoted as ARIMA(p,d,q)$$\times$$(P, D, Q)S, where $$p$$ is the non-seasonal AR order, $$d$$ is the non-seasonal differencing order, $$q$$ is the non-seasonal MA order, $$P$$ is the seasonal AR order, $$D$$ is the seasonal differencing order, $$Q$$ is seasonal MA order, and $$S$$ is number of measurements included in one seasonal pattern.  Such a model can be broken down into four components.  The short term, non-seasonal components are written:
 
 
 $$ AR(p): x_t = \phi_0 + \phi_1 x_{t−1} + \phi_2 x_{t−2} + \ldots + \phi_p x_{t−p} + \epsilon_t $$
@@ -238,4 +244,4 @@ $$ MA(Q): x_t = \epsilon_t - \Theta_0 - \Theta_1 \epsilon_{t−S} - \ldots - \Th
 
 # Closing remarks
 
-In this post we learned the theory behind the ARIMA(p,d,q) model for forecasting time series data.  Next time, I'll implement the techniques we discussed in sections ?? to analyze a time series in Python.  At the moment I'm busy writing my dissertation and applying to jobs, so expect the next post to be up in about two weeks.
+In this post we learned the theory behind the ARIMA(p,d,q) model for forecasting time series data.  Next time, I'll implement the techniques we discussed in [Sections 7-11](##differencing) to analyze a time series in Python.  At the moment I'm busy writing my dissertation and applying to jobs, so I expect the next post will be up in about two weeks.
