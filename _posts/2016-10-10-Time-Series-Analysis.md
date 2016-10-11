@@ -131,7 +131,7 @@ If the series exhibits any long-term trends, this will produce positive autocorr
 
 
 <center> *<a name="Fig3"></a> Figure 3: Nonstationary ACF* </center>
-![png](https://github.com/Raknoche/Raknoche.github.io/blob/master/_posts/Images/TimeSeriesPlots/NonstationaryACF.png)
+![png](https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/NonstationaryACF.png)
 
 
 In general, differencing introduces negative correlation to the series, driving the autocorrelation of the lag-1 term towards negative values.  If the lag-1 autocorrelation becomes negative, the series does not need to be differenced further.  If the lag-1 autocorrelation becomes less than -0.5, it is possible the series is over-differenced.  If the lag-1 autocorrelation is close to 1.0, or if the sum of tall autocorrelations is close to 1.0, the time series is said to have a "unit root".  This indicates that the series is nonstationary, and additional differencing operations should be applied.   Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.
