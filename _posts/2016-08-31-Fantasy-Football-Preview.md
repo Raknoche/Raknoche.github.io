@@ -66,6 +66,8 @@ You should not treat these projections as the the final word on who you should d
 
 If you do use these projections, be sure to look up recent news on a player before drafting them.  It's entirely possible that a player is injured or expected to play a weaker role this season, which would not be reflected in the projections.  For instance, if a player was a starting running back last season, and might be in a running-back-by-committee this season (I'm looking at you, Devonta Freeman) it is likely their projections will be too high.  Likewise, if a player is injured going into the 2016 season and will have to take it easy the first few games (like Jamal Charles) their projected season total is also likely too high. 
 
+**Update (10/10/16)**:  I've decided to spin this project into a stand alone web app that will include fantasy projections as well a various other fantasy related analyses.  I believe the project has grown too large to describe in a series of blog posts, so I won't be posting any follow ups to this analysis in the near future.  For the curious, you can find the code used to produce these plots on my [github page](https://github.com/Raknoche/MyCode/tree/master/CodeForDealingData/FantasyFootballPredictions), which is linked in the sidebar.  Be warned &mdash; the code is messy and poorly commented, since I put it together in a rush before the start of the season and have not revisited it since.
+
 <br>
 
  
@@ -117,3 +119,4 @@ function toggle(original,text,tog) {
 
 <a id="FLEXTextPPR" href="javascript:toggle('FLEX Predictions (PPR)','FLEXTextPPR','FLEXTextTogPPR');">FLEX Predictions (PPR)</a>
 <div id="FLEXTextTogPPR" style="display: none"><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/FF_PPR/FLEX_Predictions.png"></div>
+

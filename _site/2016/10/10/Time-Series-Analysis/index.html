@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Time Series Analysis (Theory) &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2016. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2016. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div>
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Time Series Analysis (Theory)</h1>
+  <span class="post-date">10 Oct 2016</span>
+  <div class="post-content">
+  
+    
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p>A univariate time series describes a single variable that is measured at different points in time.  The measurements are typically sequental, and spaced evenly in time.  When analyzing such data, we want to develop a time dependent model that can explain past observations or forecast future trends.  Usually, each measurement in a time series is influenced by the preceeding data points.  This implies the data is not independent, and standard regression models will not be suitable for the analysis.</p>
+
+<p>I’ll begin this post by describing a special type of time series data, known as a stationary time series.  In <a href="#wolds">Section 2</a>, we’ll discuss Wold’s theorem of decomposition, and the use of an autoregressive moving average (ARMA) model to forecast this type of data. The ARMA model consists of two halves —  an auto regressive (AR) half that will be described in <a href="#AR">Section 3</a>, and a moving average (MA) half that will be described in <a href="#MA">Section 4</a>.  In <a href="#ARIMA">Section 6</a>, we’ll describe a modification of the ARMA model which can be applied to nonstationary data.  The final sections of this post will discuss how to properly implement these models in practice.  Below is a table of contents to help you navigate these sections.</p>
+
+<ol>
+  <li><a href="#stationary">Stationary Data</a></li>
+  <li><a href="#wolds">Wold’s Theorem of Decomposition</a></li>
+  <li><a href="#AR">The Autoregressive Model</a></li>
+  <li><a href="#MA">The Moving Average Model</a></li>
+  <li><a href="#ARMA">The ARMA Model</a></li>
+  <li><a href="#ARIMA">Differencing and the ARIMA Model</a></li>
+  <li><a href="#differencing">Determining the number of Differences</a></li>
+  <li><a href="#ARterms">Determining the Number of AR terms</a></li>
+  <li><a href="#MAterms">Determining the Number of MA terms</a></li>
+  <li><a href="#Summary">Summary of Modeling Practices</a></li>
+  <li><a href="#Evaluating">Evaluating an ARIMA model</a></li>
+  <li><a href="#Seasonal">Seasonal ARIMA models</a></li>
+</ol>
+
+<h1 id="a-namestationaryastationary-data"><a name="stationary"></a>Stationary Data</h1>
+
+<p>In time series analysis, we typically want to deal with stationary data.  A time series is stationary if its mean, variance, and autocorrelations (correlations with prior deviations from the mean) are constant over time.  A stationary series will have no upward or downward trends, will have consistent variations from the mean, and will have consistent short-term patterns.</p>
+
+<p>Many time series do not meet above requirements.  However, most time series can be made stationary by examining the differences of sequential measurements rather than the measurements themselves.  We’ll discuss the details of this process in <a href="#ARIMA">Section 6</a>.</p>
+
+<p>Selingkar Dakwat provides a number of stationary and nonstationary time series examples in his <a href="https://drsifu.wordpress.com/2012/11/27/time-series-econometrics/">time series econometrics</a> blog post.  For your convenience, I’ve included his plots below.  Note that the upward and downward trends in the latter plots make it easy to identify the data as nonstationary.  This is not always the case, as it may be harder to recognize a time dependent variance by eye.  In <a href="#differencing">Section 7</a>, we’ll introduce the autocorrelation function, which will provide a more quantitative measurement of the stationarity of a time series.</p>
+
+<center> Figure 1: Stationary Time Series </center>
+<p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/StationaryData.jpg" alt="png" /></p>
+
+<center> Figure 2: Nonstationary Time Series </center>
+<p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/NonStationaryData.jpg" alt="png" /></p>
+
+<h1 id="a-namewoldsa-wolds-theorem-of-decomposition"><a name="wolds"></a> Wold’s Theorem of Decomposition</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Wold%27s_theorem">Wold’s theorem of decomposition</a> states that any stationary process can be decomposed into a deterministic component and a indeterministic, stochastic component.  Mathematically, this is written as</p>
+
+<script type="math/tex; mode=display">x_{t}=\eta _{t}+\sum_{j=0}^{\infty }\theta_{j}\epsilon _{t-j}</script>
+
+<p>where <script type="math/tex">x_t</script> is the value of the time series at time <script type="math/tex">t</script>, and <script type="math/tex">\epsilon_{t-j}</script> term is the error of the model at the prior <script type="math/tex">x_{t-j}</script> measurement.  The first term on the right (<script type="math/tex">\eta_t</script>), is the deterministic component of the time series, and represents a perfectly predictable behavior based on past observations on <script type="math/tex">x_t</script> alone. This resembles a autoregressive model, and will be discussed in <a href="#AR">Section 3</a>. The second term on the right represents the indeterministic component of the series.  It is a linear combination of past errors of the model due to random white noise, and represents a component of the time series that is impossible to predict perfectly. This resembles a moving average model, and will be discussed in section <a href="#MA">Section 4</a>.</p>
+
+<p>Wold’s theorem of decomposition motivates what is known as an autoregressive moving average (ARMA) model for stationary time series analysis.  In the next two sections we’ll discuss the autoregressive (AR) and moving average (MA) terms separately, before detailing the full ARMA model in section <a href="#ARMA">Section 5</a>.</p>
+
+<h1 id="a-nameara-the-autoregressive-model"><a name="AR"></a> The Autoregressive Model</h1>
+
+<p>There are a few ways that we can model the time dependence of our data.  First, we can use an autoregressive (AR) model which claims that the current observations are dependent on the previous observations.  There are different orders of AR models, with the order denoting how many past observations (or “lags”) are used to predict the current observation. The order of an AR model is typically represented with with the letter <script type="math/tex">p</script>, and written as AR(p).  For instance, a first order AR(1) model uses lag-1 data to predict the value at present time.  The mathematical representation of this model would be</p>
+
+<script type="math/tex; mode=display">AR(1): x_t = \phi_0 + \phi_1 x_{t−1} + \epsilon_t</script>
+
+<p>where <script type="math/tex">x_t</script> is the observation at time t, <script type="math/tex">x_{(t-1)}</script> is the lag-1 observation, <script type="math/tex">\phi</script> are the model parameters, and <script type="math/tex">\epsilon_t</script> is a stochastic error term representing random white noise. Notice that this is essentially a linear regression model, where we would optimize the model parameters by minimizing the sum of the squared error terms.</p>
+
+<p>Similarly, an AR(2) model uses  <script type="math/tex">x_{(t-1)}</script> and <script type="math/tex">x_{(t-2)}</script> to determine the value at <script type="math/tex">x_t</script>. Mathematically, this model would be represented by</p>
+
+<script type="math/tex; mode=display">AR(2): x_t = \phi_0 + \phi_1 x_{t−1} + \phi_2 x_{t−2} + \epsilon_t</script>
+
+<p>From these examples, it’s easy to see that the general mathematical equation for an AR model of some order <script type="math/tex">p</script> is given by:</p>
+
+<script type="math/tex; mode=display">AR(p): x_t = \phi_0 + \phi_1 x_{t−1} + \phi_2 x_{t−2} + \ldots + \phi_p x_{t−p} + \epsilon_t</script>
+
+<h1 id="a-namemaa-the-moving-average-model"><a name="MA"></a> The Moving Average Model</h1>
+
+<p>We can also use a moving average (MA) model to describe our time series data. These models claim that the current observations are dependent on previous forecast errors. The order of an MA model is denoted with a q, and represents how many lag terms are included in the model.  Mathematically, a first order MA(1) model is represented by</p>
+
+<script type="math/tex; mode=display">MA(1): x_t =  \epsilon_t - \theta_0 - \theta_1 \epsilon_{t−1}</script>
+
+<p>where we have distinguished the MA model parameters with <script type="math/tex">\theta</script>. In general, an MA(q) model of some order <script type="math/tex">q</script> is written as</p>
+
+<script type="math/tex; mode=display">MA(q): x_t = \epsilon_t - \theta_0 - \theta_1 \epsilon_{t−1} - \ldots - \theta_q \epsilon_{t−q}</script>
+
+<p>Note that the model parameters are defined with negative signs for historical reasons, and that some analysis programs may choose the opposite convention.  It is also important to note that the moving average model is not equivalent to a linear regression model.  Although the equations resemble each other, the <script type="math/tex">\epsilon</script> terms are not directly observed, and must be computed on a measurement-by-measurement basis when the model is fitted to the data.  Therefore, the predictors are not independent variables and the model parameters must be optimized using nonlinear methods, such as <a href="https://en.wikipedia.org/wiki/Hill_climbing">hill-climbing</a>, rather than solving a system of equations as we would with linear regression.</p>
+
+<p>A consequence of this model is that any shock to the time series will only propagate to <script type="math/tex">q</script> observations in the future.  In contrast, a shock to an AR model will directly affect every term in the series, since each observation is recursively dependent on the past observations.  In this way, a shock to an AR model is propagated to all subsequent terms, whereas a shock to an MA model is propagated to a limited number of nearby terms.</p>
+
+<h1 id="a-namearmaa-the-arma-model"><a name="ARMA"></a> The ARMA Model</h1>
+
+<p>As mentioned in <a href="#wolds">Section 2</a>, stationary time series data can be modeled by a combination of the AR and MA models.  This combined model is known as an autoregressive moving average (ARMA) model, and is represented mathematically by</p>
+
+<script type="math/tex; mode=display">ARMA(p,q): x_t = C + \epsilon_t + \sum _{i=1}^{p}\phi _{i}x_{t-i} - \sum _{i=1}^{q}\theta _{i}\epsilon _{t-i}</script>
+
+<p>where <script type="math/tex">C</script> is a constant fit parameter, and <script type="math/tex">p</script> and <script type="math/tex">q</script> denote the orders of the AR and MA models, respectively.  Note that is it possible for the ARMA model to reduce to a purely AR model if <script type="math/tex">p=0</script>, or a purely MA model if <script type="math/tex">q=0</script>.</p>
+
+<h1 id="a-namearimaa-differencing-and-the-arima-model"><a name="ARIMA"></a> Differencing and the ARIMA Model</h1>
+
+<p>Recall our discussion of Wold’s decomposition theorem from <a href="#wolds">Section 2</a>.  We stated that any stationary time series data can be approximated by an ARMA model.  If the time series we’re working with isn’t stationary, we’ll need to take some extra steps to make it so.  One way to accomplish this is to model the differences of each measurement in the dataset, rather than model the measurements themselves.  This process helps to stabilize the mean of our model.  An intuitive way to think about this is to imagine a time series which has a constant, upward slope.  This series is not stationary, since the upward trend implies a time dependence in the mean of the data.  However, since the slope is constant the difference between sequential points will be identical at all points on the line.  Therefore, a time series of the differences will be flat and stationary.</p>
+
+<p>An autoregressive integrate moving average (ARIMA) model incorporates this differencing operation, and is the most general class of models which can be applied to data that can be made stationary by differencing.  In an ARIMA model, the data is differenced a number of times before the autoregressive and moving average terms are applied.  The number of difference operations is typically denoted with the letter <script type="math/tex">d</script>.  If <script type="math/tex">d = 0</script>, an ARIMA model reduces to the ARMA model.  If <script type="math/tex">d = 1</script>, the time series is differenced one time, resulting in a new time series <script type="math/tex">X_t</script>, where</p>
+
+<script type="math/tex; mode=display">X_t  =  x_t - x_{t-1}</script>
+
+<p>Likewise, if <script type="math/tex">d=2</script> the time series being modeled is the difference of the differences:</p>
+
+<script type="math/tex; mode=display">X_t = (x_t - x_{t-1}) - (x_{t-1} - x_{t-2})  =  x_t - 2x_{t-1} + x_{t-2}</script>
+
+<p>After performing the differencing steps, the autoregressive and moving average terms are applied to the ARIMA model, such that</p>
+
+<script type="math/tex; mode=display">ARIMA(p,d,q): X_t = C + \epsilon_t + \sum _{i=1}^{p}\phi _{i}X_{t-i} - \sum _{i=1}^{q}\theta _{i}\epsilon _{t-i}</script>
+
+<p>where <script type="math/tex">p</script> is the number of autoregressive terms, <script type="math/tex">q</script> is the number of moving average terms, and <script type="math/tex">d</script> is the number of differences required to make the original time series stationary.  Note that the only difference between ARMA and the ARIMA equation is that the time series being modeled is the differenced series <script type="math/tex">X_t</script>, rather than the original series <script type="math/tex">x_t</script>. (If <script type="math/tex">d = 0</script>, the differenced series is equivalent to the original series).</p>
+
+<h1 id="a-namedifferencinga-determining-the-number-of-differences"><a name="differencing"></a> Determining the number of Differences</h1>
+
+<p>The hardest part of implementing an ARIMA(p,d,q) model is determining the appropriate number of differences, autoregressive terms, and moving average terms to include in the model.</p>
+
+<p>Two plots, known as the autocorrelation function (ACF) and the partial autocorrelation function (PACF), are extremely useful when addressing these questions.  An ACF plot is a bar graph of the coefficients of correlation between a time series and the lags of itself. If there is significant correlation between <script type="math/tex">x_t</script> and <script type="math/tex">x_{t-1}</script>, as well as <script type="math/tex">x_{t-1}</script> and <script type="math/tex">x_{t-2}</script>, then we should also find a correlation between <script type="math/tex">x_t</script> and <script type="math/tex">x_{t-2}</script>.  In this way, the correlation from lower lag terms will propagate to higher lag terms in the ACF plot.  The PACF plot addresses this issue by plotting the partial correlation of coefficients between the time series and lags of itself, where the partial correlation between two variables is any correlation that is not explained by mutual relationships with lower order lag terms.</p>
+
+<p>If the series exhibits any long-term trends, this will produce positive autocorrelations out to a high number of lags in the ACF plot.  An example of this is shown in Figure 1.  In this case, the series must be differenced at least one more time before the data is stationary.  Note that it is possible to “over-difference” a time series, resulting in additional MA terms in the model to compensate.  To avoid this issue, you should only apply the minimum number of difference required to produce a flat mean in the series, and  an ACF plot that decays to zero within a few lags.</p>
+
+<center> *Figure 3: Nonstationary ACF* </center>
+<p><img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/StationaryData.jpg" alt="png" /></p>
+
+<p>In general, differencing introduces negative correlation to the series, driving the autocorrelation of the lag-1 term towards negative values.  If the lag-1 autocorrelation becomes negative, the series does not need to be differenced further.  If the lag-1 autocorrelation becomes less than -0.5, it is possible the series is over-differenced.  If the lag-1 autocorrelation is close to 1.0, or if the sum of tall autocorrelations is close to 1.0, the time series is said to have a “unit root”.  This indicates that the series is nonstationary, and additional differencing operations should be applied.   Similarly, if the lag-1 term of the PACF plot is close to 1.0, or if the sum of all of the partial autocorrelations is close to 1.0, the series has a unit root due to over-differencing.  In this case, you should reduce the order of differencing in the model.  A telltale sign of a unit root is erratic or unstable behavior in the long-term forecasts of your model.  If such behavior is observed, you should reassess your ACF and PACF plots and reconsider the number of differencing operations that were included in your model.</p>
+
+<p>Before we discuss the appropriate number of AR and MA terms to add to the model, we should discuss whether to include a constant fit parameter in the ARIMA model.  The constant fit parameter, $C$, is almost always included in an undifferenced ARIMA(p,0,q) model, since the addition of the parameter allows for a non-zero, constant mean in the time series. In an ARIMA(p,1,q) model, the constant fit parameter allows for a non-zero average trend over the original time series.  Therefore, if one difference operation has been applied the constant fit parameter should be included in the model if the original time series has a non-zero average trend.  Similarly, in an ARIMA(p,2,q) model, the constant fit parameter allows for a non-zero average curvature in the original time series.  It is rarely the case that we need to model a non-zero curvature in the original time series, so second order differencing models generally do not include the constant term.  Instead, data with a non-zero curvature (or with non-constant variance) can be addressed by transforming the initial series with a logarithm or square root operation.</p>
+
+<h1 id="a-nameartermsa-determining-the-number-of-ar-terms"><a name="ARterms"></a> Determining the Number of AR terms</h1>
+
+<p>After applying the appropriate number of differences, any mild under-differencing or over-differencing can be addressed by adding AR or MA terms to the model.  If the PACF displays a sharp cut off at a low number of lags, while the ACF decays slowly over a higher number of lags, we say the series displays an “AR signature”.  This indicates that the autocorrelations of the differenced time series are best explained by adding additional AR terms to the model.  In particular, the partial autocorrelation at lag-k (where k is indicating some order of the lag) is approximately equal to the AR(k) coefficient in an autoregressive model. Therefore, if the PACF falls below a statistical significance at lag-k, then you should add $k$ AR terms to your ARIMA model.  Note that the cut-off of statistical significance is often ambiguous, with autocorrelations below 0.2 often being considered insignificant.</p>
+
+<p>An AR signature is often accompanied with a positive autocorrelation at lag-1, indicating a mild under-differencing in the time series.  Therefore, it is helpful to think of AR terms as adding partial differences to the ARIMA model.  This line of thinking is consistent with the unit roots discussed in the previous section, since an autocorrelation of approximately 1.0 at lag-1 indicates a significant under-differencing in the time series model.  In fact, any autocorrelation pattern in a stationary time series can be removed by adding enough AR terms, even if doing so isn’t always the best approach.  For instance,  in the case of a unit root it is better to apply one full differencing operation at the beginning of the model, rather than apply multiple partial differencing operations via the addition of AR terms.</p>
+
+<h1 id="a-namematermsadetermining-the-number-of-ma-terms"><a name="MAterms"></a>Determining the number of MA terms</h1>
+
+<p>When determining the appropriate number of MA terms to add to your ARIMA model, the ACF plot plays an analogous role to the PACF plot in the previous section.  That is, if the ACF plot displays a sharp cut off at a low number of lags, while the PACF decays slowly over a higher number of lags, the series displays an “MA signature”.  In this case, if the ACF plot cuts off at lag-k, it indicates that the the autocorrelations of the differenced time series are best explained by adding exactly k MA terms to our model.  An MA signature is often accompanied with a negative autocorrelation at lag-1, indicating a mild over-differencing in the time series.  As in the previous section, it is helpful to think of MA terms as partial canceling an order of differencing in our ARIMA model.</p>
+
+<h1 id="a-namesummarya-summary-of-modeling-practices"><a name="Summary"></a> Summary of Modeling Practices</h1>
+
+<p>The previous three sections can be summarized with the following list:</p>
+
+<ul>
+  <li>
+    <p>If the ACF plot gradually falls off and extends to high lag terms, difference your model additional times</p>
+  </li>
+  <li>
+    <p>If the lag-1 term in an ACF plot is close to 1.0, or if the sum of all ACF terms are close 1.0, then you should add an additional differencing operation</p>
+  </li>
+  <li>
+    <p>If the lag-1 term in an PACF plot is close to 1.0, or if the sum of all ACF terms are close 1.0, then you should remove a differencing operation</p>
+  </li>
+  <li>
+    <p>If the PACF cuts off sharply at lag-k, and the ACF falls off gradually, add k MA terms.  Typically, this will be accompanied by a positive lag-1 term in the ACF plot.</p>
+  </li>
+  <li>
+    <p>If the ACF cuts off sharply at lag-k, and the PACF falls off gradually, add k AR terms.  Typically, this will be accompanied by a negative lag-1 term in the ACF plot.</p>
+  </li>
+</ul>
+
+<p>As a final note, some time series will not conform to the rules above.  These data sets will require a mixed model that includes both AR and MA terms.  In this case, the AR and MA terms tend to work against each other, and it is easy for a model to spiral out of control by including incrementally more AR and MA terms.  In general, if using mixed ARIMA model you should favor models which use fewer terms.  For instance, if an ARIMA(1,1,2) model fits the model well, it’s likely that the simpler ARIMA (0,1,1) model will work as well.  This issue can be usually be avoided by adding only one type of term in a step-by-step manner as described above.</p>
+
+<h1 id="a-nameevaluatinga-evaluating-an-arima-model"><a name="Evaluating"></a> Evaluating an ARIMA model</h1>
+
+<p>As we’ve seen above, most time series analysis exploit the correlations between adjacent values to forecast future data.  Since this model is trained on dependent data, common validation techniques such as <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">Leave-One-Out cross validation</a> are not applicable when evaluating the model’s performance.  Instead, we can evaluate our model’s performance using the follow steps:</p>
+
+<p>1) Fit the model using data up to a specific time, denoted by $x_T$.</p>
+
+<p>2) Use the model to predict the next point in the time series, denoted as $\hatx_{T+1}$.</p>
+
+<p>3) Compute the error of the prediction using $\epsilon_{T+1} = x_{T+1} - \hatx{T+1}$, where $x_{T+1}$ is the true measurement at time $T+1$.</p>
+
+<p>4) Repeat steps 1-3 for $T=m,\ldots,(n-1)$, where m is the minimum number of measurements needed to evaluate the model, and n is the total number of measurements in the time series.  For instance, if a model implemented lag-2 terms, m=2.</p>
+
+<p>5) Compute the <a href="https://en.wikipedia.org/wiki/Mean_squared_error">mean squared error</a> using the results from step 4.</p>
+
+<h1 id="a-nameseasonala-seasonal-arima-models"><a name="Seasonal"></a> Seasonal ARIMA models</h1>
+
+<p>Some time series have seasonal trends in the data.  For instance, purchases of heavy coats would likely rise in winter, and fall in summer, every year.  We can stationarize this type of data by taking the seasonal difference of the time series.  That is, if the seasonal trends repeat every $S$ periods, we can remove them by modeling the difference of $x_t - x_{t-S}$.  In doing so, we force the model to predict future data based on the shape of the most recently observed seasonal pattern.</p>
+
+<p>The implementation of a seasonal ARIMA model is identical to the process outlined above, with that exception that the time series being modeled using the differences in seasonal data, rather than the differencing in adjacent data.  After difference, seasonal AR and MA terms can be added to the model as we did in sections ??.  Note that each lag of a seasonal model uses data that is a multiple of the seasonal period.  In other words, a lag-1 term would correspond to $x_t-x_{t-S}$, whereas a lag-2 term would correspond to $x_t-x_{t-2S}$.</p>
+
+<p>Often, a purely seasonal model will not provide a satisfactory forecast of future data.  In particular, since purely seasonal models forecast data using seasonal differences, sudden changes in the data are not reflected until an entire season has passed.  To address this issue, we can add non-seasonal differences to the model.  For instance, for data with a 12 month seasonal period, we may want to model the first difference of the season differences.  That is, we may want to model:</p>
+
+<script type="math/tex; mode=display">(x_t - x_{t-12}) - (x_{t-1} - x_{t-13})</script>
+
+<p>This type of model is denoted as ARIMA(p,d,q)$\times$(P, D, Q)S, where <script type="math/tex">p</script> is the non-seasonal AR order, <script type="math/tex">d</script> is the non-seasonal differencing order, <script type="math/tex">q</script> is the non-seasonal MA order, <script type="math/tex">P</script> is the seasonal AR order, <script type="math/tex">D</script> is the seasonal differencing order, <script type="math/tex">Q</script> is seasonal MA order, and <script type="math/tex">S</script> is time span of seasonal pattern.  Such a model can be broken down into four components.  The short term, non-seasonal components are written:</p>
+
+<script type="math/tex; mode=display">AR(p): x_t = \phi_0 + \phi_1 x_{t−1} + \phi_2 x_{t−2} + \ldots + \phi_p x_{t−p} + \epsilon_t</script>
+
+<script type="math/tex; mode=display">MA(q): x_t = \epsilon_t - \theta_0 - \theta_1 \epsilon_{t−1} - \ldots - \theta_q \epsilon_{t−q}</script>
+
+<p>while the long term, seasonal components are written:</p>
+
+<script type="math/tex; mode=display">AR(P): x_t = \Phi_0 + \Phi_1 x_{t−S} + \Phi_2 x_{t−2S} + \ldots + \Phi_P x_{t−PS} + \epsilon_t</script>
+
+<script type="math/tex; mode=display">MA(Q): x_t = \epsilon_t - \Theta_0 - \Theta_1 \epsilon_{t−S} - \ldots - \Theta_q \epsilon_{t−SQ}</script>
+
+<h1 id="closing-remarks">Closing remarks</h1>
+
+<p>In this post we learned the theory behind the ARIMA(p,d,q) model for forecasting time series data.  Next time, I’ll implement the techniques we discussed in sections ?? to analyze a time series in Python.  At the moment I’m busy writing my dissertation and applying to jobs, so expect the next post to be up in about two weeks.</p>
+
+  
+  </div>
+</div>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=Time Series Analysis (Theory)&url=http://www.dealingdata.net/2016/10/10/Time-Series-Analysis/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2016/10/10/Time-Series-Analysis/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2016/10/10/Time-Series-Analysis/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2016/10/10/Time-Series-Analysis/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2016/10/10/Time-Series-Analysis/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>

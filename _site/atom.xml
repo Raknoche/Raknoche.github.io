@@ -4,13 +4,21 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2016-08-31T15:33:46-04:00</updated>
+ <updated>2016-10-10T20:06:56-04:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
    <email>raknoche@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Time Series Analysis (Theory)</title>
+   <link href="http://www.dealingdata.net/2016/10/10/Time-Series-Analysis/"/>
+   <updated>2016-10-10T00:00:00-04:00</updated>
+   <id>http://www.dealingdata.net/2016/10/10/Time-Series-Analysis</id>
+   <content type="html">&lt;p&gt;A description of time series analysis and the ARIMA model.&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;A univariate time series describes a single variable that is measured at different points in time. The measurements are typically sequental, and spaced evenly in time. When analyzing such data, we want to develop a...</content>
+ </entry>
  
  <entry>
    <title>Fantasy Football Predictions &mdash; A First Look</title>
@@ -82,14 +90,6 @@
    <updated>2016-07-20T00:00:00-04:00</updated>
    <id>http://www.dealingdata.net/2016/07/20/PoGo-Series-Intro</id>
    <content type="html">&lt;p&gt;An introduction to the seven part series covering various analysis techniques using data from Pokemon Go.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;Table of Contents:&lt;/p&gt; &lt;ol&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/20/PoGo-Series-Intro/&quot;&gt;Introduction to the Series&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/21/PoGo-Series-TwitterAPI/&quot;&gt;The Twitter API&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/23/PoGo-Series-Tweepy/&quot;&gt;The Tweepy Library&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/24/PoGo-Series-NaiveBayesClassifier/&quot;&gt;Naive Bayes Classifiers&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/28/PoGo-Series-Sentiment-Analyzer/&quot;&gt;Training a Sentiment Analyzer&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a href=&quot;http://raknoche.github.io/2016/07/31/PoGo-Series-Statistical-Analysis-of-the-Data/&quot;&gt;Statistical Analysis of the Data&lt;/a&gt;&lt;/li&gt; &lt;li&gt;&lt;a...</content>
- </entry>
- 
- <entry>
-   <title>Making a Website with Jekyll</title>
-   <link href="http://www.dealingdata.net/2016/07/12/MakingAWebsite/"/>
-   <updated>2016-07-12T00:00:00-04:00</updated>
-   <id>http://www.dealingdata.net/2016/07/12/MakingAWebsite</id>
-   <content type="html">&lt;p&gt;How to create a website like this blog with Jekyll.&lt;/p&gt; &lt;!--more--&gt; &lt;p&gt;I thought it would be appropriate for my first post to explain how I created this website. There are many options on the web to help you build a blog. The most popular among these include &lt;a href=&quot;https://wordpress.com/create/&quot;&gt;WordPress&lt;/a&gt;, &lt;a...</content>
  </entry>
  
 
