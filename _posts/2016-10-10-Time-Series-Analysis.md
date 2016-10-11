@@ -148,7 +148,7 @@ If the lag-1 autocorrelation is close to 1.0, or if the sum of all autocorrelati
 <a name="Fig5"></a> 
 <center>
 Figure 5: Under-differenced ACF
-<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/UnitRootACF.png">
+<img align="center" src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/TimeSeriesPlots/UnderdifferencedACF.png">
 </center>
 
 
