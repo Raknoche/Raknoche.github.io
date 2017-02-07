@@ -86,10 +86,7 @@ Although a user won't have much control over the color of their pictures, the ov
 
 <center>
 <div class="container">
-<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B15_original.png" Width="200"> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B15.png" Width="195">
-</div>
-
-<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B188_original.png" Width="300"> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B188.png" Width="275">
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/Organized.png" Width="600"> 
 
 <div style="width:600px;">
 <i> Top: An image with low intensity in the blue color channel
@@ -133,12 +130,7 @@ In calculus, the "gradient" of a function defines how quickly that function chan
 It is worth noting that the "color gradient" and "variation of color intensity" are similar, but are measuring two different quantities.  Specifically, the gradient features take correlation of nearby pixels into account, while the standard deviation is applied to the image as a whole.
 
 <center>
-<div>
-<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p0_original.png" Width="300"> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p0.png" Width="285">
-</div>
-
-<div>
-<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p29_original.png" Width="300"> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p29.png" Width="275">
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/Organized.png" Width="600">
 </div>
 
 <div style="width:600px;">
