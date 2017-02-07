@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Automatically Assessing Image Quality for AptDeco.com &middot; Dealing Data
+    
+  </title>
+
+  <!-- Sidebar Icon Links-->
+  <link rel="stylesheet" href="/fonts/font-awesome/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="/fonts/cvFonts/styles.css"> 
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81371278-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  <body>
+
+    <div class="sidebar">
+    <div class="sidebar-about">
+      <h1>
+          Dealing Data
+      </h1>
+    </div>
+
+    <div class="sidebar-item">
+      <p>A blog dedicated to learning data science techniques by applying them to real world data.</p>
+    </div>
+
+
+    <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+
+      <!-- <a class="sidebar-nav-item" href=" http://www.github.com/raknoche ">GitHub Repo</a> -->
+      <!-- <span class="sidebar-nav-item">Currently v1.0.0</span> -->
+
+    <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #mc_embed_signup{background:#202020; clear:left; font:14px Helvetica,Arial,sans-serif; }
+  /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+     We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+<form action="//dealingdata.us13.list-manage.com/subscribe/post?u=194dacfdd7036fb11766517ff&amp;id=c0d39c54f6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div id="mc_embed_signup_scroll">
+  <h2 class="subscribe">Subscribe to our mailing list</h2>
+<div class="mc-field-group">
+  <label for="mce-EMAIL">Email Address </label>
+  <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+</div>
+  <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_194dacfdd7036fb11766517ff_c0d39c54f6" tabindex="-1" value=""></div>
+    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="color: #202020"></div>
+  </div>
+</form>
+</div>
+
+    </nav>
+
+    <!-- <p>&copy; 2017. All rights reserved.</p> -->
+    <div class="sidebar-item">
+     <p class="social-icons">
+       <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
+       <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
+       <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+      
+     </p>
+     <p>
+       &copy; 2017. All rights reserved.
+     </p>
+   </div>
+</div>
+
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div>
+      <div class="masthead">
+        <div class="container-mast">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Dealing Data</a>
+            <small>Learning data science through example</small>
+          </h3>
+        </div>
+      </div>
+      
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Automatically Assessing Image Quality for AptDeco.com</h1>
+  <span class="post-date">05 Feb 2017</span>
+  <div class="post-content">
+  
+    
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<p>Over the past three weeks, I’ve been consulting on a data science project for AptDeco.com.  AptDeco is a peer-to-peer online marketplace for buying and selling used furniture.  The website simplifies the resale process by handling all of the logistics for its users.  The AptDeco team fills in any missing details about the furniture, creates high quality listings on their website, and even delivers the furniture when it’s purchased.</p>
+
+<p>The first step of creating a listing on AptDeco.com is to submit a picture of the furniture.  The editors at AptDeco will review the pictures, and decide if they are of high enough quality to be edited and displayed on the front page of the listing.  Unfortunately, many of the submitted images are low quality, and can’t be displayed in the online store.  This means that AptDeco’s team spends a large amount of time sifting through low quality pictures and requesting improvements from their users.  In addition to the time sink of this process, some users never submit better images, leading to a lost sale for AptDeco and its users.</p>
+
+<p>With this in mind, I created DecoRater — an algorithm for automatically assessing the quality of furniture images on AptDeco.com.  DecoRater provides immediate feedback to AptDeco users, increasing the odds that they will submit high quality images for their listings.  DecoRater can also be used behind the scenes, to reduce the number of low-quality photos that the AptDeco team has to sift through, and to flag listings which are in high need of editor intervention.</p>
+
+<p>In this post, I’ll explain how I created DecoRater from ground up.  The discussion will include:</p>
+
+<ul>
+  <li><a href="#ChoosingAModel">Choosing an Appropriate Model</a></li>
+  <li><a href="#ColorSpaces">Extracting Different Color Spaces From an Image</a></li>
+  <li><a href="#ImageFeatures">Extracting Image Features</a></li>
+  <li><a href="#initSetup">Training an Image Quality Model</a></li>
+  <li><a href="#customize">Assessing Model Performance</a></li>
+  <li><a href="#ideas">Implementing the Model</a></li>
+</ul>
+
+<h1 id="a-namechoosingamodela-choosing-an-appropriate-model"><a name="ChoosingAModel"></a> Choosing an appropriate model</h1>
+
+<p>Before we describe how to assess the quality of each image, we need to define what the “quality” of an image means.  AptDeco’s database has a number of metrics which we could use to define “quality.”  Most of these metrics, such as a listing’s click through rate and conversion rate, are influenced by outside factors, such as the price of a listing, or the age of the furniture.  Even if we were to account for these factors, the images that are displayed in the store are already edited.  This means that any model which uses these metrics could only suggest improvements to the already-edited images, rather than to the raw images that users upload directly.</p>
+
+<p>A more useful measure of image quality can be defined by AptDeco’s choice to edit and display an image, or to reject it.  AptDeco’s editors don’t record the outcome of this decision in their database, but they were willing to help me hand-label a subset of 2000 images for this purpose.  In this light, the goal of assessing image quality becomes a binary classification problem in which we try to predict the probability that an unedited picture will be edited and displayed on the front page of a listing.</p>
+
+<p>To accomplish this goal, we’ll need to train a machine learning model to emulate a human’s subjective opinion of each image’s quality.  The go-to model for image processing is a convolutional neural network (CNN), which requires minimal preprocessing of an image, and can easily account for the spatial correlation of individual pixels.  Unfortunately, we lack the large amount of labeled data that is required to train a CNN.</p>
+
+<p>Instead, we’ll need to implement a more simple classification model.  After considering multiple algorithms, I settled on an AdaBoost random forest classifier due to its higher test performance relative to other models.  The Adaboost model focuses on hard to classify samples, which helps boost performance on borderline images.  Most importantly, the model can output the probability that an image belongs to the “high quality” class, rather than simply classifying the images on a binary scale.  This is a nice feature to have, since we can use the continuous probability to rank the quality of images within the “high quality” and “low quality” groups. (Note: This is why support vector machines were not considered, since the output of these models should not be interpreted as a continuous probability.)</p>
+
+<h1 id="a-namecolorspacesa-extracting-different-color-spaces-from-an-image"><a name="ColorSpaces"></a> Extracting Different Color Spaces From an Image</h1>
+
+<p>The input features for our model will need to describe certain characteristics of each image.  We’ll discuss the details of these features in the next section, but suffice it to say that many of them will describe how colors change throughout the picture.  We can represent these colors in a number of different <a href="https://en.wikipedia.org/wiki/List_of_color_spaces_and_their_uses">color spaces</a>, which each have their own advantages.  In this section, I’ll discuss the four different color spaces that we’ll be working with.</p>
+
+<p>1) <strong>The RGB Color Space</strong></p>
+
+<center>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/RGB.png" width="300" />
+</center>
+
+<p>The <a href="https://en.wikipedia.org/wiki/RGB_color_model">RGB (Red,Green,Blue) color space</a> describes each color as a fraction of red, green, and blue light.  The intensity of each component determines the final color, with zero intensity from each channel resulting in black, and full intensity from each channel resulting in white.  This color space is useful for measuring the brightness of images, as well as the gradients of the red, green, and blue color channels across the image.</p>
+
+<p>2) <strong>The HSV Color Space</strong></p>
+
+<center>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/HSV.png" width="400" />
+</center>
+
+<p>The <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV (Hue,Saturation,Value) color space</a> is a cylindrical representation of the RGB color model that attempts to be more perceptually relevant than the standard RGB space.  Within the cylinder, the angle around the vertical axis represents to the “Hue” of the color, which denotes the wavelength of light which is most dominant.  Since hue is measured as an angle around a cylinder, we’ll need to use circular statistics when quantifying it.  The distance from the center represents the “saturation” of the color, which measures the colorfulness or purity of a color relative to how bright it is.  Mixing a completely saturated color with white lowers the saturation, causing the color to appear white-washed a lower saturation values.  Finally, value measures the brightness of the color, with a low value corresponding to a low brightness.  The HSV color space is useful for measuring how white-washed or dark an image appears, and for measuring how complimentary certain colors appear to the human eye.</p>
+
+<p>3) <strong>The LAB Color Space</strong></p>
+
+<center>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/LAB.png" width="300" />
+</center>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Lab_color_space">LAB (Lightness, a, b) color space</a> represents colors using two color-opponent dimensions (a and b) and the overall lightness of the image.  It is particularly useful for measuring how colorful an image appears, since a wider area in the a-b plane corresponds to a wider range of colors in the image.</p>
+
+<p>4) <strong>The Grayscale Channel</strong></p>
+
+<center>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/Grayscale.png" width="400" /> 
+</center>
+
+<p>The grayscale channel of an image encodes color intensity with varying shades of gray.  The grayscale channel varies from black, at zero starsintensity, to white, at full intensity.  This channel is useful for calculating non-color related features, such as the blurriness of an image, or the location of focal points.</p>
+
+<h1 id="a-nameimagefeaturesa-extracting-image-features"><a name="ImageFeatures"></a> Extracting Image Features</h1>
+
+<p>Now that we have a number of color spaces to work with, we’re ready to extract features from our images.  We’ll start with the low hanging fruit, before moving on to more complex features.</p>
+
+<p>1) <strong>Image size - 2 features</strong></p>
+
+<p>All of the pictures that we use begin with a 1500x1500 pixel format.  Many of these pixels are filled with white borders that would not be displayed in the online listings.  After we removing these white borders, the images take on a wide range of shapes and sizes.  We can measure the total number of pixels in the cropped images, as well as the aspect ratio (height-to-width ratio) to produce two features that tell us about the shape of a picture.</p>
+
+<p>2) <strong>Average Color Intensity – 6 features</strong></p>
+
+<p>Although a user won’t have much control over the color of their pictures, the overall color of the image may nonetheless impact its aesthetic quality. We can easily measure the average intensity of each color by working in the individual channels of the RGB or HSV color spaces. For each channel, we calculate the average intensity over the image and use the result to create six more features.</p>
+
+<center>
+<div class="container">
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B15_original.png" width="200" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B15.png" width="195" />
+</div>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B188_original.png" width="300" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorIntensity/AverageColorIntensity_B188.png" width="275" />
+
+<div style="width:600px;">
+<i> Top: An image with low intensity in the blue color channel
+<br />
+Bottom: An image with high intensity in the blue color channel
+</i>
+</div>
+
+</center>
+
+<p>3) <strong>Variation of Color Intensity - 6 features</strong></p>
+
+<p>We can also measure the variation of intensity within each color channel.  A low standard deviation of the intensity in channel may indicate that the image is tinted that color, while a high standard deviation may indicate bright lights or shadows in the image.  Calculating the standard deviation for both the RGB and HSV color spaces provides six additional image features.</p>
+
+<center>
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorVariation/ColorVariation_B0p55_original.png" width="300" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorVariation/ColorVariation_B0p55.png" width="270" />
+</div>
+
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorVariation/ColorVariation_B0p74_original.png" width="200" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorVariation/ColorVariation_B0p74.png" width="200" />
+</div>
+
+<div style="width:600px;">
+<i> Top: An image with low variation in the blue color channel, indicating a blue tint of the image
+<br />
+Bottom: An image with high variation the blue color channel, indicating the presence of a bright light source and shadows.
+</i>
+</div>
+
+</center>
+
+<p>4) <strong>Color Gradients - 12 features</strong></p>
+
+<p>In calculus, the “gradient” of a function defines how quickly that function changes with respect to a particular variable.  A function which changes quickly with respect to a variable will have a high gradient, while a function which changes slowly with respect to a variable will have a low gradient.  We can use this concept to measure how quickly each color changes throughout our image.  The gradient is measured using a <a href="http://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_gradients/py_gradients.html">Sobel Filter</a>, which removes noise from neighboring pixels before calculating the difference of intensity between them.  We can calculate the gradient of the RGB and HSV filters, in both the horizontal and vertical directions, providing 12 additional image features.  These features are particularly useful for detecting shadows or glares in the picture, which will present as high gradients due to the quickly varying shades of light.</p>
+
+<p>It is worth noting that the “color gradient” and “variation of color intensity” are similar, but are measuring two different quantities.  Specifically, the gradient features take correlation of nearby pixels into account, while the standard deviation is applied to the image as a whole.</p>
+
+<center>
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p0_original.png" width="300" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p0.png" width="285" />
+</div>
+
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p29_original.png" width="300" /> <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/AverageColorGradient/AverageColorGradient_B0p29.png" width="275" />
+</div>
+
+<div style="width:600px;">
+<i> Top: An image with low horizontal gradients in the blue color channel
+<br />
+Bottom: An image with high horizontal gradient in the blue color channel, indicating the presence of shadows.
+</i>
+</div>
+
+</center>
+
+<p>5) <strong>Colorfulness of an image - 1 feature</strong></p>
+
+<p>The LAB color space is particularly useful when measuring how “colorful” an image is.  The A and B channels represent opposing colors, so a the total area of an image in the AB plane corresponds to the colorfulness of an image.  <a href="https://www.researchgate.net/publication/243135534_Measuring_Colourfulness_in_Natural_Images">Hasler and Suesstrunk</a> present a formula for quantifying the perceived colorfulness of an image based on their 2003 experimental study.  The formula is given by:</p>
+
+<script type="math/tex; mode=display">\mathsf{Colorfulness} = \sigma_a + \sigma_b + 0.39 \sqrt{\mu_a^2 + \mu_b^2}</script>
+
+<p>where the first two terms are essentially measuring the spread of the image in along the A and B axis, and the third term is a slight modification that relates to the average color of the picture.</p>
+
+<center>
+
+<div>
+&lt;img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Colorfulness/Colorfulness_72.png" Width=165"&gt; <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Colorfulness/Colorfulness_132.png" width="275" />
+</div>
+
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Colorfulness/Comparison.png" width="400" /> 
+</div>
+
+<div style="width:600px;">
+<i> Top: An image with low colorfulness (left) and an image with high colorfulness (right)
+<br />
+Bottom: The two images projected on the A-B plane.  Note that the colorful image (green) occupies more area than the colorless image (red).
+</i>
+</div>
+
+</center>
+
+<p>6) <strong>Complimentary Colors - 1 feature</strong></p>
+
+<p>Complimentary colors are located directly across from each other on the color hue circle, as shown in the figure above.  We can use complex analysis to measure the overall amount of complementary colors in an image.  Specifically, the equation</p>
+
+<script type="math/tex; mode=display">e^{i \theta} = cos\theta + i sin\theta</script>
+
+<p>defines a circle of radius one in the “complex plane,” where the real coordinate of the number is given by <script type="math/tex">cos\theta</script>, and the imaginary part is given by <script type="math/tex">sin\theta</script>. By imagining the circle in the complex plane as the color hue circle, we can use the real and imagine components coordinates of each color to measure how complimentary each one is.</p>
+
+<p>If you are unfamiliar with complex analysis, this will be a hard concept to grasp.  It may be helpful to think of the problem in term of the real component alone — that is, in terms of <script type="math/tex">cos\theta</script>.  If we have one color that is located at an angle of zero on the hue circle (<script type="math/tex">\theta = 0</script>), and a complimentary color located on the other side of the circle, at <script type="math/tex">\theta = 180</script>, then the cosine of these angles will equal <script type="math/tex">1</script> and <script type="math/tex">-1</script>, respectively.  With this scheme, the sum of two complimentary colors would equal zero.  It’s more intuitive to assign a high value to complimentary colors, which we can achieve by multiplying the hue angle by a factor of two.  In our previous example, the colorfulness values would become <script type="math/tex">cos(2 \times 0) =1</script>, and <script type="math/tex">cos(2 \times 180) = 1</script>, allowing the sum of complimentary colors to add together.  This transformation also allows uncomplimentary colors to cancel out. For instance, a color at <script type="math/tex">theta=0</script> and a color at <script type="math/tex">theta=90</script> on the hue circle would have values of <script type="math/tex">cos(2*0)=1</script> and <script type="math/tex">cos(2*90)=-1</script> respectively.</p>
+
+<p>Using the method described above, we can measure the total amount of complimentary colors in an image by calculating <script type="math/tex">e^(2*\theta)</script> for each pixel of an image, where $\theta$ represent the Hue angle for that pixel.  Next, we add the absolute value of the resulting numbers together, and divide by the total number of pixels in the image:</p>
+
+<p>Complimentary Color Index <script type="math/tex">= \sum \frac{\abs(e^(2*H*i)}{ N_{pixels} }</script></p>
+
+<p>The result is a number between zero in one, with one representing an image made of perfectly complimentary images (such as red and green), and zero representing an image made of perfectly uncomplimentary images (such as red and blue).</p>
+
+<center>
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/ComplementaryColors.png" width="300" /> 
+</div>
+
+<div style="width:600px;">
+<b>Figure 1 </b>: <i> An illustration of complementary colors on the Hue wheel.
+</i>
+</div>
+
+</center>
+
+<p>7) <strong>Darkness of an image - 3 features</strong></p>
+
+<p>The easiest way to measure the “brightness” of an image is to make a histogram of the intensity values within the R,G, and B channels.  Since values that are closer to zero represent black, and values that are closer to 255 represent white, we can take the average value of the intensity histogram as a measure of how dark the image is.</p>
+
+<p>A more nuanced way to measure the “brightness” of an image is to use the average <a href="https://en.wikipedia.org/wiki/Relative_luminance">relative luminance</a> of the image, which emphasizes the physiological aspects of the human eye.  Relative luminance is defined by</p>
+
+<script type="math/tex; mode=display">L = 0.2126R + 0.7152G + 0.0722B</script>
+
+<p>We can also use the average <a href="https://www.w3.org/TR/AERT#color-contrast">perceived luminance</a> of the image, which accounts for psychological aspects of human perception, and is given by:</p>
+
+<script type="math/tex; mode=display">L = 0.299R + 0.587G + 0.114B</script>
+
+<p>Note that since these three image features originate from the relative intensities of the RGB channels, they will be highly correlated.</p>
+
+<center>
+
+<div>
+&lt;img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Darkness/Darkness_36p2.png" Width=165"&gt; <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Darkness/Darkness_150.4.png" width="150" />
+</div>
+
+<div>
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/Darkness/Comparison.png" width="400" /> 
+</div>
+
+<div style="width:600px;">
+<i> Top: An image with low luminosity (left) and an image with high luminosity (right)
+<br />
+Bottom: A histogram of the pixel intensity for the two images above. Note that the bright image (green) has a right-leaning histogram, while the dark image (red) has a left-leaning histogram.</i>
+</div>
+
+</center>
+
+<p>8) <strong>Blurriness of an image - 5 features</strong></p>
+
+<p>We have taken two separate approaches to measure how blurry an image is.  The first approach applies a <a href="http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/laplace_operator/laplace_operator.html">Laplacian Filter</a> to the image, which calculates the second derivative of single channel from the image.  If you aren’t familiar with calculus, this means the laplacian filter calculates how quickly color changes accelerate in the image.  Typically, edges that are present in the image will have a high value in the laplacian filter.  If the variance of the laplacian filter is high, then the image has a wide range of edge-like and non-edge-like responses.  On the other hand, if the variance of the laplacian is low, then there are very few edges present in the picture — likely indicating a blurry image.  Since the laplacian filter is applied to a single channel, we can measure the blurriness of the HSV and grayscale channels separately, producing 4 additional features.</p>
+
+<p>A more complicated way to measure the blurriness of an image is to compute the <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier Transform </a> of the image.  Without going into the details, the Fourier Transform decomposes the image into high frequency and low frequency variations.  High frequency variations indicate rapid changes in the image, which correspond to edge-like features in the image.  Therefore, the average frequency found in the Fourier Transform provides a measure of how blurry an image is, with higher frequencies corresponding to sharper images.</p>
+
+<p>9) <strong>Focal points of an image - 3 features</strong></p>
+
+<p>We can identify focal points of an image by constructing a <a href="https://en.wikipedia.org/wiki/Salience_(neuroscience)">saliency map</a> of the image.  The concept of saliency originates from neuroscience, and measures the extent to which it stands out relative to its surroundings.  The method we use to create a saliency map is described by Itti, Koch, and Niebur in their 1998 paper <a href="http://www.lira.dist.unige.it/teaching/SINA_08-09/papers/itti98model.pdf">A model of Saliency-based Visual Attention for Rapid Scene Analysis</a>. This method takes a bottom-up approach, in which the image is decomposed into 12 color maps, 6 intensity maps, and 24 orientation maps. The extent to which an object stands out within each map is calculated, and a normalized saliency map representing each of the three categories (color, intensity, and orientation) are produced.  The final saliency map is created by averaging over the three normalized maps. Itti, Hoch, and Niebur’s visualization of this algorithm is included in Figure XX, and an example saliency map is included in Figure XX.</p>
+
+<p>Once we have identified areas of high saliency in our image, we can calculate the average Hue, Saturation, and Value at these locations to produce three additional image features.</p>
+
+<p>10) <strong>Rule of Thirds - 5 features</strong></p>
+
+<p>The rule of thirds is a common guideline which applies to the composition of photographs. The rule states that an image should be divided into nine parts, with two horizontal lines and two vertical lines equally dividing the image into three rows and three columns.  Proponents of the rule of thirds believe that aligning the subject of a photo with the intersection of these lines produces a more interesting composition than simply centering the subject.</p>
+
+<p>In our case, AptDeco’s editors strongly prefer front-facing pictures of furniture, since they are easier to edit and display on the front page.  Nonetheless, we can use the rule of thirds to measure just how centered a piece of furniture is in the image.  We begin by drawing the lines of thirds on an image.  After locating the intersection of these lines, we create a mask to select pixels which are close to the points of intersection, as shown in Figure XX.</p>
+
+<p>Once we have identified the rule of thirds intersections, we can calculate the average HSV and saliency at these locations, producing 4 additional image features.  We can also calculate the distance between the highest saliency point and any of the intersections to determine how close the focal point is to one of the rule of thirds.</p>
+
+<p>11) <strong>Image Symmetry - 16 Features</strong></p>
+
+<p>Measuring the symmetry of an image is accomplished by decomposing the image into symmetric ($I_s$) and antisymmetric ($I_a$) components.  The symmetric component of an image is produced by mirroring the image across the axis of symmetry, and adding it to the original image.  For instance, if we are measuring the horizontal symmetry of an image, we mirror the image across the vertical axis to produce the symmetric component.  Similarly, the antisymmetric component of an image is produced by mirroring the image across the axis of symmetry, and subtracting it from the original image.  The total symmetry of an image is calculated by taking the ratio of the total intensity of the symmetric component to the total intensity of both components:</p>
+
+<p>Symmetry = $ \frac{\sum I_s^2 }{ \sum I_s^2 + \sum I_a^2 }$</p>
+
+<p>We can apply the symmetry calculation to the full HSV and saliency channels of an image, as well as the HSV and saliency channels near the rule of thirds alone.  This produces an additional 16 image features for our model. (4 channels, measured in the full image or near rule of thirds, and measured in the horizontal and vertical directions)</p>
+
+<p>12) <strong>Number of Objects in an Image - 2 Features</strong></p>
+
+<p>Our last two features assess how “busy” an image appears.  To accomplish this, we automatically threshold the image using <a href="https://en.wikipedia.org/wiki/Otsu's_method">Otsu’s Method</a> to produce a black and white picture.  Next, we draw contours around connected black pixels to identify individual objects within the picture.  This process works extremely well for background subtracted images (as shown in Figure XX), but can unintentionally divide single objects into multiple contours when the thresholding process is not straightforward (as shown in Figure XX).  To resolve this issue, we also keep track of the standard deviation of the centers of each contour.  A low standard deviation indicates that many of the contours were found in the same location, and that the individual contours most likely originate from a single object.</p>
+
+
+  
+  </div>
+</div>
+
+
+<script type="text/javascript"
+    src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<div class="social-media">
+    Share this: 
+    <a class="social-media-box" href="https://twitter.com/intent/tweet?text=Automatically Assessing Image Quality for AptDeco.com&url=http://www.dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter fa-sm-90"></i>Twitter</a>
+    <a class="social-media-box" href="https://facebook.com/sharer.php?u=http://www.dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook-f fa-sm-90"></i>Facebook</a>
+    <a class="social-media-box" href="https://plus.google.com/share?url=http://www.dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus fa-sm-90"></i>Google+</a>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+    
+    
+    var disqus_config = function () {
+        this.page.url = "http://dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/";  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = "dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//dealingdata.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+                                  
+
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
