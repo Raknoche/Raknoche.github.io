@@ -313,7 +313,11 @@ Our last two features assess how "busy" an image appears.  To accomplish this, w
 
 # <a name="initSetup"></a> Training an Image Quality Model
 
-Once we've extracted our features from each image, we're ready to train our machine learning model.  As I mentioned previously, we'll being using an AdaBoost Random Forest Classifier.
+Once we've extracted our features from each image, we're ready to train our machine learning model.  As I mentioned previously, we'll being using an AdaBoost Random Forest Classifier.  I'll provide a brief over of the algorithm before detailing how well our model performs.
+
+The foundation of a random forest classifier is called a decision tree.  A decision tree splits our data into subsets by using the value of a particular feature.  The goal of a decision tree is to end up with "pure" subsets of data, which contain only “High quality” or only “Low quality” images. If a particular feature splits the data into a pure subset, no additional splitting is required.  If the feature leaves a subset with a mix of “high quality” and “low quality” images, then the subset is further split by using another feature.
+
+As an example, suppose we have the dataset shown below.
 
 
 # <a name="assessment"></a> Assessing Model Performance
