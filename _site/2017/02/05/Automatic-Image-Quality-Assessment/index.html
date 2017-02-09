@@ -456,7 +456,41 @@ Bottom: An image with high sharpness and the corresponding Laplacian filter. Not
 
 <h1 id="a-nameinitsetupa-training-an-image-quality-model"><a name="initSetup"></a> Training an Image Quality Model</h1>
 
-<p>Once we’ve extracted our features from each image, we’re ready to train our machine learning model.  As I mentioned previously, we’ll being using an AdaBoost Random Forest Classifier.</p>
+<p>Once we’ve extracted our features from each image, we’re ready to train our machine learning model.  As I mentioned previously, we’ll being using an AdaBoost Random Forest Classifier.  I’ll provide a brief over of the algorithm before detailing how well our model performs.</p>
+
+<p>The foundation of a random forest classifier is called a decision tree.  A decision tree splits our data into subsets by using the value of a particular feature.  The goal of a decision tree is to end up with “pure” subsets of data, which contain only “High quality” or only “Low quality” images. If a particular feature splits the data into a pure subset, no additional splitting is required.  If the feature leaves a subset with a mix of “high quality” and “low quality” images, then the subset is further split by using another feature.</p>
+
+<p>As an example, suppose we have the dataset shown below.</p>
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Data.png" width="600" /> 
+
+</center>
+
+<p>Each row of the table represents a particular furniture image.  The first column specifies the quality of the image, and the remaining columns are three different features that we could use to split our data.  For clarity, I’ve color coded the rows according to the quality of the image.</p>
+
+<p>For now, we will choose a random feature to create our decision tree.  Suppose we split our data on the symmetry of an image.  After we do so, we’ll end up with three subsets — low symmetry images, average symmetry images, and high symmetry images.  From our table above, we can see that all of the average symmetry images are also high quality images, so we won’t need to split that subset any further.  On the other hand, the low symmetry subset and high symmetry subset contain a mix of high and low quality images, so they will need to be split further.  Up to this point, our decision tree looks like this:</p>
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Step1.png" width="600" /> 
+
+</center>
+
+<p>We’ll need to split the low symmetry and high symmetry subsets further.  By inspection, if we split the low symmetry subset using darkness of the image, and the high symmetry subset using the blurriness of the image, then we’ll end up with completely pure subsets of data.  Following this procedure, final decision tree is depicted below:</p>
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Step2.png" width="600" /> 
+
+</center>
+
+<p>In the example above, we chose our initial splitting features randomly.  In reality, we should pick features that will improve the purity of each subsequent subset by the highest amount.    If the feature we select to split on produces a 50/50 mix of high quality and low quality images, that splitting was useless.  In contrast, if the feature we select to split on produces a perfectly pure subset, then the splitting is ideal. We can mathematically the optimal splittings by computing the <a href="https://www.garysieling.com/blog/sklearn-gini-vs-entropy-criteria">gini or entropy</a> of a subset, and determining which features splitting maximizes the <a href="https://en.wikipedia.org/wiki/Decision_tree_learning#Information_gain">information gain</a>.</p>
+
+<p>Since a single decision tree tries to create the optimal splitting at the current depth of the tree, it is possible that the final splittings are not the optimal splittings for the decision tree as a whole.  This means that small changes in our training set can drastically change the structure of our decision tree.  The resolution to this problem is to create multiple decision trees.  We allow each tree to choose a random subset of our features at each splitting to ensure different results, and then have the “forest” of trees vote on the final outcome.  This method is what we refer to as the Random Forest Classifier.</p>
+
+<p>So where does AdaBoost come in?  In short, AdaBoost is a boosting algorithm which trains our model over multiple iterations.  With each iteration, samples which were misclassified are given an increased weight in the algorithm.  This forces the model to focus on hard to classify samples, such as images that are on the border of being high quality or low quality.</p>
 
 <h1 id="a-nameassessmenta-assessing-model-performance"><a name="assessment"></a> Assessing Model Performance</h1>
 

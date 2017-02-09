@@ -319,6 +319,39 @@ The foundation of a random forest classifier is called a decision tree.  A decis
 
 As an example, suppose we have the dataset shown below.
 
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Data.png" Width="600"> 
+
+</center>
+
+Each row of the table represents a particular furniture image.  The first column specifies the quality of the image, and the remaining columns are three different features that we could use to split our data.  For clarity, I've color coded the rows according to the quality of the image.  
+
+For now, we will choose a random feature to create our decision tree.  Suppose we split our data on the symmetry of an image.  After we do so, we'll end up with three subsets &mdash; low symmetry images, average symmetry images, and high symmetry images.  From our table above, we can see that all of the average symmetry images are also high quality images, so we won't need to split that subset any further.  On the other hand, the low symmetry subset and high symmetry subset contain a mix of high and low quality images, so they will need to be split further.  Up to this point, our decision tree looks like this:
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Step1.png" Width="600"> 
+
+</center>
+
+We'll need to split the low symmetry and high symmetry subsets further.  By inspection, if we split the low symmetry subset using darkness of the image, and the high symmetry subset using the blurriness of the image, then we'll end up with completely pure subsets of data.  Following this procedure, final decision tree is depicted below:
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/RF_Step2.png" Width="600"> 
+
+</center>
+
+In the example above, we chose our initial splitting features randomly.  In reality, we should pick features that will improve the purity of each subsequent subset by the highest amount.    If the feature we select to split on produces a 50/50 mix of high quality and low quality images, that splitting was useless.  In contrast, if the feature we select to split on produces a perfectly pure subset, then the splitting is ideal. We can mathematically the optimal splittings by computing the [gini or entropy](https://www.garysieling.com/blog/sklearn-gini-vs-entropy-criteria) of a subset, and determining which features splitting maximizes the [information gain](https://en.wikipedia.org/wiki/Decision_tree_learning#Information_gain).  
+
+Since a single decision tree tries to create the optimal splitting at the current depth of the tree, it is possible that the final splittings are not the optimal splittings for the decision tree as a whole.  This means that small changes in our training set can drastically change the structure of our decision tree.  The resolution to this problem is to create multiple decision trees.  We allow each tree to choose a random subset of our features at each splitting to ensure different results, and then have the "forest" of trees vote on the final outcome. This method is what we refer to as the Random Forest Classifier.
+
+The the fraction of trees which voted for for a particular class can be interpreted as the probability that the image belongs to that class. We can also choose a probability threshold at which we classify the image as belonging to a particular class.  Typically, a threshold of 50% is chosen as the threshold, and the image is classified according to a majority vote.
+
+So where does AdaBoost come in?  In short, AdaBoost is a boosting algorithm which trains our model over multiple iterations.  With each iteration, samples which were misclassified are given an increased weight in the algorithm.  This forces the model to focus on hard to classify samples, such as images that are on the border of being high quality or low quality.
 
 # <a name="assessment"></a> Assessing Model Performance
+
+A common way to assess the performance of a binary classification algorithm is called the receiver operating characteristic curve (more commonly called the ROC curve).  The ROC curve illustrates the classifier's performance as the threshold for calling our picture "high quality" is altered.  For example, suppose we classified everything with a "high quality" probability higher than 70% as a "high quality" image.  In this case, the classifier requires the vast majority of trees to agree that the image is "high quality" before classifying it as such.  With such a strict threshold, we're likely to misclassify many of the high quality images as a low quality image.  In exchange, we are less likely to misclassify a low quality image as high quality.  In this situation, we say that our classifier has a low true positive rate (the fraction of high quality images that we correctly identified as high quality), and a low false positive rate (the fraction of low quality images that we incorrectly identified as high quality).  As we lower the threshold of our classifier, we will increase both the true positive and false positive rate, tracing out the ROC curve.  The ROC for our image classifier is shown below:
 
