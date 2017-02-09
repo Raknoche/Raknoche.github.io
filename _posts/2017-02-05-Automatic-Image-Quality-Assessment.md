@@ -355,3 +355,23 @@ So where does AdaBoost come in?  In short, AdaBoost is a boosting algorithm whic
 
 A common way to assess the performance of a binary classification algorithm is called the receiver operating characteristic curve (more commonly called the ROC curve).  The ROC curve illustrates the classifier's performance as the threshold for calling our picture "high quality" is altered.  For example, suppose we classified everything with a "high quality" probability higher than 70% as a "high quality" image.  In this case, the classifier requires the vast majority of trees to agree that the image is "high quality" before classifying it as such.  With such a strict threshold, we're likely to misclassify many of the high quality images as a low quality image.  In exchange, we are less likely to misclassify a low quality image as high quality.  In this situation, we say that our classifier has a low true positive rate (the fraction of high quality images that we correctly identified as high quality), and a low false positive rate (the fraction of low quality images that we incorrectly identified as high quality).  As we lower the threshold of our classifier, we will increase both the true positive and false positive rate, tracing out the ROC curve.  The ROC for our image classifier is shown below:
 
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/ROC.png" Width="600"> 
+
+</center>
+
+The dashed diagonal line in the figure above indicates how well our classifier would perform with completely random guesses.  The most ideal classifier would have an extremely high true positive rate while maintaining a low false positive rate.  Thus, higher quality classifiers will hug the top left corner of the ROC plot.  As the ROC curve approaches the top left corner, the area under the curve (AUC) approached 1.0.  In our case, our classifier has an AUC halfway between random guessing and perfect classification, at 0.74.
+
+Another tool to evaluate our classifier is called a confusion matrix.  The confusion matrix is a heat map which plots the true class of an image against the predicted class of an image, as shown below.  
+
+<center>
+
+<img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/RF_Explanation/ConfusionMatrix.png" Width="600"> 
+
+</center>
+
+From the top row of the confusion matrix, we can see that 68% of the low quality images were correctly identified, and 32% of the low quality images were incorrectly identified.  From the bottom row of the confusion matrix, we can see that 73% of the high quality images were correctly identified, and 27% of the high quality images were incorrectly identified.  This information is also encoded by the color of the squares.
+
+The confusion matrix is particularly useful for evaluating classification models when the balance of classes is uneven.  In our case, only about 25% of AptDeco's images truly belong to the high quality class.  Therefore, if our classifier always predicted that images were low quality, it would be correct 75% of the time.  This would lead to a confusion matrix with dark squared in the first column, and light squares in the right column.  A high quality classifier will correctly identify both the majority and minority class, leading to dark squares in the top left and bottom right corners, as is the case with our classifier.
+
