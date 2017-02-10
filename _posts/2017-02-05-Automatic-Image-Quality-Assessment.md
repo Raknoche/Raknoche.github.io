@@ -10,13 +10,13 @@ Training an AdaBoost model to automatically quantify the quality of furniture im
 
 {% include math.html %}
 
-Over the past three weeks, I've been consulting on a data science project for AptDeco.com.  AptDeco is a peer-to-peer online marketplace for buying and selling used furniture.  The website simplifies the resale process by handling all of the logistics for its users.  The AptDeco team fills in any missing details about the furniture, creates high quality listings on their website, and even delivers the furniture when it's purchased.
+Over the past three weeks, I've been consulting on a data science project for [AptDeco.com](https://www.aptdeco.com/).  AptDeco is a peer-to-peer online marketplace for buying and selling used furniture.  The website simplifies the resale process by handling all of the logistics for its users.  The AptDeco team fills in any missing details about the furniture, creates high quality listings on their website, and even delivers the furniture when it's purchased.
 
-The first step of creating a listing on AptDeco.com is to submit a picture of the furniture.  The editors at AptDeco will review the pictures, and decide if they are of high enough quality to be edited and displayed on the front page of the listing.  Unfortunately, many of the submitted images are low quality, and can't be displayed in the online store.  This means that AptDeco's team spends a large amount of time sifting through low quality pictures and requesting improvements from their users.  In addition to the time sink of this process, some users never submit better images, leading to a lost sale for AptDeco and its users.
+The first step of creating a listing on AptDeco is to submit a picture of the furniture.  The editors at AptDeco will review the pictures, and decide if they are of high enough quality to be edited and displayed on the front page of the listing.  Unfortunately, 75% of the submitted images are low quality, and can't be displayed on the front of a listing.  This means that AptDeco's team spends a large amount of time sifting through low quality pictures and requesting improvements from their users.  In addition to the amount of time this takes, some users never submit better images, leading to a lost sale for AptDeco and its users.
 
 With this in mind, I created DecoRater &mdash; an algorithm for automatically assessing the quality of furniture images on AptDeco.com.  DecoRater provides immediate feedback to AptDeco users, increasing the odds that they will submit high quality images for their listings.  DecoRater can also be used behind the scenes, to reduce the number of low-quality photos that the AptDeco team has to sift through, and to flag listings which are in high need of editor intervention.  
 
-In this post, I'll explain how I created DecoRater from ground up.  The discussion will include:
+In this post, I'll explain how I created DecoRater from the ground up.  The discussion will include:
 
 * [Choosing an Appropriate Model](#ChoosingAModel)
 * [Extracting Different Color Spaces From an Image](#ColorSpaces)
@@ -27,17 +27,17 @@ In this post, I'll explain how I created DecoRater from ground up.  The discussi
 
 # <a name="ChoosingAModel"></a> Choosing an appropriate model
 
-Before we describe how to assess the quality of each image, we need to define what the "quality" of an image means.  AptDeco's database has a number of metrics which we could use to define "quality."  Most of these metrics, such as a listing's click through rate and conversion rate, are influenced by outside factors, such as the price of a listing, or the age of the furniture.  Even if we were to account for these factors, the images that are displayed in the store are already edited.  This means that any model which uses these metrics could only suggest improvements to the already-edited images, rather than to the raw images that users upload directly.
+Before I describe how to assess the quality of each image, we need to define what the "quality" of an image means.  AptDeco's database has a number of metrics which we could use to define "quality."  Most of these metrics, such as a listing's click through rate and conversion rate, are influenced by outside factors, such as the price of a listing, or the age of the furniture.  Even if we account for these factors, the images that are displayed in the store are already edited.  This means that any model which uses these metrics could only suggest improvements to the already-edited images, rather than to the raw images that users upload directly.
 
 A more useful measure of image quality can be defined by AptDeco's choice to edit and display an image, or to reject it.  AptDeco's editors don't record the outcome of this decision in their database, but they were willing to help me hand-label a subset of 2000 images for this purpose.  In this light, the goal of assessing image quality becomes a binary classification problem in which we try to predict the probability that an unedited picture will be edited and displayed on the front page of a listing.  
 
-To accomplish this goal, we'll need to train a machine learning model to emulate a human's subjective opinion of each image's quality.  The go-to model for image processing is a convolutional neural network (CNN), which requires minimal preprocessing of an image, and can easily account for the spatial correlation of individual pixels.  Unfortunately, we lack the large amount of labeled data that is required to train a CNN.  
+To accomplish this goal, we'll need to train a machine learning model to emulate a human's subjective opinion of each image's quality.  The go-to model for image processing is a [convolutional neural network (CNN)](http://cs231n.github.io/convolutional-networks/), which requires minimal preprocessing of an image, and can easily account for the spatial correlation of individual pixels.  Unfortunately, we lack the large amount of labeled data that is required to train a CNN.  
 
-Instead, we'll need to implement a more simple classification model.  After considering multiple algorithms, I settled on an AdaBoost random forest classifier due to its higher test performance relative to other models.  The Adaboost model focuses on hard to classify samples, which helps boost performance on borderline images.  Most importantly, the model can output the probability that an image belongs to the "high quality" class, rather than simply classifying the images on a binary scale.  This is a nice feature to have, since we can use the continuous probability to rank the quality of images within the "high quality" and "low quality" groups. (Note: This is why support vector machines were not considered, since the output of these models should not be interpreted as a continuous probability.)
+Instead, we'll need to implement a simpler classification model.  After considering multiple algorithms, I settled on an [AdaBoost](https://en.wikipedia.org/wiki/AdaBoost) [Random Forest Classifier](https://en.wikipedia.org/wiki/Random_forest) due to its higher test performance relative to the other models.  The random forest model well suited for the nonlinearity of the classification problem, and the AdaBoost boosting algorithm helps to properly classify the many borderline images in our database.  Most importantly, the model can output the probability that an image belongs to the "high quality" class, rather than simply classifying the images on a binary scale.  This is a nice feature to have, since we can use the continuous probability to rank the quality of images within the "high quality" and "low quality" groups. (Note: This is why support vector machines were not considered, since the output of these models should not be interpreted as a continuous probability.)
 
 # <a name="ColorSpaces"></a> Extracting Different Color Spaces From an Image
 
-The input features for our model will need to describe certain characteristics of each image.  We'll discuss the details of these features in the next section, but suffice it to say that many of them will describe how colors change throughout the picture.  We can represent these colors in a number of different [color spaces](https://en.wikipedia.org/wiki/List_of_color_spaces_and_their_uses), which each have their own advantages.  In this section, I'll discuss the four different color spaces that we'll be working with.
+The input features for our model will need to describe different characteristics of each image.  I'll detail each of these features in the next section, but suffice it to say that many of them will describe how colors change throughout the picture.  We can represent these colors in a number of different [color spaces](https://en.wikipedia.org/wiki/List_of_color_spaces_and_their_uses), which each have their own advantages.  In this section, I'll discuss the four color spaces that we'll be working with.
 
 1) **The RGB Color Space**
 
@@ -53,7 +53,7 @@ The [RGB (Red,Green,Blue) color space](https://en.wikipedia.org/wiki/RGB_color_m
 <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/HSV.png" width="400"/>
 </center>
 
-The [HSV (Hue,Saturation,Value) color space](https://en.wikipedia.org/wiki/HSL_and_HSV) is a cylindrical representation of the RGB color model that attempts to be more perceptually relevant than the standard RGB space.  Within the cylinder, the angle around the vertical axis represents to the "Hue" of the color, which denotes the wavelength of light which is most dominant.  Since hue is measured as an angle around a cylinder, we'll need to use circular statistics when quantifying it.  The distance from the center represents the "saturation" of the color, which measures the colorfulness or purity of a color relative to how bright it is.  Mixing a completely saturated color with white lowers the saturation, causing the color to appear white-washed a lower saturation values.  Finally, value measures the brightness of the color, with a low value corresponding to a low brightness.  The HSV color space is useful for measuring how white-washed or dark an image appears, and for measuring how complimentary certain colors appear to the human eye.
+The [HSV (Hue,Saturation,Value) color space](https://en.wikipedia.org/wiki/HSL_and_HSV) is a cylindrical representation of the RGB color model that attempts to be more perceptually relevant than the standard RGB space.  Within the cylinder, the angle around the vertical axis represents the "hue" of the color, which denotes the wavelength of light which is most dominant.  Since hue is measured as an angle around a cylinder, we'll need to use circular statistics when quantifying it.  The distance from the center of the cylinder represents the "saturation" of the color, which measures the colorfulness or purity of a color relative to how bright it is.  Mixing a completely saturated color with white lowers the saturation and causes the color to appear white-washed.  Finally, the depth of the cylinder represents the "value" of the color, which measures the brightness of the color.  A low value corresponds to a low brightness.  The HSV color space is useful for measuring how white-washed or dark an image appears, and for measuring how complimentary certain colors appear to the human eye.
 
 3) **The LAB Color Space**
 
@@ -61,7 +61,7 @@ The [HSV (Hue,Saturation,Value) color space](https://en.wikipedia.org/wiki/HSL_a
 <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/LAB.png" Width="300">
 </center>
 
-The [LAB (Lightness, a, b) color space](https://en.wikipedia.org/wiki/Lab_color_space) represents colors using two color-opponent dimensions (a and b) and the overall lightness of the image.  It is particularly useful for measuring how colorful an image appears, since a wider area in the a-b plane corresponds to a wider range of colors in the image.
+The [LAB (Lightness, a, b) color space](https://en.wikipedia.org/wiki/Lab_color_space) represents colors using two color-opponent dimensions (a and b) and the overall lightness of the image.  The a-opponent axis ranges from green to red, while the b-opponent axis ranged from yellow to blue.  The LAB color space is particularly useful for measuring how colorful an image appears, since a wider area in the a-b plane corresponds to a wider range of colors in the image.
 
 4) **The Grayscale Channel**
 
@@ -69,21 +69,21 @@ The [LAB (Lightness, a, b) color space](https://en.wikipedia.org/wiki/Lab_color_
 <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/Grayscale.png" width="400"/> 
 </center>
 
-The grayscale channel of an image encodes color intensity with varying shades of gray.  The grayscale channel varies from black, at zero starsintensity, to white, at full intensity.  This channel is useful for calculating non-color related features, such as the blurriness of an image, or the location of focal points.
+The grayscale channel of an image encodes color intensity with varying shades of gray.  The grayscale channel varies from black, at zero intensity, to white, at full intensity.  This channel is useful for calculating non-color related features, such as the blurriness of an image, or the location of focal points.
 
 # <a name="ImageFeatures"></a> Extracting Image Features
 
-Now that we have a number of color spaces to work with, we're ready to extract features from our images.  We'll start with the low hanging fruit, before moving on to more complex features.
+Now that we have a number of color spaces to work with, we're ready to extract features from our images.  We'll start with the low hanging fruit before moving on to more complex features.
 
 1) **Image size -- 2 features**
 
-All of the pictures that we use begin with a 1500x1500 pixel format.  Many of these pixels are filled with white borders that would not be displayed in the online listings.  After we removing these white borders, the images take on a wide range of shapes and sizes.  We can measure the total number of pixels in the cropped images, as well as the aspect ratio (height-to-width ratio) to produce two features that tell us about the shape of a picture.
+All of the pictures in our database begin in a 1500x1500 pixel format, but many of them contain white borders that would not be displayed in the online listings.  After we remove these borders, the images take on a wide range of shapes and sizes.  We can measure the total number of pixels in the cropped images, as well as the aspect ratio (height-to-width ratio) to produce two features that tell us about the shape of a picture.
 
 
 <center>
 <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ImageShape/Organized.png" Width="600"> 
 
-<div style="width:600px;">
+<div style="width:900px;">
 <i> From left to right: An image with an aspect ratio of 0.51, an aspect ratio of 1.0, and an aspect ratio of 1.81
 </i>
 </div>
