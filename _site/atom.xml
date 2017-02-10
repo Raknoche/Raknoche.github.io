@@ -4,7 +4,7 @@
  <title>Dealing Data</title>
  <link href="http://www.dealingdata.net/atom.xml" rel="self"/>
  <link href="http://www.dealingdata.net/"/>
- <updated>2017-02-09T10:20:33-05:00</updated>
+ <updated>2017-02-09T20:33:48-05:00</updated>
  <id>http://www.dealingdata.net</id>
  <author>
    <name>Richard Knoche</name>
@@ -17,7 +17,7 @@
    <link href="http://www.dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment/"/>
    <updated>2017-02-05T00:00:00-05:00</updated>
    <id>http://www.dealingdata.net/2017/02/05/Automatic-Image-Quality-Assessment</id>
-   <content type="html">&lt;p&gt;Training an AdaBoost model to automatically quantify the quality of furniture images for AptDeco.com&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;Over the past three weeks, I’ve been consulting on a data science project for AptDeco.com. AptDeco is a peer-to-peer online marketplace for buying and selling used furniture. The website simplifies the...</content>
+   <content type="html">&lt;p&gt;Training an AdaBoost model to automatically quantify the quality of furniture images for AptDeco.com&lt;/p&gt; &lt;!--more--&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt; &lt;/script&gt; &lt;p&gt;Over the past three weeks, I’ve been consulting on a data science project for &lt;a href=&quot;https://www.aptdeco.com/&quot;&gt;AptDeco.com&lt;/a&gt;. AptDeco is a peer-to-peer online marketplace for buying and selling used furniture. The website simplifies...</content>
  </entry>
  
  <entry>
