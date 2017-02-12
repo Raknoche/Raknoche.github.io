@@ -156,7 +156,7 @@ The LAB color space is particularly useful when measuring how "colorful" an imag
 
 $$\mathsf{Colorfulness} = \sigma_a + \sigma_b + 0.39 \sqrt{\mu_a^2 + \mu_b^2}$$
 
-where the first two terms are measuring the spread of the image in along the A and B axes, and the third term is a slight modification that relates to the average color of the picture.
+where the first two terms are measuring the spread of the image along the A and B axes, and the third term is a slight modification that relates to the average color of the picture.
 
 <center>
 
@@ -181,7 +181,7 @@ Complimentary colors are located directly across from each other on the color hu
 
 $$e^{i \theta} = cos\theta + i sin\theta$$
 
-defines a circle of radius one in the [complex plane](https://en.wikipedia.org/wiki/Complex_plane), where the real coordinate of a number is given by $$cos\theta$$, and the imaginary part is given by $$sin\theta$$. By imagining the circle in the complex plane as the color hue circle, we can use the real and imagine coordinates of each color to measure how complimentary they are.
+defines a circle of radius one in the [complex plane](https://en.wikipedia.org/wiki/Complex_plane), where the real coordinate of a number is given by $$cos\theta$$, and the imaginary part is given by $$sin\theta$$. By imagining the circle in the complex plane as the color hue circle, we can use the real and imaginary coordinates of each color to measure how complimentary they are.
 
 If you are unfamiliar with complex analysis, this will be a hard concept to grasp.  It may be helpful to think of the problem in term of the real component alone &mdash; that is, in terms of $$cos\theta$$.  If we have one color that is located at an angle of zero on the hue circle, and a complimentary color located on the other side of the circle at $$\theta = 180$$, then the cosine of these angles will equal $$1$$ and $$-1$$, respectively.  With this scheme, the sum of two complimentary colors would equal zero.  
 
@@ -192,7 +192,7 @@ Using the method described above, we can measure the total amount of complimenta
 
 Complimentary Color Index $$=  \frac{ \sum \left\|{ e^{2 H i} } \right\|}{ N_{pixels} }$$
 
-The result is a number between zero in one, with one representing an image made of perfectly complimentary images (such as red and green), and zero representing an image made of perfectly uncomplimentary images (such as red and blue).
+The result is a number between zero and one, with one representing an image made of perfectly complimentary images (such as red and green), and zero representing an image made of perfectly uncomplimentary images (such as red and blue).
 
 <center>
 <div>
@@ -244,7 +244,7 @@ Note that all three of these image features originate from the relative intensit
 I have taken two separate approaches to measure how blurry an image is.  The first approach applies a [Laplacian Filter](http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/laplace_operator/laplace_operator.html) to the image, which calculates the second derivative of a single channel from the image.  If you aren't familiar with calculus, this means the laplacian filter calculates how quickly color changes accelerate in the image.  Typically, edges that are present in the image will have a high value in the laplacian filter.  If the variance of the laplacian filter is high, then the image has a wide range of edge-like and non-edge-like responses.  On the other hand, if the variance of the laplacian is low, then there are very few edges present in the picture &mdash; likely indicating a blurry image.  Since the laplacian filter is applied to a single channel, we can measure the blurriness of the HSV and grayscale channels separately, producing 4 additional features.
 
 
-A more complicated way to measure the blurriness of an image is to compute the [Fast Fourier Transform ](https://en.wikipedia.org/wiki/Fast_Fourier_transform) of the image.  Without going into the details, the Fourier Transform decomposes the image into high frequency and low frequency variations.  High frequency variations indicate rapid changes in the image, which correspond to edge-like features.  Therefore, the average frequency found in the Fourier Transform provides a measure of how blurry an image is, with higher frequencies corresponding to sharper images.
+A more complicated way to measure the blurriness of an image is to compute the [Fast Fourier Transform ](https://en.wikipedia.org/wiki/Fast_Fourier_transform) of the image.  Without going into too much detail, the Fourier Transform decomposes the image into high frequency and low frequency variations.  High frequency variations indicate rapid changes in the image, which correspond to edge-like features.  Therefore, the average frequency found in the Fourier Transform provides a measure of how blurry an image is, with higher frequencies corresponding to sharper images.
 
 <center>
 
