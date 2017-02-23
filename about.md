@@ -7,7 +7,7 @@ My name is Richard Knoche.  I'm a graduate student working on my Ph.D. in Physic
 
 If you would like more information about me or my graduate school research, please read my [Hello, World](http://www.dealingdata.net/2016/07/08/HelloWorld/) blog post.  I've also provided the following link in the sidebar of my web page:
 
-* [Github page](www.github.com/raknoche)
+* [Github page](https://www.github.com/raknoche)
 * [LinkedIn page](https://www.linkedin.com/in/richard-knoche-ba8bb1122
 )
 * [email](mailto:raknoche@dealingdata.net)
