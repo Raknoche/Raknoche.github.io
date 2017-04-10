@@ -132,7 +132,7 @@
        <a href="https://github.com/raknoche"><i class="fa fa-github fa-2x"></i></a>
        <a href="https://www.linkedin.com/in/richard-knoche-ba8bb1122"><i class="fa fa-linkedin fa-2x"></i></a>
        <a href="mailto:raknoche@dealingdata.net"><i class="fa fa-envelope fa-2x"></i></a>
-       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/CV/RichardKnoche_CV.pdf"><i class="icon-roundcv fa-2x"></i></a>
+       <a href="https://github.com/Raknoche/CV_and_Resume/blob/master/RichardKnoche_Resume.pdf"><i class="icon-roundcv fa-2x"></i></a>
       
      </p>
      <p>
@@ -211,7 +211,7 @@
 <img src="https://raw.githubusercontent.com/Raknoche/Raknoche.github.io/master/_posts/Images/DecoRater/ColorSpaces/HSV.png" width="400" />
 </center>
 
-<p>The <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV (Hue,Saturation,Value) color space</a> is a cylindrical representation of the RGB color model that attempts to be more perceptually relevant than the standard RGB space.  Within the cylinder, the angle around the vertical axis represents the “hue” of the color, which denotes the wavelength of light which is most dominant.  Since hue is measured as an angle around a cylinder, we’ll need to use circular statistics when quantifying it.  The distance from the center of the cylinder represents the “saturation” of the color, which measures the colorfulness or purity of a color relative to how bright it is.  Mixing a completely saturated color with white lowers the saturation and causes the color to appear white-washed.  Finally, the depth of the cylinder represents the “value” of the color, which measures the brightness of the color.  A low value corresponds to a low brightness.  The HSV color space is useful for measuring how white-washed or dark an image appears, and for measuring how complimentary certain colors appear to the human eye.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV (Hue,Saturation,Value) color space</a> is a cylindrical representation of the RGB color model that attempts to be more perceptually relevant than the standard RGB space.  Within the cylinder, the angle around the vertical axis represents the “hue” of the color, which denotes the wavelength of light which is most dominant.  Since hue is measured as an angle around a cylinder, we’ll need to use circular statistics when quantifying it.  The distance from the center of the cylinder represents the “saturation” of the color, which measures the colorfulness or purity of a color relative to how bright it is.  Mixing a completely saturated color with white lowers the saturation and causes the color to appear white-washed.  Finally, the depth of the cylinder represents the “value” of the color, which measures the brightness of the color.  A low value corresponds to a low brightness.  The HSV color space is useful for measuring how white-washed or dark an image appears, and for measuring how complementary certain colors appear to the human eye.</p>
 
 <p>3) <strong>The LAB Color Space</strong></p>
 
@@ -328,23 +328,23 @@
 
 <p><br /></p>
 
-<p>6) <strong>Complimentary Colors – 1 feature</strong></p>
+<p>6) <strong>Complementary Colors – 1 feature</strong></p>
 
-<p>Complimentary colors are located directly across from each other on the color hue circle, as shown in the figure below.  We can use complex analysis to measure the overall amount of complementary colors in an image.  Specifically, the equation</p>
+<p>Complementary colors are located directly across from each other on the color hue circle, as shown in the figure below.  We can use complex analysis to measure the overall amount of complementary colors in an image.  Specifically, the equation</p>
 
 <script type="math/tex; mode=display">e^{i \theta} = cos\theta + i sin\theta</script>
 
-<p>defines a circle of radius one in the <a href="https://en.wikipedia.org/wiki/Complex_plane">complex plane</a>, where the real coordinate of a number is given by <script type="math/tex">cos\theta</script>, and the imaginary part is given by <script type="math/tex">sin\theta</script>. By imagining the circle in the complex plane as the color hue circle, we can use the real and imaginary coordinates of each color to measure how complimentary they are.</p>
+<p>defines a circle of radius one in the <a href="https://en.wikipedia.org/wiki/Complex_plane">complex plane</a>, where the real coordinate of a number is given by <script type="math/tex">cos\theta</script>, and the imaginary part is given by <script type="math/tex">sin\theta</script>. By imagining the circle in the complex plane as the color hue circle, we can use the real and imaginary coordinates of each color to measure how complementary they are.</p>
 
-<p>If you are unfamiliar with complex analysis, this will be a hard concept to grasp.  It may be helpful to think of the problem in term of the real component alone — that is, in terms of <script type="math/tex">cos\theta</script>.  If we have one color that is located at an angle of zero on the hue circle, and a complimentary color located on the other side of the circle at <script type="math/tex">\theta = 180</script>, then the cosine of these angles will equal <script type="math/tex">1</script> and <script type="math/tex">-1</script>, respectively.  With this scheme, the sum of two complimentary colors would equal zero.</p>
+<p>If you are unfamiliar with complex analysis, this will be a hard concept to grasp.  It may be helpful to think of the problem in term of the real component alone — that is, in terms of <script type="math/tex">cos\theta</script>.  If we have one color that is located at an angle of zero on the hue circle, and a complementary color located on the other side of the circle at <script type="math/tex">\theta = 180</script>, then the cosine of these angles will equal <script type="math/tex">1</script> and <script type="math/tex">-1</script>, respectively.  With this scheme, the sum of two complementary colors would equal zero.</p>
 
-<p>It’s more intuitive to assign a high value to complimentary colors, which we can achieve by multiplying the hue angle by a factor of two.  In our previous example, the colorfulness values would become <script type="math/tex">cos(2 \times 0) =1</script>, and <script type="math/tex">cos(2 \times 180) = 1</script>, allowing the sum of complimentary colors to add together.  This transformation also allows uncomplimentary colors to cancel out. For instance, a color at <script type="math/tex">\theta=0</script> and a color at <script type="math/tex">\theta=90</script> on the hue circle would have values of <script type="math/tex">cos(2 \times 0)=1</script> and <script type="math/tex">cos(2 \times 90)=-1</script> respectively.</p>
+<p>It’s more intuitive to assign a high value to complementary colors, which we can achieve by multiplying the hue angle by a factor of two.  In our previous example, the colorfulness values would become <script type="math/tex">cos(2 \times 0) =1</script>, and <script type="math/tex">cos(2 \times 180) = 1</script>, allowing the sum of complementary colors to add together.  This transformation also allows uncomplementary colors to cancel out. For instance, a color at <script type="math/tex">\theta=0</script> and a color at <script type="math/tex">\theta=90</script> on the hue circle would have values of <script type="math/tex">cos(2 \times 0)=1</script> and <script type="math/tex">cos(2 \times 90)=-1</script> respectively.</p>
 
-<p>Using the method described above, we can measure the total amount of complimentary colors in an image by calculating <script type="math/tex">e^{ 2 H i }</script> for each pixel of an image.  Next, we add the <a href="https://en.wikipedia.org/wiki/Norm_(mathematics)">norm</a> of the resulting numbers together, and divide by the total number of pixels in the image:</p>
+<p>Using the method described above, we can measure the total amount of complementary colors in an image by calculating <script type="math/tex">e^{ 2 H i }</script> for each pixel of an image.  Next, we add the <a href="https://en.wikipedia.org/wiki/Norm_(mathematics)">norm</a> of the resulting numbers together, and divide by the total number of pixels in the image:</p>
 
-<p>Complimentary Color Index <script type="math/tex">=  \frac{ \sum \left\|{ e^{2 H i} } \right\|}{ N_{pixels} }</script></p>
+<p>Complementary Color Index <script type="math/tex">=  \frac{ \sum \left\|{ e^{2 H i} } \right\|}{ N_{pixels} }</script></p>
 
-<p>The result is a number between zero and one, with one representing an image made of perfectly complimentary images (such as red and green), and zero representing an image made of perfectly uncomplimentary images (such as red and blue).</p>
+<p>The result is a number between zero and one, with one representing an image made of perfectly complementary images (such as red and green), and zero representing an image made of perfectly uncomplementary images (such as red and blue).</p>
 
 <center>
 <div>
